@@ -1,0 +1,61 @@
+<script id="tpl/cp-search" type="text/ng-template">
+    <div class="cp-search">
+        <input-text
+            ng-model="$root.keywords" no-error="true" no-label="true"
+            ng-change="$root.search()" ng-hide="$root.client_search_by == 'breed'"
+            class="clearable keywords" placeholder="Search here ..."
+            autofocus="autofocus" style="border: 1px solid #b3b3b3; margin: 10px 0 0 0;">
+        </input-text>
+        <input-select
+            no-label="true" no-error="true"
+            ng-show="$root.client_search_by == 'breed'"
+            ng-model="$root.pet_type_id" s="pet_type"
+            ng-change="$root.search('pet_type_id')"
+            line-value="- all pet types -">
+        </input-select>
+        <input-select
+            no-label="true" no-error="true"
+            ng-show="$root.client_search_by == 'breed'"
+            ng-model="$root.pet_breed_id" s="pet_breed"
+            ng-change="$root.search('pet_breed_id')"
+            line-value="- all pet breeds -"
+            filter-select="filter:{pet_type_id:pet_type_id}">
+        </input-select>
+        <div class="clearfix">&nbsp;</div>
+        <div class="list">
+            <a ng-click="$root.setSearchBy('name')"
+               ng-class="{'bg-button': $root.client_search_by == 'name'}">
+                <i class="fa fa-user fa-3x"></i> <br />
+                Client name
+            </a>
+            <a ng-click="$root.setSearchBy('pet')"
+               ng-class="{'bg-button': $root.client_search_by == 'pet'}">
+                <i class="fa fa-paw fa-3x"></i> <br />
+                Pet name
+            </a>
+            <a ng-click="$root.setSearchBy('phone')"
+               ng-class="{'bg-button': $root.client_search_by == 'phone'}">
+                <i class="fa fa-phone fa-3x"></i> <br />
+                Phone / Cell
+            </a>
+            <a ng-click="$root.setSearchBy('breed')"
+               ng-show="access.checkSearchPetBreed()"
+               ng-class="{'bg-button': $root.client_search_by == 'breed'}">
+                <i class="fa fa-filter fa-3x"></i> <br />
+                Type / breed
+            </a>
+            <a ng-click="$root.setSearchBy('pet_id')"
+               ng-show="access.checkSearchPetId()"
+               ng-class="{'bg-button': $root.client_search_by == 'pet_id'}">
+                <i class="fa fa-gear fa-3x"></i> <br />
+                Pet ID
+            </a>
+            <a ng-click="$root.setSearchBy('membership')"
+               ng-show="access.checkMembership() && access.checkSearchMembership()"
+               ng-class="{'bg-button': $root.client_search_by == 'membership'}">
+                <i class="fa fa-barcode fa-3x"></i> <br />
+                Membership
+            </a>
+        </div>
+    </div>
+</script>

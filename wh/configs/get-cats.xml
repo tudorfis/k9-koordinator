@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    
+    <set var="appPath">C:\xampp\htdocs\km-api\wh\</set>
+    <set var="result"></set>    
+    
+    <loop item="item">
+        <list>
+            <xpath expression="(//table)[2]//tr/td[1]/a/text()">
+                    <file path="${appPath}raw-cats.html" />
+            </xpath>        
+        </list>
+        <body>
+            <set var="result">
+                <template>
+                    ${result}
+                    insert into    `pet_breed` set `pet_type_id` = "2", `v` = "${item}";
+                </template>
+            </set>
+                <template>${item}</template>
+        
+        </body>
+    </loop>
+    
+</config>

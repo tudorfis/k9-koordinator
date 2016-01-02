@@ -1,0 +1,352 @@
+<fieldset>
+    <legend>
+        <i class="fa fa-th-list"></i> Daycare reservation
+    </legend>
+    <div ng-controller="rDaycareTop" ng-init="r_type_mod = 'r_daycare_mod'" ng-include="'tpl/r-top-sections'"></div>
+    <div id="check_in_out"
+         ng-show="$root.section == 'check_in_out'">
+        <div class="small-12">
+            <fieldset>
+                <div class="small-6 column">
+                    <div ng-include="'tpl/cp-info'"></div>
+                </div>
+                <form form-submit hide-show-al-content="true" id="rDaycareForm" t="r_daycare_mod" table="r_daycare" data-abide="true">
+                    <div class="small-6 column">
+                        <div class="small-6 column">
+                            <input-text
+                                title="Date in"
+                                ng-model="r_daycare_mod.date_in"
+                                ng-disabled="r_daycare_mod.in_out == 'out'"
+                                placeholder="" class="datepicker" required="required"
+                                error-text="This field is required, only numeric values">
+                            </input-text>
+                            <input-text
+                                title="Date out"
+                                ng-model="r_daycare_mod.date_out"
+                                ng-disabled="r_daycare_mod.in_out == 'out'"
+                                placeholder="" class="datepicker" required="required"
+                                error-text="This field is required, only numeric values">
+                            </input-text>
+                        </div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Time in"
+                                ng-model="r_daycare_mod.time_in"
+                                ng-disabled="r_daycare_mod.in_out == 'out'"
+                                required="required" placeholder="" class="timepicker" pattern="time_pattern"
+                                error-text="Please add this format 10:30">
+                            </input-text>
+                            <input-text
+                                title="Time out"
+                                ng-model="r_daycare_mod.time_out"
+                                ng-disabled="r_daycare_mod.in_out == 'out'"
+                                required="required" placeholder="" class="timepicker" pattern="time_pattern"
+                                error-text="Please add this format 10:30">
+                            </input-text>
+                        </div>
+                        <div class="small-12" ng-show="r_daycare_mod.date_checkout && r_daycare_mod.time_checkout">
+                            <hr />
+                            <div class="small-6 column">
+                                <input-text
+                                    title="Date of checkout"
+                                    disabled="true" ng-model="r_daycare_mod.date_checkout">
+                                </input-text>
+                            </div>
+                            <div class="small-6 column">
+                                <input-text
+                                    title="Time of checkout out"
+                                    disabled="true" ng-model="r_daycare_mod.time_checkout">
+                                </input-text>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="small-12">
+                            <input-select
+                                title="Group" ng-model="r_daycare_mod.daycare_group_id"
+                                ng-disabled="r_daycare_mod.in_out == 'out'"
+                                s="daycare_groups" required="required">
+                            </input-select>
+                            <table class="small-12" ng-show="r_daycare_mod.daycare_group_id">
+                                <tr>
+                                    <td>Limitt</td>
+                                    <td>{{daycare_groups[r_daycare_mod.daycare_group_id].limits}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Fullday</td>
+                                    <td>$ {{daycare_groups[r_daycare_mod.daycare_group_id].full_day}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Halfday</td>
+                                    <td>$ {{daycare_groups[r_daycare_mod.daycare_group_id].half_day}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="right" ng-show="r_daycare_mod.in_out == 'in'">
+                            <button type="submit" class="submit button radius" style="font-weight: bold;">
+                                <i class="fa fa-check-square"> </i>
+                            </button>
+                            <img class="al" ng-src="{{'img/ajax.gif' | baseUrl}}" style="display: none;" />
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        <div class="small-12">
+            <div class="small-6 column" ng-show="r_daycare_mod.id">
+                <fieldset>
+                    <legend>
+                        <i class="fa fa-credit-card"></i> Payment details
+                    </legend>
+                    <form form-submit hide-show-al-content="true" t="o" table="daycare_payments"
+                          ng-hide="r_grooms_mod.in_out == 'out'" data-abide="true" submit-btn="true"
+                          submit-btn-text="Pay reservation">
+                        <input-select
+                            title="Payment type" required="required"
+                            line-value="- select payment type -"
+                            ng-model="o.payment_type_id" s="payment_types">
+                        </input-select>
+                        <postfix i="fa fa-dollar" pl="4" dl="8" wl="true">
+                            <input-text
+                                no-label="true" type="number" pattern="number" required="required"
+                                error-text="This field is required and must be numeric value"
+                                ng-model="o.paid" placeholder="Enter amount to process ... ">
+                            </input-text>
+                        </postfix>
+                        <div class="clearfix">&nbsp;</div>
+                    </form>
+                    <table class="small-12" ng-show="o.id">
+                        <tr>
+                            <td>Payment status: </td>
+                            <td>{{(payment_status[o.payment_status_id].v)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Payment type: </td>
+                            <td>{{(payment_types[o.payment_type_id].v)}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>TOTAL: </td>
+                            <td>$ {{o.required | number:2}}</td>
+                        </tr>
+                        <tr>
+                            <td>Paid</td>
+                            <td>$ {{o.paid | number:2}}</td>
+                        </tr>
+                        <tr>
+                            <td>Change</td>
+                            <td>$ {{o.change | number:2}}</td>
+                        </tr>
+                        <tr>
+                            <td>Unpaid</td>
+                            <td>$ {{o.unpaid | number:2}}</td>
+                        </tr>
+                        <tr>
+                            <td>Date created</td>
+                            <td>{{o.date_created}}</td>
+                        </tr>
+                        <tr>
+                            <td>Date modified</td>
+                            <td>{{o.date_modified}}</td>
+                        </tr>
+                        <tr>
+                            <td>Created by</td>
+                            <td>{{$root.users[o.created_user_id].first_name}}, {{$root.users[o.created_user_id].last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Modified by</td>
+                            <td>{{$root.users[o.modified_user_id].first_name}}, {{$root.users[o.modified_user_id].last_name}}</td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="small-6 column">
+                <fieldset ng-show="r_daycare_mod.id">
+                    <legend>
+                        <i class="fa fa-dollar"></i> Billing details
+                    </legend>
+                   <div class="small-4 column">
+                        <input-radio
+                            title="Charge by fullday rate"
+                            ng-disabled="r_daycare_mod.in_out == 'out'"
+                            ng-model="r_daycare_mod.is_halfday" v="0">
+                        </input-radio>
+                    </div>
+                    <div class="small-4 column">
+                        <input-radio
+                            title="Charge by halfday rate"
+                            ng-disabled="r_daycare_mod.in_out == 'out'"
+                            ng-model="r_daycare_mod.is_halfday" v="1">
+                        </input-radio>
+                    </div>
+                    <hr />
+                    <div class="small-6 column">
+                        <input-select
+                            title="Select language" no-error="true" s="$root.lang_keys"
+                            ng-model="o.language" ng-id="lang" ng-v="text">
+                        </input-select>
+                        <input-radio
+                            title='Show details <i class="fa fa-laptop"></i>'
+                            t="o" n="print_type" v="screen" placeholder="...">
+                        </input-radio>
+                        <input-radio
+                            title='Print to screen <i class="fa fa-print"></i>'
+                            t="o" n="print_type" v="print" placeholder="...">
+                        </input-radio>
+                        <input-radio
+                            title='Download a copy <i class="fa fa-file-o"></i>'
+                            t="o" n="print_type" v="download" placeholder="...">
+                        </input-radio>
+                        <hr />
+                        <a class="tiny button radius btn_print"
+                           ng-click="$root.printRsvBill('#rDaycareCtrl', 'r_daycare_mod', 'r_daycare')">
+                            <i class="fa fa-print"></i> Bill details and prices
+                        </a>
+                        <i class="fa fa-spin fa-spinner fa-2x al_print" style="display: none;"></i>
+                    </div>
+                    <div class="small-6 column">
+                        <a class="button radius"
+                           ng-disabled="r_daycare_mod.in_out == 'out'"
+                           ng-click="(r_daycare_mod.in_out == 'in' ? $root.checkoutPet('#rDaycareCtrl', 'r_daycare_mod', 'r_daycare') : void(0))">
+                            <i class="fa fa-sign-out"></i> Checkout pet
+                        </a>
+                        <hr />
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-12">
+            <fieldset>
+                <legend>Vacancy</legend>
+                <div class="small-4 column">
+                    <fieldset class="small-12">
+                        <legend>Sort options</legend>
+                        <div class="small-6 column">
+                            <ul class="no-list-type">
+                                <li>
+                                    <input-radio
+                                        title="Daycare group"
+                                        placeholder="" ng-model="sort_o" v="daycare_group_id">
+                                    </input-radio>
+                                </li>
+                                <li>
+                                    <input-radio
+                                        title="<i class='fa fa-calendar'></i> Date in"
+                                        placeholder="" ng-model="sort_o" v="date_in">
+                                    </input-radio>
+                                </li>
+                                <li>
+                                    <input-radio
+                                        title="<i class='fa fa-clock-o'></i> Time in"
+                                        placeholder="" ng-model="sort_o" v="time_in">
+                                    </input-radio>
+                                </li>
+                                <li>
+                                    <input-radio
+                                        title="<i class='fa fa-calendar'></i> Date out"
+                                        placeholder="" ng-model="sort_o" v="date_out">
+                                    </input-radio>
+                                </li>
+                                <li>
+                                    <input-radio
+                                        title="<i class='fa fa-clock-o'></i> Time out"
+                                        placeholder="" ng-model="sort_o" v="time_out">
+                                    </input-radio>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="small-6 column">
+                            <ul class="no-list-type">
+                                <li>
+                                    <input-radio
+                                        title="<i class='fa fa-sort-amount-desc'></i> Descending"
+                                        placeholder="" ng-model="sort_o_r" v="true">
+                                    </input-radio>
+                                </li>
+                                <li>
+                                    <input-radio
+                                        title="<i class='fa fa-sort-amount-asc'></i> Ascending"
+                                        placeholder="" ng-model="sort_o_r" v="false">
+                                    </input-radio>
+                                </li>
+                            </ul>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="small-4 column">
+                    <fieldset class="small-12">
+                        <legend>Group info</legend>
+                        <span style="font-size: 10px">* select group to see prices and available reservation options</span>
+                        <input-select
+                            title="" v="v" line-value="- all types -"
+                            no-error="true" ng-change="sd = (!dg_id ? '' : sd)"
+                            ng-model="dg_id" s="daycare_groups">
+                        </input-select>
+                        <div ng-show="dg_id">
+                            <ul class="no-list-type">
+                                <li><strong>Name:</strong> <i>{{daycare_groups[dg_id].v}}</i></li>
+                                <li><strong>Limit:</strong> <i>{{daycare_groups[dg_id].limit}}</i></li>
+                                <li><strong>Day rate:</strong> <i>$ {{daycare_groups[dg_id].day_rate}}</i></li>
+                                <li><strong>Hour rate:</strong> <i>$ {{daycare_groups[dg_id].hour_rate}}</i>
+                                <li><strong>Halfday rate:</strong> <i>$ {{daycare_groups[dg_id].halfday_rate}}</i></li>
+                            </ul>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="small-4 column" ng-show="dg_id">
+                    <fieldset class="small-12">
+                        <legend>Legend</legend>
+                        <ul class="no-list-type">
+                            <li><span class="rectangle bg-purple">&nbsp;</span> Selected day </li>
+                            <li><span class="rectangle bg-red">&nbsp;</span> Over booked</li>
+                            <li><span class="rectangle bg-orange">&nbsp;</span> Full</li>
+                            <li><span class="rectangle bg-white">&nbsp;</span> Available</li>
+                            <li><span class="rectangle bg-gray">&nbsp;</span> Not available</li>
+                        </ul>
+                    </fieldset>
+                </div>
+                <hr />
+                <div class="small-12">
+                    <table weekdays-daycare></table>
+                    <sub>Note: it is posible to select a day, just click on the certain date</sub>
+                    <hr />
+                    <table class="small-12">
+                        <thead>
+                            <tr>
+                                <th>Group</th>
+                                <th>Date in</th>
+                                <th>Time in</th>
+                                <th>Date out</th>
+                                <th>Time out</th>
+                                <th>Client</th>
+                                <th>Pet</th>
+                                <th>Breed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="d in r_daycare | array | filter:{daycare_group_id:(dg_id||'')} | filterDaycare | array | orderBy:sort_o:sort_o_r">
+                                <td>{{daycare_groups[d.daycare_group_id].v}}</td>
+                                <td>{{d.date_in || '-'}}</td>
+                                <td>{{d.time_in || '-'}}</td>
+                                <td>{{d.date_out || '-'}}</td>
+                                <td>{{d.time_out || '-'}}</td>
+                                <td>{{clients[d.client_id].first_name}}, {{clients[d.client_id].last_name}}</td>
+                                <td>{{pets[d.pet_id].pet_name}}</td>
+                                <td>{{pet_breed[pets[d.pet_id].pet_breed_id].v}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+        </div>
+
+    </div>
+    <div ng-controller="rDaycareServices" ng-include="'tpl/r-ss-mod'"
+         ng-init="do = 1; scope_id = '#rDaycareCtrl'; r_type = 'r_daycare'; r_type_mod = 'r_daycare_mod'; r_type_in = 'pet.r_daycare[r_daycare_mod.id].r_ss'; "></div>
+
+    <div ng-controller="rDaycareMeds" ng-include="'tpl/r-meds-mod'"
+         ng-init="do = 1; scope_id = '#rDaycareCtrl'; r_type = 'r_daycare'; r_type_mod = 'r_daycare_mod'; r_type_in = 'pet.r_daycare[r_daycare_mod.id].r_meds'; "></div>
+
+    <div ng-controller="rDaycareDiets" ng-include="'tpl/r-diets-mod'"
+         ng-init="do = 1; scope_id = '#rDaycareCtrl'; r_type = 'r_daycare'; r_type_mod = 'r_daycare_mod'; r_type_in = 'pet.r_daycare[r_daycare_mod.id].r_diets'; "></div>
+</fieldset>

@@ -1,0 +1,35 @@
+<script id="tpl/last-visits" type="text/ng-template">
+    <div ng-show="$root.pet.id && access.checkRsv()" last-visits>
+        <p style="font-weight: bold; border-bottom: 1px solid #ccc;">Last Visit !</p>
+        <div ng-show="access.checkBoarding()" class="small-12">
+            <div class="bg-owes"
+                 ng-click="$root.revealModal('#PendingCtrl'); $root.initPending()"
+                 ng-show="client.pp.pending_total > 0 || client.bp.pending_total > 0 || client.dp.pending_total > 0 || client.gp.pending_total > 0 || client.tp.pending_total > 0">
+                Owes: {{(client.pp.pending_total + client.bp.pending_total + client.dp.pending_total + client.gp.pending_total + client.tp.pending_total) | number:2}} $
+            </div>
+            <div class="bg-deposits"
+                 ng-click="$root.revealModal('#DepositsCtrl'); $root.initDeposits()"
+                 ng-show="client.deposits.total > 0">
+                Deposits: {{client.deposits.total | number:2}} $
+            </div>
+            <label>
+                <i class="fa fa-th-large"></i> B: <strong>{{(pet) ? (pet.r_boarding[lastEl(pet.r_boarding).id].date_out || pet.r_boarding[lastEl(pet.r_boarding).id].date_in || "-") : ""}}</strong>
+            </label>
+        </div>
+        <div ng-show="access.checkDaycare()" class="small-12">
+            <label>
+                <i class="fa fa-th-list"></i> D: <strong>{{(pet) ? (pet.r_daycare[lastEl(pet.r_daycare).id].date_out || pet.r_daycare[lastEl(pet.r_daycare).id].date_in || "-") : ""}}</strong>
+            </label>
+        </div>
+        <div ng-show="access.checkGrooming()" class="small-12">
+            <label>
+                <i class="fa fa-th"></i> G: <strong>{{(pet) ? (pet.r_grooms[lastEl(pet.r_grooms).id].date_out || pet.r_grooms[lastEl(pet.r_grooms).id].date_in || "-") : ""}}</strong>
+            </label>
+        </div>
+        <div ng-show="access.checkTraining()" class="small-12">
+            <label>
+                <i class="fa fa-list-alt"></i> T: <strong>{{(pet) ? (pet.r_training[lastEl(pet.r_training).id].date_out || pet.r_training[lastEl(pet.r_training).id].date_in || "-") : ""}}</strong>
+            </label>
+        </div>
+    </div>
+</script>

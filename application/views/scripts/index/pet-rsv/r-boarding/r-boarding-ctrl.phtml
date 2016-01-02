@@ -1,0 +1,20 @@
+<div id="rBoardingCtrl" ng-controller="rBoardingCtrl"
+     class="small-6 columns pet-rsv"
+     ng-show="$root.prd_selected == 'r_boarding'">
+
+    <a ng-click="$root.prd_selected = ''"
+       style="margin: 25px;"
+       class="close-item"
+       href="javascript:;"
+       title="Close">
+    </a>
+
+    <div id="rBoardingModal" class="reveal-modal xlarge exclude" data-reveal>
+        <?= $this->partial('index/pet-rsv/r-boarding/r-boarding-mod.phtml', array()) ?>
+        <a class="close-reveal-modal close-item"></a>
+    </div>
+
+    <div ng-controller="rBoardingPanel" ng-include="'tpl/r-panel'"
+         ng-init="do = 1; icon = 'fa fa-th-large'; title = 'Boardings'; name = 'boarding'; r_type = 'r_boarding'; modal = '#rBoardingModal';"></div>
+
+</div>

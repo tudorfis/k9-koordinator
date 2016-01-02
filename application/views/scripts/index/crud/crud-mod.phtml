@@ -1,0 +1,127 @@
+<div id="crud-mod">
+     <form form-submit hide-show-al-content="true" submit-btn="true" t="crud_mod" table="{{t}}" data-abide="ajax">
+         <fieldset class="crud-bg">
+            <legend>
+                <i class="{{icon_class}}"></i> {{title}}
+            </legend>
+
+                <!-- PET COLOR -->
+                <?php if ($this->t == 'pet_color') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Color" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- PET TYPE -->
+                <?php elseif ($this->t == 'pet_type') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Type" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- PET BREED -->
+                <?php elseif ($this->t == 'pet_breed') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-select title="Type" t="crud_mod" n="pet_type_id" s="pet_type" required="true"></input-select>
+                    <input-text title="Breed" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- PET STATUS -->
+                <?php elseif ($this->t == 'pet_status') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Pet status" t="crud_mod" n="v" required="required"></input-text>
+                    <input-text title="Price" t="crud_mod" n="price" pattern="number" required="required"></input-text>
+
+                <!-- CLIENT STATUS -->
+                <?php elseif ($this->t == 'client_status') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Client status" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- BOARDING STAY REASON -->
+                <?php elseif ($this->t == 'stay_reasons') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Stay reason" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- SCHEDULE SERVICES -->
+                <?php elseif ($this->t == 'schedule_services') : ?>
+                    <?= $this->partial('index/crud/'. $this->t .'.phtml') ?>
+
+                <!-- MEDS -->
+                <?php elseif ($this->t == 'meds') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Medication" t="crud_mod" n="v" required="required"></input-text>
+                    <input-text title="Price" t="crud_mod" n="price" required="required"></input-text>
+
+                <!-- MEDS TYPE -->
+                <?php elseif ($this->t == 'meds_type') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Medication type" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- DIETS -->
+                <?php elseif ($this->t == 'diets') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Diet" t="crud_mod" n="v" required="required"></input-text>
+                    <input-text title="Price" t="crud_mod" n="price" required="required"></input-text>
+
+                <!-- DIETS TYPE -->
+                <?php elseif ($this->t == 'diets_type') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Diet type" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- MD DOSAGE -->
+                <?php elseif ($this->t == 'md_dosage') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Dosage" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- MD DOSAGE -->
+                <?php elseif ($this->t == 'md_dose_type') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Dose type" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- PAYMENT TYPES -->
+                <?php elseif ($this->t == 'payment_types') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Payment type" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- Client survey -->
+                <?php elseif ($this->t == 'client_survey_findout') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-checkbox title="Is refferal" t="crud_mod" n="is_refferal"></input-checkbox>
+                    <input-text title="Value" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- Client survey -->
+                <?php elseif ($this->t == 'client_survey_income') : ?>
+
+                    <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+                    <input-text title="Income" t="crud_mod" n="v" required="required"></input-text>
+
+                <!-- VETS -->
+                <?php elseif ($this->t == 'vets') : ?>
+                    <?= $this->partial('index/crud/'. $this->t .'.phtml') ?>
+
+                <!-- USERS -->
+                <?php elseif ($this->t == 'users') : ?>
+                    <?= $this->partial('index/crud/'. $this->t .'.phtml') ?>
+
+                <!-- GROOMERS -->
+                <?php elseif ($this->t == 'groomers') : ?>
+                    <?= $this->partial('index/crud/'. $this->t .'.phtml') ?>
+
+                <!-- TRAINERS -->
+                <?php elseif ($this->t == 'trainers') : ?>
+                    <?= $this->partial('index/crud/'. $this->t .'.phtml') ?>
+
+                <?php endif ?>
+
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,79 @@
+<fieldset>
+    <legend><i class="fa fa-folder-open-o"></i> Notepads</legend>
+    <div class="small-12">
+        <div class="small-4 column">
+            <label>Lat update</label>
+            <p>{{(($root.notepads | array) | lastEl).date_created}}</p>
+            <hr />
+            <div ng-include="'tpl/from-to-dates'" onload="d_dates = {target_date: ['date_created', 'date_modified']};"></div>
+        </div>
+        <div class="small-8 column">
+            <div class="small-6 column">
+                <label>&nbsp;</label>
+                <a class="button tiny radius"
+                   ng-click="editNotepad({})">
+                    <i class="fa fa-plus"></i> Add new
+                </a>
+            </div>
+            <div class="small-6 column">
+                <table class="small-12" ng-show="nm.id">
+                    <tr>
+                        <td>Date / time created</td>
+                        <td>{{nm.date_created}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date / time modified</td>
+                        <td>{{nm.date_modified}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="small-10 column">
+                <input-textarea
+                    title="" no-error="true" style="height: 150px;"
+                    t="nm" n="v">
+                </input-textarea>
+            </div>
+            <div class="small-2 column">
+                <save-button
+                    name="sn" function="saveNotepad()"
+                    icon-class="fa fa-check" title="">
+                </save-button>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="small-12">
+        <table class="small-12">
+            <thead>
+            <tr>
+                <th></th>
+                <th th-order title="Date created" t="date_created"></th>
+                <th th-order title="Date modified" t="date_modified"></th>
+                <th>Notepad</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr style="cursor: pointer;"
+                    ng-class="{'tr-actv': n.id == nm.id}"
+                    ng-click="editNotepad(n)"
+                    ng-repeat="n in $root.notepads | filterDates:d_dates | array | orderBy:pr:rv">
+                        <td>
+                            <i class="fa fa-arrow-right fa-2x"
+                               ng-show="n.id == nm.id"></i>
+                        </td>
+                        <td>{{n.date_created}}</td>
+                        <td>{{n.date_modified}}</td>
+                        <td>{{n.v}}</td>
+                        <td>
+                            <a class="button tiny radius"
+                               ng-click="deleteNotepad(n.id)">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</fieldset>

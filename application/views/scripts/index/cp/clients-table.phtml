@@ -1,0 +1,53 @@
+<div id="clients-table" ng-show="!$root.prd_selected">
+    <button class="small-4 column radius left"
+            style="margin-bottom: 10px;"
+            ng-click="$root.client = {}; $root.pet = {}; $root.checkCpClient(); $root.checkCpPet(); revealModal('#cpModal'); ">
+        <i class="fi-plus"></i> Add Client
+    </button>
+    <fieldset class="bg-gray radius small-12">
+        <div class="small-12"
+             ng-show="(($root.clients | array).length == 0)">
+            <h3 style="padding: 10px 15px; background-color: #fff;">* no clients available</h3>
+        </div>
+        <table class="small-12"
+               ng-show="(($root.clients | array).length > 0)">
+            <thead>
+                <th>Client name</th>
+                <th>Pet name</th>
+                <th>Phone</th>
+                <th>Breed</th>
+                <th>Edit</th>
+            </thead>
+            <tbody>
+                <tr style="cursor: pointer;"
+                    ng-class="{'client-active': c.id == client.id}"
+                    ng-click="$root.client = c; $root.pet = c.pet;"
+                    ng-repeat="c in $root.clients | orderBy:'id':true track by $index">
+                        <td>{{c.last_name}} {{c.first_name}}</td>
+                        <td>
+                            <div ng-show="c.pet">{{c.pet.pet_name}}</div>
+                            <strong ng-hide="c.pet.pet_name">- no pets -</strong>
+                        </td>
+                        <td>
+                            <i class="fi-telephone"></i> {{c.preffered_phone}}
+                        </td>
+                        <td>
+                            <div ng-show="c.pet">
+                                {{$root.pet_breed[c.pet.pet_breed_id].v}}
+                            </div>
+                            <strong ng-hide="c.pet">
+                                - no pets -
+                            </strong>
+                        </td>
+                        <td>
+                            <a ng-click="revealModal('#cpModal');"
+                               style="margin: 15px 10px"
+                               class="button tiny radius">
+                                <i class="fi-wrench"></i>
+                            </a>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</div>

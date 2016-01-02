@@ -1,0 +1,20 @@
+<div id="rGroomsCtrl" ng-controller="rGroomsCtrl"
+     class="small-6 columns pet-rsv"
+     ng-show="$root.prd_selected == 'r_grooms'">
+
+    <a ng-click="$root.prd_selected = ''"
+       style="margin: 25px;"
+       class="close-item"
+       href="javascript:;"
+       title="Close">
+    </a>
+
+    <div id="rGroomsModal" class="reveal-modal xlarge exclude" data-reveal>
+        <?= $this->partial('index/pet-rsv/r-grooms/r-grooms-mod.phtml', array()) ?>
+        <a class="close-reveal-modal close-item"></a>
+    </div>
+
+    <div ng-controller="rGroomsPanel" ng-include="'tpl/r-panel'"
+         ng-init="do = 1; icon = 'fa fa-th'; title = 'Grooms'; name = 'groom'; r_type = 'r_grooms'; modal = '#rGroomsModal';"></div>
+
+</div>

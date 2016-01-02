@@ -1,0 +1,12 @@
+        
+<?php $this->headScript()->captureStart() ?>
+    $(document).ready(function(){
+        $('#myAlert').foundation({alert: {speed: 100}});  
+    });
+<?php $this->headScript()->captureEnd() ?>
+
+<?=
+$this->inlineScript()->appendScript("
+    $('#myAlert').foundation({alert: {speed: 300}});    
+
+") ?>

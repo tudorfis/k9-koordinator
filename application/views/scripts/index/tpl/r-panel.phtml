@@ -1,0 +1,82 @@
+<script id="tpl/r-panel" type="text/ng-template">
+    <div ng-switch="do">
+        <div ng-switch-when="1">
+            <fieldset class="none-bg">
+                <div class="small-12">
+                    <div class="small-6 column">
+                        <h3>
+                            <i class="{{icon}}"></i> {{title}}
+                            <span ng-show="ma(pet.{{r_type}}).length">
+                                ({{ma(pet[r_type]).length || '0'}})
+                            </span>
+                        </h3>
+                    </div>
+                    <div class="small-6 column">
+                        <button ng-click="getMod({}, 'new'); revealModal(modal)"
+                                class="button radius right tiny">
+                            <i class="fi-plus"></i> Add {{name}} reservation
+                        </button>
+                    </div>
+                    <hr />
+                    <div ng-show="!pet[r_type] || ma(pet[r_type]).length == 0">
+                        <h5>No {{name}} reservations for this pet</h5>
+                    </div>
+                    <div ng-show="pet[r_type] && ma(pet[r_type]).length > 0">
+                        <div class="small-2 column">
+                            <label>In / Out</label>
+                            <select ng-model="in_out">
+                                <option value="">- all -</option>
+                                <option value="in">In</option>
+                                <option value="out">Out</option>
+                            </select>
+                        </div>
+                        <div class="small-10 column">
+                            <div ng-include="'tpl/from-to-dates'"></div>
+                        </div>
+                        <hr />
+                        <div class="small-12">
+                            <table class="small-12">
+                                <thead>
+                                <tr ng-init="pr = 'date_in'; rv = 1;">
+                                    <th th-order title="In / Out" t="in_out"></th>
+                                    <th th-order title="Date in" t="date_in"></th>
+                                    <th th-order title="Time in" t="time_in"></th>
+                                    <th th-order title="Date out" t="date_out"></th>
+                                    <th th-order title="Time out" t="time_out"></th>
+                                    <th class="text-center">View / Edit</th>
+                                    <th class="text-center">Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="r in pet[r_type] | filterDates:d_dates | array | filter:{in_out:in_out} | orderBy:pr:rv">
+                                    <td>{{r.in_out || '-'}}</td>
+                                    <td>{{r.date_in || '-'}}</td>
+                                    <td>{{r.time_in || '-'}}</td>
+                                    <td>{{((r.in_out == 'in') ? (r.date_out || '-') : (r.date_checkout || '-'))}}</td>
+                                    <td>{{((r.in_out == 'in') ? (r.time_out || '-') : (r.time_checkout || '-'))}}</td>
+                                    <td class="text-center">
+                                        <a ng-click="getMod(r); revealModal(modal)"
+                                           class="button tiny radius">
+                                            <i class="fi-wrench" ng-show="r.in_out == 'in'"></i>
+                                            <i class="fa fa-eye" ng-show="r.in_out == 'out'"></i>
+                                        </a>
+
+                                    </td>
+                                    <td class="text-center">
+                                        <button
+                                            ng-show="r.in_out == 'in'"
+                                            ng-click="delete(r.id)"
+                                                class="button tiny radius">
+                                            <i class="fi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</script>

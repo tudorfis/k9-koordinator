@@ -1,0 +1,378 @@
+<div class="small-5 column">
+    <a class="button tiny radius"
+       ng-show="$root.r_m_mod.type == 1 && $root.not_add != 0"
+       ng-click="$root.not_add = 0">
+        <i class="fa fa-plus"></i> Add new medication to inventory
+    </a>
+    <a class="button tiny radius"
+       ng-show="$root.r_d_mod.type == 2 && $root.not_add != 0"
+       ng-click="$root.not_add = 0">
+        <i class="fa fa-plus"></i> Add new diet to inventory
+    </a>
+    <fieldset ng-show="!$root.not_add && $root.r_m_mod.type == 1">
+        <legend>Add new medication to inventory</legend>
+        <form form-submit hide-show-al-content="true" submit-btn="true" t="md_med_mod"
+              table="meds" data-abide="true" set-table-after-submit="true">
+            <div>
+                <a class="tiny button radius right" ng-click="$root.not_add = 1">X</a>
+                <div class="clearfix">&nbsp;</div>
+                <input-text title="Medication" ng-model="$root.md_med_mod.v" required="required"></input-text>
+                <input-text
+                    title="Price" ng-model="$root.md_med_mod.price"
+                    required="required" pattern="number"
+                    error-text="Required, must be numeric value">
+                </input-text>
+                <p style="font-size: 10px; color: #666;">Tip: always search inventory by name
+                    before adding to avoid adding duplicate items to the inventory</p>
+            </div>
+        </form>
+    </fieldset>
+    <fieldset ng-show="!$root.not_add && $root.r_d_mod.type == 2">
+        <legend>Add new diet to inventory</legend>
+        <form form-submit hide-show-al-content="true" submit-btn="true" t="md_diet_mod"
+              table="diets" data-abide="true" set-table-after-submit="true">
+            <div>
+                <a class="tiny button radius right" ng-click="$root.not_add = 1">X</a>
+                <div class="clearfix">&nbsp;</div>
+                <input-text
+                    title="Diet" ng-model="$root.md_diet_mod.v"
+                    required="required">
+                </input-text>
+                <input-text
+                    title="Price" ng-model="$root.md_diet_mod.price"
+                    required="required" pattern="number"
+                    error-text="Required, must be numeric value">
+                </input-text>
+                <p style="font-size: 10px; color: #666;">Tip: always search inventory by name
+                    before adding to avoid adding duplicate items to the inventory</p>
+            </div>
+        </form>
+    </fieldset>
+    <fieldset ng-show="$root.not_add">
+        <legend>Search inventory</legend>
+        <input-select
+            title="Select type" no-error="true" s="md_select"
+            ng-model="$root.r_m_mod.type" ng-change="refreshMd($root.r_m_mod.type)">
+        </input-select>
+        <input-text
+            title="Search by name" no-error="true"
+            ng-model="$root.search_md" class="clearable">
+        </input-text>
+        <table class="small-12"
+               ng-show="$root.r_m_mod.type == 1">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>$</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-click="$root.r_m_mod.md_id = md.id"
+                ng-repeat="md in $root.meds | array | filter:$root.search_md"
+                style="cursor: pointer;"
+                ng-class="{'tr-actv': md.id == $root.r_m_mod.md_id}">
+                <td>
+                    <i class="fa fa-arrow-circle-o-right"
+                       ng-show="md.id == $root.r_m_mod.md_id">&nbsp;</i>
+                </td>
+                <td>{{md.v}}</td>
+                <td>${{md.price}}</td>
+                <td>
+                    <a ng-click="deleteMd('meds', $root.md.id)">
+                        <i class="fa fa-trash-o">&nbsp;</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="small-12"
+               ng-show="$root.r_d_mod.type == 2">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>$</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-click="$root.r_d_mod.md_id = md.id"
+                ng-repeat="md in $root.diets | array | filter:$root.search_md"
+                style="cursor: pointer;"
+                ng-class="{'tr-actv': md.id == $root.r_d_mod.md_id}">
+                <td>
+                    <i class="fa fa-arrow-circle-o-right"
+                       ng-show="md.id == $root.r_d_mod.md_id">&nbsp;</i>
+                </td>
+                <td>{{md.v}}</td>
+                <td>${{md.price}}</td>
+                <td>
+                    <a ng-click="deleteMd('diets', $root.md.id)">
+                        <i class="fa fa-trash-o">&nbsp;</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset ng-show="$root.r_m_mod.type == 1">
+        <legend>Schedule medication details</legend>
+        <form form-submit t="r_m_mod" submit-btn="true"
+              table="records_meds_diets" data-abide="true">
+            <div class="small-6 column">
+                <input-checkbox
+                    title="Morning" class="mmed_morning"
+                    ng-model="$root.r_m_mod.md_morning">
+                </input-checkbox>
+                <input-checkbox
+                    title="Afternoon" class="mmed_afternoon"
+                    ng-model="$root.r_m_mod.md_afternoon">
+                </input-checkbox>
+                <input-checkbox
+                    title="Evening" class="mmed_evening"
+                    ng-model="$root.r_m_mod.md_evening">
+                </input-checkbox>
+                <hr />
+                <input-checkbox
+                    title="As needed"
+                    ng-click="doCheckboxesMd('root', 'r_m_mod', 'md_as_needed', 'mmed', 'md')"
+                    ng-model="$root.r_m_mod.md_as_needed">
+                </input-checkbox>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="On date" class="datepicker"
+                    ng-required="!$root.r_m_mod.md_everyday"
+                    error-text="Please select a date or set 'daily'"
+                    ng-model="$root.r_m_mod.md_date">
+                </input-text>
+                <input-checkbox
+                    title="Daily"
+                    ng-model="$root.r_m_mod.md_everyday">
+                </input-checkbox>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="small-12">
+                <div class="small-6 column">
+                    <input-select
+                        title="Select med type"
+                        required="required"
+                        ng-model="$root.r_m_mod.md_type_id" s="meds_type">
+                    </input-select>
+                </div>
+                <div class="small-3 column">
+                    <input-select
+                        title="Dose" ng-required="!$root.r_m_mod.md_dose_type_id"
+                        error-text="Please select a dose type"
+                        ng-model="$root.r_m_mod.md_dosage_id" s="md_dosage">
+                    </input-select>
+                </div>
+                <div class="small-3 column">
+                    <input-select
+                        title="Dose" ng-required="!$root.r_m_mod.md_dosage_id"
+                        error-text="Please select a dose type"
+                        ng-model="$root.r_m_mod.md_dose_type_id" s="md_dose_type">
+                    </input-select>
+                </div>
+                <div class="small-12">
+                    <input-text
+                        title="Instructions" no-error="true"
+                        ng-model="$root.r_m_mod.md_instructions">
+                    </input-text>
+                </div>
+                <div class="small-12">
+                    <input-checkbox
+                        title="Only show for pets checked in for daycare"
+                        ng-model="$root.r_m_mod.md_only_daycare">
+                    </input-checkbox>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+    <fieldset ng-show="$root.r_d_mod.type == 2">
+        <legend>Schedule diets details</legend>
+        <form form-submit t="r_d_mod" submit-btn="true"
+              table="records_meds_diets" data-abide="true">
+            <div class="small-6 column">
+                <input-checkbox
+                    title="Morning" class="mdiet_morning"
+                    ng-model="$root.r_d_mod.md_morning">
+                </input-checkbox>
+                <input-checkbox
+                    title="Afternoon" class="mdiet_afternoon"
+                    ng-model="$root.r_d_mod.md_afternoon">
+                </input-checkbox>
+                <input-checkbox
+                    title="Evening" class="mdiet_evening"
+                    ng-model="$root.r_d_mod.md_evening">
+                </input-checkbox>
+                <hr />
+                <input-checkbox
+                    title="As needed"
+                    ng-click="doCheckboxesMd('root', 'r_d_mod', 'md_as_needed', 'mdiet', 'md')"
+                    ng-model="$root.r_d_mod.md_as_needed">
+                </input-checkbox>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="On date" class="datepicker"
+                    ng-required="!$root.r_d_mod.md_everyday"
+                    error-text="Please select a date or set 'daily'"
+                    ng-model="$root.r_d_mod.md_date">
+                </input-text>
+                <input-checkbox
+                    title="Daily"
+                    ng-model="$root.r_d_mod.md_everyday">
+                </input-checkbox>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="small-12">
+                <div class="small-6 column">
+                    <input-select
+                        title="Select med type"
+                        required="true"
+                        ng-model="$root.r_d_mod.md_type_id" s="diets_type">
+                    </input-select>
+                </div>
+                <div class="small-3 column">
+                    <input-select
+                        title="Dose" ng-required="!$root.r_d_mod.md_dose_type"
+                        error-text="Please select a dose type"
+                        ng-model="$root.r_d_mod.md_dosage_id" s="md_dosage">
+                    </input-select>
+                </div>
+                <div class="small-3 column">
+                    <input-select
+                        title="Dose" ng-required="!$root.r_d_mod.md_dosage_id"
+                        error-text="Please select a dose type"
+                        ng-model="$root.r_d_mod.md_dose_type_id" s="md_dose_type">
+                    </input-select>
+                </div>
+                <div class="small-12">
+                    <input-text
+                        title="Instructions" no-error="true"
+                        ng-model="$root.r_d_mod.md_instructions">
+                    </input-text>
+                </div>
+                <div class="small-12">
+                    <input-checkbox
+                        title="Only show for pets checked in for daycare"
+                        ng-model="$root.r_d_mod.md_only_daycare">
+                    </input-checkbox>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+<div class="small-7 column">
+    <fieldset ng-show="$root.r_m_mod.type == 1">
+        <legend>Medications already scheduled</legend>
+        <h3 class="bg-gray">{{$root.client.first_name}} {{$root.client.last_name}} - {{$root.pet.pet_name}}</h3>
+        <table class="small-12">
+            <tr>
+                <td></td>
+                <td>M = Morning</td>
+                <td>A = Afternoon</td>
+                <td>E = Evening</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>D = Only for daycare</td>
+            </tr>
+        </table>
+        <table class="small-12">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>M</th>
+                    <th>A</th>
+                    <th>E</th>
+                    <th>Instructions</th>
+                    <th>Dose / Dosage</th>
+                    <th>Type</th>
+                    <th>Daily</th>
+                    <th>Date</th>
+                    <th>D</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="md in $root.pet.records_meds | array">
+                    <td>{{$root.meds[md.md_id].v}}</td>
+                    <td>{{((md.md_morning == 1) ? 'Y' : 'N')}}</td>
+                    <td>{{((md.md_afternoon == 1) ? 'Y' : 'N')}}</td>
+                    <td>{{((md.md_evening == 1) ? 'Y' : 'N')}}</td>
+                    <td>{{md.md_instructions || '-'}}</td>
+                    <td>{{$root.md_dose_type[md.md_dose_type_id].v}} {{$root.md_dosage[md.md_dosage_id].v}}</td>
+                    <td>{{$root.meds_type[md.md_type_id].v}}</td>
+                    <td>{{((md.md_everyday == 1) ? 'Y' : 'N')}}</td>
+                    <td>{{md.md_date || '-'}}</td>
+                    <td>{{((md.md_only_daycare == 1) ? 'Y' : 'N')}}</td>
+                    <td>
+                        <a ng-click="deleteMdRecords('meds', md.id)">
+                            <i class="fa fa-trash-o">&nbsp;</i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+    <fieldset ng-show="$root.r_d_mod.type == 2">
+        <legend>Diets already scheduled</legend>
+        <h3 class="bg-gray">{{$root.client.first_name}} {{$root.client.last_name}} - {{$root.pet.pet_name}}</h3>
+        <table class="small-12">
+            <tr>
+                <td></td>
+                <td>M = Morning</td>
+                <td>A = Afternoon</td>
+                <td>E = Evening</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>D = Only for daycare</td>
+            </tr>
+        </table>
+        <table class="small-12">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>M</th>
+                    <th>A</th>
+                    <th>E</th>
+                    <th>Instructions</th>
+                    <th>Dose / Dosage</th>
+                    <th>Type</th>
+                    <th>Daily</th>
+                    <th>Date</th>
+                    <th>D</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="md in $root.pet.records_diets | array">
+                    <td>{{diets[md.md_id].v}}</td>
+                    <td>{{((md.md_morning == 1) ? 'Y' : 'N')}}</td>
+                    <td>{{((md.md_afternoon == 1) ? 'Y' : 'N')}}</td>
+                    <td>{{((md.md_evening == 1) ? 'Y' : 'N')}}</td>
+                    <td>{{md.md_instructions || '-'}}</td>
+                    <td>{{$root.md_dose_type[md.md_dose_type_id].v}} {{$root.md_dosage[md.md_dosage_id].v}}</td>
+                    <td>{{$root.diets_type[md.md_type_id].v}}</td>
+                    <td>{{((md.md_everyday == 1) ? 'Y' : 'N')}}</td>
+                    <td>{{md.md_date || '1'}}</td>
+                    <td>{{((md.md_only_daycare == 1) ? 'Y' : 'N')}}</td>
+                    <td>
+                        <a ng-click="deleteMdRecords('diets', md.id)">
+                            <i class="fa fa-trash-o">&nbsp;</i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</div>

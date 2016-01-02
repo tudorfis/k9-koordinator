@@ -1,0 +1,142 @@
+<div id="MessagesCtrl" data-ng-controller="MessagesCtrl"
+     class="reveal-modal xlarge exclude" data-reveal>
+    <fieldset class="small-12">
+        <legend>
+            <i class="fa fa-inbox"></i> Messages
+        </legend>
+        <div class="small-6 column">
+            <h4 class="red-big">
+                <div class="th-img-35 left">
+                    <image-no-image
+                        t="identity" n="image_id" s="files" st="path"
+                        stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+                    </image-no-image>
+                </div>
+                <i>Employee:</i> <br />
+                <strong>{{$root.identity.last_name}}, {{$root.identity.first_name}} [{{$root.identity.username}}]</strong>
+            </h4>
+            <hr />
+            <div class="small-12 column">
+                <a class="button radius"
+                   ng-class="{'bg-dark-gray': current_msg == 'inbox'}"
+                   ng-click="setCurrentMsgList('inbox')">
+                    <i class="fa fa-arrow-down"></i> Inbox
+                </a>
+                <a class="button radius"
+                   ng-class="{'bg-dark-gray': current_msg == 'sent'}"
+                   ng-click="setCurrentMsgList('sent')">
+                    <i class="fa fa-arrow-up"></i> Sent
+                </a>
+                <a class="button radius"
+                   ng-class="{'bg-dark-gray': current_msg == 'deleted'}"
+                   ng-click="setCurrentMsgList('deleted')">
+                    <i class="fa fa-trash"></i> Trash
+                </a>
+                <div ng-hide="current_msg == 'deleted' || current_msg_list.length == 0">
+                    <hr />
+                    <a ng-click="checkUncheckAll(1)">
+                        <i class="fa fa-check"></i> Check all
+                    </a>
+                    <span>
+                        <i class="fa fa-arrows-h"></i>
+                    </span>
+                    <a ng-click="checkUncheckAll(0)">
+                        <i class="fa fa-undo"></i> Uncheck all
+                    </a>
+                    <a class="button tiny radius"
+                       style="margin-left: 30px;"
+                       ng-click="deleteCheckedMsg()">
+                        <i class="fa fa-trash"></i> Delete selected
+                    </a>
+                </div>
+                <div class="small-12" ng-hide="current_msg_list.length == 0">
+                    <hr />
+                    <div class="small-9 column">
+                        <div ng-include="'tpl/from-to-dates'"></div>
+                    </div>
+                    <div class="small-3 column">
+                        <input-select
+                            title="Limit to:" no-error="true" s="rnt(100)"
+                            ng-model="limit_to" ng-init="limit_to = 10">
+                        </input-select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="small-6 column">
+            <input-select
+                title="Send to employee" no-error="true"
+                line-value="- send to all employees -"
+                ng-model="message.inbox_user_id" s="users">
+            </input-select>
+            <input-textarea
+                title="Message" no-error="true"
+                ng-model="message.message" style="height: 150px;">
+            </input-textarea>
+            <fieldset class="small-9 right">
+                <label>Select message color</label>
+                <div ng-repeat="bg in ['#f28585', '#a6f285', '#f2c585', '#85b3f2', '#85e9f2', '#bb85f2', '']">
+                    <div class="rectangle left" style="background-color: {{bg}}; cursor: pointer;" ng-click="setColorHex(bg)"></div>
+                </div>
+                <div class="right">
+                    <a class="button tiny radius btn_msg"
+                       style="background-color: {{message.color_hex}} !important"
+                       ng-click="sendMsg()">
+                        <i class="fa fa-envelope"></i> Sent
+                    </a>
+                    <i class="fa fa-spinner fa-spin fa-2x al_msg" style="display: none;"></i>
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <table class="small-12"
+               ng-show="current_msg_list.length > 0">
+            <thead>
+                <tr ng-init="pr = 'date_created'; rv = true">
+                    <th></th>
+                    <th>Message</th>
+                    <th th-order title="Date" t="date_created"></th>
+                    <th th-order title="From:" t="sent_user_id" ng-show="current_msg == 'inbox' || current_msg == 'deleted'"></th>
+                    <th th-order title="To:" t="inbox_user_id" ng-show="current_msg == 'sent' || current_msg == 'deleted'"></th>
+                    <th ng-hide="current_msg == 'deleted'">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-click="setSelectedMsg(m)"
+                    ng-class="{'tr-actv': m.check}"
+                    ng-repeat="m in current_msg_list  | filterDates:d_dates | array | orderBy:pr:rv | limitTo:limit_to"
+                    style="background-color: {{m.color_hex}}; cursor: pointer;">
+                    <td>
+                       <div ng-show="current_msg != 'deleted'">
+                           <input-checkbox ng-model="m.check"></input-checkbox>
+                       </div>
+                    </td>
+                    <td class="small-6">
+                        <div ng-bind-html="m.message | textToHtml"></div>
+                    </td>
+                    <td>{{m.date_created}}</td>
+                    <td ng-show="current_msg == 'inbox' || current_msg == 'deleted'">
+                        <i class="fa fa-user"></i> {{users[m.sent_user_id].v}} <br />
+                        <i class="fa fa-phone"></i> {{users[m.sent_user_id].phone}} <br />
+                        <i class="fa fa-envelope"></i> {{users[m.sent_user_id].email}}
+                    </td>
+                    <td ng-show="current_msg == 'sent' || current_msg == 'deleted'">
+                        <i class="fa fa-user"></i> {{users[m.inbox_user_id].v}} <br />
+                        <i class="fa fa-phone"></i> {{users[m.inbox_user_id].phone}} <br />
+                        <i class="fa fa-envelope"></i> {{users[m.inbox_user_id].email}}
+                    </td>
+                    <td ng-hide="current_msg == 'deleted'">
+                        <i class="fa fa-trash fa-2x"
+                           style="cursor: pointer;"
+                           ng-click="deleteMsg(m)"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <fieldset class="bg-gray radius small-12" ng-show="current_msg_list.length == 0">
+            <h3 style="padding: 10px 15px; background-color: #fff;">* no {{current_msg}} messages</h3>
+        </fieldset>
+    </fieldset>
+    <a class="close-reveal-modal close-item"></a>
+</div>

@@ -1,0 +1,101 @@
+<fieldset>
+    <legend><i class="fa fa-folder-open"></i> Training class scheduler</legend>
+    <div class="small-7 column" style="border-right: 1px solid #ccc;">
+        <form form-submit hide-show-al-submit="true" submit-btn="true" submit-btn-text="Add"
+              t="ts" table="training_schedule" id="tsForm" data-abide="true">
+            <input-select
+                title="Select a group" ng-v="v" required="required"
+                ng-model="ts.tg_id" s="$root.training_groups">
+            </input-select>
+            <div class="small-6 column">
+                <input-text
+                    title="Date start"
+                    t="ts" n="date_in"
+                    class="datepicker" required="required"
+                    error-text="This field is required, only numeric values">
+                </input-text>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="Time in"
+                    t="ts" n="time_in" pattern="number"
+                    class="timepicker" required="required"
+                    error-text="This field is required, please enter this format 10:00">
+                </input-text>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="Date end"
+                    t="ts" n="date_out"
+                    class="datepicker" required="required"
+                    error-text="This field is required, only numeric values">
+                </input-text>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="Time out"
+                    t="ts" n="time_out" pattern="number"
+                    class="timepicker" required="required"
+                    error-text="This field is required, please enter this format 10:00">
+                </input-text>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <input-text
+                title="Time / Durations"
+                t="ts" n="time_duration" required="required"
+                class="timepicker" pattern="time_pattern"
+                error-text="Please add this format 10:30">
+            </input-text>
+            <div class="clearfix">&nbsp;</div>
+            <input-select
+                title="Select a trainer" ng-v="v" required="required"
+                ng-model="ts.t_id" s="$root.trainers">
+            </input-select>
+        </form>
+    </div>
+    <div class="small-5 column">
+        <fieldset>
+            <legend>
+                <i class="fa fa-anchor"></i> Usefull links
+            </legend>
+            <ul class="no-list-type">
+                <li>
+                    <content-link
+                        link="tbl/reservations/training/training-groups" title="Training groups & options"
+                        ui-sref="reservation_training_groups" icon-class="fa fa-asterisk">
+                    </content-link>
+                </li>
+                <li>
+                    <content-link
+                        link="crud/trainers" title="Trainers"
+                        ui-sref="trainers" icon-class="fa fa-asterisk">
+                    </content-link>
+                </li>
+            </ul>
+        </fieldset>
+    </div>
+    <hr />
+    <div class="small-12 column">
+        <div class="small-3 column">
+            <input-select
+                title="Select a class" ng-v="v" line-value="- all classes -"
+                ng-model="tg_id" s="$root.training_groups" no-error="true">
+            </input-select>
+        </div>
+        <div class="small-3 column">
+            <input-select
+                title="Select a trainer" ng-v="v" line-value="- all trainers -"
+                ng-model="t_id" s="$root.trainers" no-error="true">
+            </input-select>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-12">
+            <editable-table
+                ts="trainingSchedule"
+                filter=" | array | filter:{tg_id:(tg_id||''),t_id:(t_id||'')}"
+                with-delete="true" with-add="false" class="small-12"
+                empty-message="* No relationships defined">
+            </editable-table>
+        </div>
+    </div>
+</fieldset>

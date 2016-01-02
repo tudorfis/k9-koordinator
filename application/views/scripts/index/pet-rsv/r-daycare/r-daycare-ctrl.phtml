@@ -1,0 +1,20 @@
+<div id="rDaycareCtrl" ng-controller="rDaycareCtrl"
+     class="small-6 columns pet-rsv"
+     ng-show="$root.prd_selected == 'r_daycare'">
+
+    <a ng-click="$root.prd_selected = ''"
+       style="margin: 25px;"
+       class="close-item"
+       href="javascript:;"
+       title="Close">
+    </a>
+
+    <div id="rDaycareModal" class="reveal-modal xlarge exclude" data-reveal>
+        <?= $this->partial('index/pet-rsv/r-daycare/r-daycare-mod.phtml', array()) ?>
+        <a class="close-reveal-modal close-item"></a>
+    </div>
+
+    <div ng-controller="rDaycarePanel" ng-include="'tpl/r-panel'"
+         ng-init="do = 1; icon = 'fa fa-th-list'; title = 'Daycares'; name = 'daycare'; r_type = 'r_daycare'; modal = '#rDaycareModal';"></div>
+
+</div>

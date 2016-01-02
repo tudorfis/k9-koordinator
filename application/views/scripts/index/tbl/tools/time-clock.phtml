@@ -1,0 +1,31 @@
+<fieldset class="small-12 none-bg">
+    <legend><i class="fa fa-calendar"></i> Time clock</legend>
+    <div class="small-8 column">
+        <div class="small-9 column">
+            <div ng-include="'tpl/from-to-dates'"></div>
+        </div>
+        <div class="small-3 column">
+            <input-select
+                title="Limit to:" no-error="true" s="rnt(100)"
+                ng-model="limit_to" ng-init="limit_to = 10">
+            </input-select>
+        </div>
+    </div>
+    <div class="small-4 right column">
+        <div class="right" style="margin-right: 80px;">
+            <print-buttons></print-buttons>
+        </div>
+    </div>
+    <div class="small-6">
+        <input-select
+            title="Filter employee" no-error="true"
+            line-value="- all employees -"
+            ng-model="f_u" s="users">
+        </input-text>
+    </div>
+    <editable-table
+        ts="timeClock" add-btn-text="Add a New Time Clock Entry"
+        with-delete="true" with-add="true" delete-permanent="true" filtered-items="tokensArray"
+        class="small-12" empty-message="No time clock defined" filter="| filterDates:d_dates | array | filter:{user_id:(f_u || '')} | limitTo:limit_to">
+    </editable-table>
+</fieldset>

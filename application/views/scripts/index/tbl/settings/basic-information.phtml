@@ -1,0 +1,79 @@
+
+<div id="BasicInformationCtrl" data-ng-controller="BasicInformationCtrl">
+    <h3><i class="fi-info"> Basic Information</i></h3>
+    <form form-submit hide-show-al-submit="true" submit-btn="true" t="settings" table="settings" t-post="basic_information"
+          id="basicInformationForm" action="" method="post" enctype="multipart/form-data" data-abide="true">
+        <fieldset>
+            <div class="small-6 column">
+                <input-text
+                    title="Business Name" t="settings" n="business_name"
+                    class="" required="required" error-text="">
+                </input-text>
+                <input-text
+                    title="Address<br />Example: 1234 Main Street - MainVille, MV 123456"
+                    t="settings" n="business_address"
+                    class="" required="required" error-text="">
+                </input-text>
+                <input-text
+                    title="Address (using 2 lines) for Membership Cards<br />Example: 1234 Main Street"
+                    t="settings" n="business_address_memberships"
+                    class="" required="" error-text="">
+                </input-text>
+                <input-text
+                    title="2nd Line: MainVille, MV 123456"
+                    t="settings" n="business_address_membership_2"
+                    class="" required="" error-text="">
+                </input-text>
+                <div class="small-12">
+                    <label>Business ID</label>
+                    <div class="disabled_input">
+                        {{settings.business_id}}
+                    </div>
+                    <br />
+                    <p style="font-size: 10px; color: #999;">The K9 Bytes Business ID is used to submit tickets for technical support</p>
+                </div>
+            </div>
+            <div class="small-6 column">
+
+                <div ng-controller="basicInformationPhone" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#BasicInformationCtrl';
+                    i_class = 'fa fa-phone'; title = 'Main phone'; t = 'settings'; n = 'business_main_phone'; placeholder = 'Enter main phone';
+                    tel_format = 'phone_format_id'; pattern = 'phone_number'; required = 1;">
+                </div>
+                <div ng-controller="basicInformationCell" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#BasicInformationCtrl';
+                    i_class = 'fa fa-mobile'; title = 'Extra phone'; t = 'settings'; n = 'business_extra_phone'; placeholder = 'Enter extra phone number';
+                    tel_format = 'cell_format_id'; pattern = 'cell_number'; required = 0;">
+                </div>
+                <div ng-controller="basicInformationFax" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#BasicInformationCtrl';
+                    i_class = 'fa fa-fax'; title = 'Fax'; t = 'settings'; n = 'business_fax'; placeholder = 'Enter fax number';
+                    tel_format = 'fax_format_id'; pattern = 'fax_number'; required = 0;">
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <prefix i="fa fa-globe" pl="2" dl="10">
+                    <input-text
+                        title="Website"
+                        t="settings" n="business_website"
+                        class="" required="" error-text="">
+                    </input-text>
+                </prefix>
+                <prefix i="fa fa-envelope" pl="2" dl="10">
+                    <input-text
+                        title="Email"
+                        t="settings" n="business_email"
+                        class="" required="required" error-text="">
+                    </input-text>
+                </prefix>
+            </div>
+            <hr />
+            <div class="small-3 column">
+                <label>Report image</label>
+                <div class="th-img">
+                    <image-no-image
+                        t="settings" n="report_image_id" s="files" ajax="true"
+                        st="path" stt="path_thumb" fancybox="true" w="400" h="70">
+                    </image-no-image>
+                </div>
+                <p style="font-size: 10px; margin-top: 10px; color: #999;">NOTE: desired format width 400px x height 70px, different formats will crop image to this proportions</p>
+            </div>
+        </fieldset>
+    </form>
+</div>

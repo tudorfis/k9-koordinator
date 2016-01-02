@@ -1,0 +1,20 @@
+<div id="rTrainingCtrl" ng-controller="rTrainingCtrl"
+     class="small-6 columns pet-rsv"
+     ng-show="$root.prd_selected == 'r_training'">
+
+    <a ng-click="$root.prd_selected = ''"
+       style="margin: 25px;"
+       class="close-item"
+       href="javascript:;"
+       title="Close">
+    </a>
+
+    <div id="rTrainingModal" class="reveal-modal xlarge exclude" data-reveal>
+        <?= $this->partial('index/pet-rsv/r-training/r-training-mod.phtml', array()) ?>
+        <a class="close-reveal-modal close-item"></a>
+    </div>
+
+    <div ng-controller="rTrainingPanel" ng-include="'tpl/r-panel'"
+         ng-init="do = 1; icon = 'fa fa-list-alt'; title = 'Trainings'; name = 'training'; r_type = 'r_training'; modal = '#rTrainingModal';"></div>
+
+</div>

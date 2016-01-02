@@ -1,0 +1,405 @@
+<div id="PendingCtrl" data-ng-controller="PendingCtrl"
+     class="reveal-modal xlarge exclude" data-reveal>
+    <fieldset class="small-12">
+        <legend>
+            <i class="fa fa-shopping-cart"></i> Pending bills
+        </legend>
+        <div ng-show="client.pp.pending.length > 0">
+            <h5>POS pending bills</h5>
+            <div class="small-12 column">
+                <table class="small-12">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Last name</th>
+                        <th>First name</th>
+                        <th>Required</th>
+                        <th>Paid</th>
+                        <th>Unpaid</th>
+                        <th>Service</th>
+                        <th>Home</th>
+                        <th>Email</th>
+                        <th>Date created</th>
+                        <th>Created by</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="cursor: pointer;"
+                        ng-click="setPp(pp)"
+                        ng-class="{'tr-actv': (pp_selected.id == pp.id)}"
+                        ng-repeat="pp in $root.client.pp.pending | filterDates:d_dates | array">
+                        <td>
+                            <i ng-show="pp_selected.id == pp.id"
+                               class="fa fa-arrow-circle-right"></i>
+                        </td>
+                        <td>{{clients[client.id].last_name}}</td>
+                        <td>{{clients[client.id].first_name}}</td>
+                        <td>{{pp.required}} $</td>
+                        <td>+ {{pp.paid}} $</td>
+                        <td>- {{pp.unpaid}} $</td>
+                        <td>POS</td>
+                        <td>{{clients[client.id].preffered_phone || '-'}}</td>
+                        <td>{{clients[client.id].email || '-'}}</td>
+                        <td>{{pp.date_created}}</td>
+                        <td>{{users[pp.created_user_id].last_name}}, {{users[pp.created_user_id].first_name}}</td>
+                        <td>{{$root.payment_status[pp.payment_status_id].v}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div ng-show="client.bp.pending.length > 0">
+            <h5>Boarding pending bills</h5>
+            <div class="small-12 column">
+                <table class="small-12">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Last name</th>
+                        <th>First name</th>
+                        <th>Required</th>
+                        <th>Paid</th>
+                        <th>Unpaid</th>
+                        <th>Service</th>
+                        <th>Home</th>
+                        <th>Email</th>
+                        <th>Date created</th>
+                        <th>Created by</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="cursor: pointer;"
+                        ng-click="setBp(bp)"
+                        ng-class="{'tr-actv': (bp_selected.id == bp.id)}"
+                        ng-repeat="bp in $root.client.bp.pending | filterDates:d_dates | array">
+                        <td>
+                            <i ng-show="bp_selected.id == bp.id"
+                               class="fa fa-arrow-circle-right"></i>
+                        </td>
+                        <td>{{clients[client.id].last_name}}</td>
+                        <td>{{clients[client.id].first_name}}</td>
+                        <td>{{bp.required}} $</td>
+                        <td>+ {{bp.paid}} $</td>
+                        <td>- {{bp.unpaid}} $</td>
+                        <td>Boarding</td>
+                        <td>{{clients[client.id].preffered_phone || '-'}}</td>
+                        <td>{{clients[client.id].email || '-'}}</td>
+                        <td>{{bp.date_created}}</td>
+                        <td>{{users[bp.created_user_id].last_name}}, {{users[bp.created_user_id].first_name}}</td>
+                        <td>{{$root.payment_status[bp.payment_status_id].v}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div ng-show="client.dp.pending.length > 0">
+            <h5>Daycare pending bills</h5>
+            <div class="small-12 column">
+                <table class="small-12">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Last name</th>
+                        <th>First name</th>
+                        <th>Required</th>
+                        <th>Paid</th>
+                        <th>Unpaid</th>
+                        <th>Service</th>
+                        <th>Home</th>
+                        <th>Email</th>
+                        <th>Date created</th>
+                        <th>Created by</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="cursor: pointer;"
+                        ng-click="setDp(dp)"
+                        ng-class="{'tr-actv': (dp_selected.id == dp.id)}"
+                        ng-repeat="dp in $root.client.dp.pending | filterDates:d_dates | array">
+                        <td>
+                            <i ng-show="dp_selected.id == dp.id"
+                               class="fa fa-arrow-circle-right"></i>
+                        </td>
+                        <td>{{clients[client.id].last_name}}</td>
+                        <td>{{clients[client.id].first_name}}</td>
+                        <td>{{dp.required}} $</td>
+                        <td>+ {{dp.paid}} $</td>
+                        <td>- {{dp.unpaid}} $</td>
+                        <td>Daycare</td>
+                        <td>{{clients[client.id].preffered_phone || '-'}}</td>
+                        <td>{{clients[client.id].email || '-'}}</td>
+                        <td>{{dp.date_created}}</td>
+                        <td>{{users[dp.created_user_id].last_name}}, {{users[dp.created_user_id].first_name}}</td>
+                        <td>{{$root.payment_status[dp.payment_status_id].v}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div ng-show="client.gp.pending.length > 0">
+            <h5>Grooming pending bills</h5>
+            <div class="small-12 column">
+                <table class="small-12">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Last name</th>
+                        <th>First name</th>
+                        <th>Required</th>
+                        <th>Paid</th>
+                        <th>Unpaid</th>
+                        <th>Service</th>
+                        <th>Home</th>
+                        <th>Email</th>
+                        <th>Date created</th>
+                        <th>Created by</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="cursor: pointer;"
+                        ng-click="setGp(gp)"
+                        ng-class="{'tr-actv': (gp_selected.id == gp.id)}"
+                        ng-repeat="gp in $root.client.gp.pending | filterDates:d_dates | array">
+                        <td>
+                            <i ng-show="gp_selected.id == gp.id"
+                               class="fa fa-arrow-circle-right"></i>
+                        </td>
+                        <td>{{clients[client.id].last_name}}</td>
+                        <td>{{clients[client.id].first_name}}</td>
+                        <td>{{gp.required}} $</td>
+                        <td>+ {{gp.paid}} $</td>
+                        <td>- {{gp.unpaid}} $</td>
+                        <td>Grooming</td>
+                        <td>{{clients[client.id].preffered_phone || '-'}}</td>
+                        <td>{{clients[client.id].email || '-'}}</td>
+                        <td>{{gp.date_created}}</td>
+                        <td>{{users[gp.created_user_id].last_name}}, {{users[gp.created_user_id].first_name}}</td>
+                        <td>{{$root.payment_status[gp.payment_status_id].v}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div ng-show="client.tp.pending.length > 0">
+            <h5>Training pending bills</h5>
+            <div class="small-12 column">
+                <table class="small-12">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Last name</th>
+                        <th>First name</th>
+                        <th>Required</th>
+                        <th>Paid</th>
+                        <th>Unpaid</th>
+                        <th>Service</th>
+                        <th>Home</th>
+                        <th>Email</th>
+                        <th>Date created</th>
+                        <th>Created by</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="cursor: pointer;"
+                            ng-click="setTp(tp)"
+                            ng-class="{'tr-actv': (tp_selected.id == tp.id)}"
+                            ng-repeat="tp in $root.client.tp.pending | filterDates:d_dates | array">
+                            <td>
+                                <i ng-show="tp_selected.id == tp.id"
+                                   class="fa fa-arrow-circle-right"></i>
+                            </td>
+                            <td>{{clients[client.id].last_name}}</td>
+                            <td>{{clients[client.id].first_name}}</td>
+                            <td>{{tp.required}} $</td>
+                            <td>+ {{tp.paid}} $</td>
+                            <td>- {{tp.unpaid}} $</td>
+                            <td>Boarding</td>
+                            <td>{{clients[client.id].preffered_phone || '-'}}</td>
+                            <td>{{clients[client.id].email || '-'}}</td>
+                            <td>{{tp.date_created}}</td>
+                            <td>{{users[tp.created_user_id].last_name}}, {{users[tp.created_user_id].first_name}}</td>
+                            <td>{{$root.payment_status[tp.payment_status_id].v}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-6 column">
+            <fieldset>
+                <legend>Chose dates to be used</legend>
+                <div ng-include="'tpl/from-to-dates'"></div>
+            </fieldset>
+            <table class="small-12">
+                <tr>
+                    <td><b>No. of pending bills</b></td>
+                    <td>{{$root.client.pp.pending.length + $root.client.bp.pending.length + $root.client.dp.pending.length + $root.client.gp.pending.length + $root.client.tp.pending.length}}</td>
+                </tr>
+                <tr>
+                    <td><b>Total amount: </b></td>
+                    <td>- {{total_amount}} $</td>
+                </tr>
+                <tr>
+                    <td><b>Oldest debt: </b></td>
+                    <td>{{oldest_debt}}</td>
+                </tr>
+                <tr>
+                    <td><b>Most recent: </b></td>
+                    <td>{{most_recent}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="small-6 column">
+            <fieldset>
+                <legend>
+                    <i class="fa fa-dollar"></i> Make payment
+                </legend>
+                <div ng-show="!(pp_selected | isEmpty) || !(bp_selected | isEmpty) || !(dp_selected | isEmpty) || !(gp_selected | isEmpty) || !(tp_selected | isEmpty)">
+                    <table class="small-7 column">
+                        <tr>
+                            <td><h4 class="red-big">TOTAL</h4></td>
+                            <td><h4 class="red-big">{{(required || 0) | number:2}} $</h4></td>
+                        </tr>
+                        <tr>
+                            <td>Payment type</td>
+                            <td>
+                                <input-select
+                                    title="" no-error="true" line-value="- select payment type -"
+                                    t="o" n="payment_type_id" s="payment_types">
+                                </input-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Payment amount</td>
+                            <td>
+                                <postfix i="fa fa-dollar" pl="4" dl="8" wl="true">
+                                    <input-text
+                                        no-label="true" no-error="true"
+                                        type="number" ng-model="paid"
+                                        placeholder="Enter amount to process ... ">
+                                    </input-text>
+                                </postfix>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Process payment</td>
+                            <td>
+                                <a class="button tiny radius small-12 submit"
+                                   ng-click="processPosPayment(1, '#PendingCtrl')"
+                                   ng-hide="pp_selected | isEmpty"
+                                   style="margin: 3px 0;">
+                                    <i class="fi-pricetag-multiple medium"></i> Process pos payment
+                                </a>
+                                <a class="button tiny radius small-12 submit"
+                                   ng-click="processBoardingPayment()"
+                                   ng-hide="bp_selected | isEmpty"
+                                   style="margin: 3px 0;">
+                                    <i class="fi-pricetag-multiple medium"></i> Process boarding payment
+                                </a>
+                                <a class="button tiny radius small-12 submit"
+                                   ng-click="processDaycarePayment()"
+                                   ng-hide="dp_selected | isEmpty"
+                                   style="margin: 3px 0;">
+                                    <i class="fi-pricetag-multiple medium"></i> Process daycare payment
+                                </a>
+                                <a class="button tiny radius small-12 submit"
+                                   ng-click="processGroomsPayment()"
+                                   ng-hide="gp_selected | isEmpty"
+                                   style="margin: 3px 0;">
+                                    <i class="fi-pricetag-multiple medium"></i> Process grooms payment
+                                </a>
+                                <a class="button tiny radius small-12 submit"
+                                   ng-click="processTrainingPayment()"
+                                   ng-hide="tp_selected | isEmpty"
+                                   style="margin: 3px 0;">
+                                    <i class="fi-pricetag-multiple medium"></i> Process training payment
+                                </a>
+                                <img ng-src="{{'img/ajax.gif' | baseUrl}}" class="al" style="display: none;" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Use money from deposit</td>
+                            <td>
+                                <input-checkbox ng-model="o.use_deposit"></input-checkbox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Client deposit</td>
+                            <td>{{client.deposits.total | number:2}} $</td>
+                        </tr>
+                        <tr>
+                            <td>Change</td>
+                            <td>{{(change || 0) | number:2}} $</td>
+                        </tr>
+                        <tr ng-class="{'y-active': required != unpaid}">
+                            <td>Unpaid</td>
+                            <td>{{(unpaid || 0) | number:2}} $</td>
+                        </tr>
+                    </table>
+                    <div class="small-5 column">
+                        <input-select
+                            no-label="true" no-error="true" s="$root.lang_keys"
+                            ng-model="o.language" ng-id="lang" ng-v="text">
+                        </input-select>
+                        <input-radio
+                            title='Show details <i class="fa fa-laptop"></i>'
+                            placeholder="..." t="o" n="print_type" v="screen">
+                        </input-radio>
+                        <input-radio
+                            title='Print to screen <i class="fa fa-print"></i>'
+                            placeholder="..." t="o" n="print_type" v="print">
+                        </input-radio>
+                        <input-radio
+                            title='Download a copy <i class="fa fa-file-o"></i>'
+                            placeholder="..." t="o" n="print_type" v="download">
+                        </input-radio>
+                        <hr />
+                        <a class="tiny button radius submit"
+                           ng-hide="pp_selected | isEmpty"
+                           ng-click="(o.id ? printPosBill('#PendingCtrl') : void(0))"
+                           ng-disabled="!o.id">
+                            <i class="fa fa-print"></i> Print pos bill
+                        </a>
+                        <a class="tiny button radius submit"
+                           ng-hide="bp_selected | isEmpty"
+                           ng-click="(o.id ? printBoardingBill() : void(0))"
+                           ng-disabled="!o.id">
+                            <i class="fa fa-print"></i> Print boarding bill
+                        </a>
+                        <a class="tiny button radius submit"
+                           ng-hide="dp_selected | isEmpty"
+                           ng-click="(o.id ? printDaycareBill() : void(0))"
+                           ng-disabled="!o.id">
+                            <i class="fa fa-print"></i> Print daycare bill
+                        </a>
+                        <a class="tiny button radius submit"
+                           ng-hide="gp_selected | isEmpty"
+                           ng-click="(o.id ? printGroomsBill() : void(0))"
+                           ng-disabled="!o.id">
+                            <i class="fa fa-print"></i> Print grooms bill
+                        </a>
+                        <a class="tiny button radius submit"
+                           ng-hide="tp_selected | isEmpty"
+                           ng-click="(o.id ? printTrainingBill() : void(0))"
+                           ng-disabled="!o.id">
+                            <i class="fa fa-print"></i> Print training bill
+                        </a>
+                        <img ng-src="{{'img/ajax.gif' | baseUrl}}" class="al" style="display: none;" />
+                    </div>
+                </div>
+                <div ng-hide="!(pp_selected | isEmpty) || !(bp_selected | isEmpty) || !(dp_selected | isEmpty) || !(gp_selected | isEmpty) || !(tp_selected | isEmpty)">
+                    <h5>* Please select a pending bill to make payment</h5>
+                </div>
+            </fieldset>
+        </div>
+    </fieldset>
+    <a class="close-reveal-modal close-item"></a>
+</div>

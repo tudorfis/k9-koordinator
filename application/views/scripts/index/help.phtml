@@ -1,0 +1,1509 @@
+<div ng-controller="HelpCtrl" id="HelpCtrl" class="small-12 columns">
+    <div style="position: fixed; top: 70px; width: 20%;  height: 70%; overflow-y: auto;">
+        <fieldset>
+            <legend>Documentation</legend>
+            <div>
+                <p style="font-size: 12px; color: #666;"><i class="fa fa-check-square-o">&nbsp;</i> You can also search on page using <b>CTRL+F</b></p>
+                <input-text
+                    title="Search documentation" class="clearable"
+                    ng-model="help_search" no-error="true">
+                </input-text>
+            </div>
+            <ul class="no-list-type help-menu">
+                <li ng-repeat="o in help_options | filter:help_search">
+                    <a href="#/help/#{{o.id}}">{{o.value}}</a>
+                </li>
+            </ul>
+            <hr />
+            <p style="font-size: 10px; color: #666;">- settings with asterix (*) are optional, not required</p>
+        </fieldset>
+    </div>
+
+    <div class="small-9 small-offset-3 column">
+        <p>
+            The K9 Koordinator is a complete management system for pet resorts (boarding kennels), pet daycare centers, pet sitters, dog walkers,
+            grooming shops, and mobile groomers. The K9 Koordinator was designed to efficiently and easily manage scheduling, clients, pet information,
+            services, and retail information.
+        </p>
+        <div id="introduction">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>1. Introduction</h4>
+            <hr />
+            <p>
+                Welcome to the K9 Koordinator pet care management program. Using this software will allow
+                you to perform many routine tasks quickly and easily, making more effective use of your valuable time.
+                Its straightforward options make it simple to use and you will be up and running in no time!
+            </p>
+            <h4>Before you start</h4>
+            <p>1.1. Check monitor displays and make sure they are set to at least the minimum supported display resolution of 1024 x 768 pixels. To do this open up control panel and hit the display button.</p>
+            <p>1.2. To take advantage of email and text-message capabilities Microsoft Outlook or later must be installed and configured on each computer. Outlook is properly configured if able to send and receive emails.
+                 Instructions on how to install Microsoft Outlook are available later in this guide, at this point you just want to make sure the software is available in your browsers computer.</p>
+            <p>1.3. All other system and hardware requirements: </p>
+            <ul class="no-list-type">
+                <li>- not dependable on operating system, works on  Windows, Mac or Linux</li>
+                <li>- required Mozilla Firefox or Google Chrome browser installed, on Chrome it runs faster</li>
+                <li>- compatible on any tablet device as well on any PC computer</li>
+                <li>- dosen't require free space on harddrive, all the data is stored on servers </li>
+                <li>- 1 Gb Ram Minimum, 2 Gb Reccomended. for smooth navigation</li>
+                <li>- minimum display resolution - 1024x768, works excelent on 1920x1080</li>
+                <li>- no cdrom required, no installations required</li>
+                <li>- required for reports "Adobe Reader" or any sort of *.pdf reader</li>
+                <li>- compatible with lase, inkjet or most thermal receipt printers with the condition of these to be installed</li>
+            </ul>
+            <p>
+                * This user’s guide is written so you follow steps in order. Just start at the beginning and continue until you are all done.
+                  We understand the setup process is long. However, completing the setup entirely and correctly will also setup you
+                  and your business for success.
+            </p>
+        </div>
+        <div id="login">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>2. Selecting kennel and login for first time</h4>
+            <hr />
+            <p>2.1. Open K9 Koordinator by going to <a href="http://54.72.97.34/k9" target="_blank">http://54.72.97.34/k9</a></p>
+            <p>2.2. Select kennel on which you wish to log in, if required new kennel please make a request to the technical staff  <br /><br />
+                <img ng-src="{{'img_help/help.2.1.png' | baseUrl}}" /></p>
+            <p>2.3. Log in using your own credentials,
+                if first time on a kennel use the following: <br /><br />
+                username: "admin admin [admin]" <br />
+                password: "123456" <br />
+                <img ng-src="{{'img_help/help.2.2.png' | baseUrl}}" />
+            </p>
+            <p> 2.4. Access "My Account", from top menu, from here you can set profile picture, first name, second name, email address.
+                For security reasons it is recommended to change the default password. <br />
+                <img ng-src="{{'img_help/help.2.3.png' | baseUrl}}" />
+            </p>
+            <p> 2.5. Also you can select different kennel or logout of the current one by clicking the top links <br /><br />
+                <img ng-src="{{'img_help/help.2.4.png' | baseUrl}}" />
+            </p>
+        </div>
+        <div id="general-settings">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>3. General settings</h4>
+            <hr />
+            <p>
+                3.1. This menu item is for settings up general settings, this settings is optional by selecting from uppermenu <br /><br />
+                <img ng-src="{{'img_help/help.3.1.png' | baseUrl}}" />
+            </p>
+            <p>3.2. Select desired kennel image (if any) from computer, or if on tablet by taking a picture.</p>
+            <p>3.3. Customize kennel look by checking colours as "topbar", "sidebar", "buttons", "hover over buttons"</p>
+            <p>3.5. After saving click on the gray refresh button for changes to take effect, and all done here</p>
+            <p>
+                3.4. Site title, alt title, default values for "language" (en - english), and default payment type (CA - cash) <br /><br />
+                <img ng-src="{{'img_help/help.3.2.png' | baseUrl}}" />
+            </p>
+        </div>
+        <div id="basic-information">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>4. Basic information</h4>
+            <hr />
+            <p>4.1. Enter all the required informations which includes "name", "address", "main phone", "email"</p>
+            <p>4.2. Upload report image, which will be the kennel logo or cover picture that will be display / printed on the reports (optional)</p>
+            <p>4.3. Note that the bussiness ID is given by our technical team and is used for any tickets, or problems regarding the software</p>
+            <br />
+            <img ng-src="{{'img_help/help.4.1.png' | baseUrl}}" />
+        </div>
+        <div id="staff-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>5. Employees, staff setup</h4>
+            <hr />
+            <p>5.1. Go on uppermenu to "Options" -> "Employees" -> "Staff"</p>
+            <p>5.2. Fill in the blanks for all necessary information such as name, phone, address, etc.
+                There is no need to format the data entry since the program will automatically do so for all the text that is being entered.</p>
+            <p>5.3. <strong>Deleting Employees (Strongly Not Recommended)</strong> We strongly recommend setting staff members to inactive
+                instead of deleting them. Inactive employees do not show in employee selection tools and screens, but complete records are kept.
+                In the history record for each client and each pet you will find all of their appointments and visits to your facility saved
+                including the name of the employee that made the reservation, checked the pet in, groomed the pet and so on.
+                Deleting an employee name will leave holes in many records. If recently entered and not satisfied with it you can still
+                delete by clicking the trash icon on the right</p>
+            <p>5.5. <strong>Inactivating Employees (Strongly Recommended)</strong>, go to "Edit" button on employee and select status to "inactive",
+                the employee will be hidden from all settings in software, but its records will remain. Its just set for currently out of use</p>
+            <p>5.6. Also you can set the role of the employee, "administrator", "manager", "receptionist" etc.</p>
+            <br />
+            <img ng-src="{{'img_help/help.5.1.png' | baseUrl}}" />
+        </div>
+        <div id="groomers-trainers-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>6. Groomers / trainers setup</h4>
+            <hr />
+            <p>6.1. Go on uppermenu to "Options" -> "Employees" -> "Groomers" / "Trainers"</p>
+            <p>6.2. Here you can add / edit new groomers / traienrs, set their personal date, their picture,
+                their availability to work (schedule) and daily limit (nr. of hours)</p>
+            <p>* Any employees that receive Grooming Commissions or have baths or haircuts scheduled for them by name
+                 need to be entered as Groomers. They are entered this way so the program can schedule haircuts and baths
+                 for them by name. This will also allow them to receive grooming commissions. We realize that these groomers
+                 are also a part of the staff and the program will automatically recreate them for you in the staff section.</p>
+            <p>* When a groomer is created an employee profile is also automatically created. There is no need to add a groomer
+                also as a staff member, since new groomers will automatically be also added as staff members by the program.</p>
+            <br />
+            <img ng-src="{{'img_help/help.6.1.png' | baseUrl}}" />
+        </div>
+        <div id="security-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>7. Security setup</h4>
+            <hr />
+            <p>* <strong>Single user or owner-operated businesses</strong> <br />
+                Single users or owner-operated businesses without other employees often don’t need the activation of the security system.
+                * If you have 1 or 2 employees (small business) you are not classified as a single user or Owner-operated business.
+                If you have at least one employee, you need to configure the security setting properly. Configuring security initially,
+                allows your security to scale correctly as your business grows.
+            </p>
+            <p>7.1. <strong>Security Levels</strong> <br /> Go to "Options" -> "Settings" -> "Security" -> "Security levels" <br />
+                <br />
+                From here you cand "Select" a role to set its security levels, you can add a new role to setup its security levels
+                delete a role, "check" / "uncheck" all from a category, and save the levels. Its pretty straightforwarded, just be carefull
+                on which roles you give access, also you have red / green tips on left, check bellow image
+                <br /> <br />
+                In the initial configuration of the security, do not change the security level for 'Administrator / Owner'
+                Doing so prevents you from being locked accidentally out of certain features of the program.
+                Once you have used the software for a week or so, and you have a good grasp on what security
+                policies you wish to use, then you can safely change the access to 'Administrator / Owner' if you wish.
+                <br />
+                Default password for "Owner" is "secret"
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.7.1.png' | baseUrl}}" alt="" />
+            <p>7.2. <strong>Security Center</strong> <br /> Go to "Options" -> "Settings" -> "Security" -> "Security center" <br />
+                <br />
+                Here you can select an employee and set its rightfull role / level. </p>
+            <br />
+            <img ng-src="{{'img_help/help.7.2.png' | baseUrl}}" alt="" />
+            <p>7.3 <strong>Password management</strong> <br /> Go to "Options" -> Settings" -> "Security" -> "Password management" <br />
+                <br />
+                Here you can enter new password for any select user (employee) <br />
+                * When initially configuring your program or adding new employees, you can use
+                temporarily a simple password like 1234. Then, instruct the employee to change
+                his password when they log in for the first time.
+            </p
+            <br />
+            <img ng-src="{{'img_help/help.7.3.png' | baseUrl}}" alt="" />
+        </div>
+        <div id="general-features">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>8. General features</h4>
+            <hr />
+            <p> 8.1. Go to "Options" -> "Settings" -> "General features" <br />
+                From here you set / unset desired features to use on kennel. </p>
+            <p> 8.2. Note: If some features in this screen are not mentioned they
+                will be configured in a different part of the set up process. </p> <br />
+            <img ng-src="{{'img_help/help.8.1.png' | baseUrl}}" alt="" />
+        </div>
+        <div id="grooming-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>9. Grooming setup</h4>
+            <hr />
+            <p>
+                There are two basic types of grooming in the application: Baths and Haircuts.
+                These names can be changed in the set up. Within each of these types you can configure an unlimited number
+                of sub-types, such as good shape, small dog, etc. <br /><br />
+                <h5><strong>Grooming general</strong></h5>
+                9.1.  Go to "Options" -> "Reservation" -> "Reservation options" -> "Grooming" -> "General"
+            </p>
+            <hr />
+            <p>9.1.1 <strong>Grooming options</strong> <br /><br />
+                * To print the recommended next grooming appointment date in invoices, check the option ‘Recommended Next Groom in Use.(Appears in Bill)’
+                For example, if a pet was groomed on the first of November and the system is set up to recommend every 4 weeks, the invoice will have a
+                recommended next groom date for the first of December. <br />
+                <br />
+                * The Recommended Next Groom in Use has a selectable option for how many weeks between the next grooming. <br />
+                <br />
+                * Define the groomer limit option. If a groomer will be scheduled in a day depending on the number of pets,
+                  select the option ‘Groomer Limit as number of pets.' If a groomer will be scheduled in a day depending
+                  on the number of grooming hours they can perform, select the option ‘Groomer Limit as hours.’ <br />
+                <br />
+                * Define ‘Base Type 1’ and ‘Base Type 2’ grooming types. We recommend using ‘Bath’ and ‘Hair Cut’
+                    for type’s 1 and 2 respectively; however, the two main grooming types can be labeled as desired.
+                    In this set up guide, we will refer to ‘Base 1’ and ‘Base 2’ as ‘Baths’ and ‘Hair Cuts’ for simplicity.
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.9.1.png' | baseUrl}}" alt="" />
+            <hr />
+            <p>9.1.2 <strong>Groomer priority by breed</strong> <br /><br />
+                Groomer Priority by Breed allows you to schedule new pets to a groomer that specializes in that breed.
+                Select a groomer and then select a breed and assign the priority of 1. New pets and pets not assigned
+                a ‘preferred groomer’ of that breed will automatically be assigned to that groomer if she is available.
+                You can choose a different groomer within the program.
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.9.2.png' | baseUrl}}" alt="" />
+            <hr />
+            <p>9.1.3 <strong>Pet breed setup</strong> <br /><br />
+                * you specify in hours and 15 minute increments the amount of time to be allowed for a bath or a haircut.
+                Use the set all baths and set all haircut buttons to apply one time to all breeds.
+                This should be an average amount of time that applies to many breeds.
+                To modify the time for specific breeds use the search breed window
+                to find the breed and change the amount of time needed to groom that breed.
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.9.3.png' | baseUrl}}" alt="" />
+            <br />
+            <hr />
+                <h5><strong>Grooming rates</strong></h5>
+            <p>
+                9.2.  Go to "Options" -> "Reservation" -> "Reservation options" -> "Grooming" -> "Rates"
+            </p>
+            <p>
+                9.2.1. <strong> Hourly rates</strong>
+            </p>
+            <p>
+                9.2.1.1. If you want the system to automatically assign a rate to each grooming reservation, check the option
+                  ‘In Use (Suggests automatically base price for grooming reservations).’ If not checked the grooming
+                  price will initially be set to 0. The main advantage of NOT using this feature is that if a grooming
+                  price is set up with a 0.00 rate, the system will alert you when checking out that there is no price
+                for that groom. Otherwise, if a rate was already pre-assigned by default the system will not produce any
+                alerts since a price is already entered. Clearly, not all Poodles are the same, so configuring a single
+                price for the Poodles can lead to incorrect pricing. When this feature is active the price is set to
+                the ‘Grooming work hour rate’ multiplied by the number configured for each breed
+                under ‘Setup,’ ‘Basic Services,’ then ‘Grooming,’ and ‘General.’
+            </p>
+            <p>
+                9.2.1.2. We highly recommend the use of the option ‘Use the last non-zero base price as default price.’
+                This option can (or not) be used in combination with the option for automatically pricing explained above.
+                With this option the price entered for a pet will be carried over to future appointments after they are
+                initially configured. Different prices are memorized for Baths and Hair Cuts, and different ‘Grooming Type Modifiers.’
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.9.4.png' | baseUrl}}" alt="" />
+            <br />
+            <p>
+                9.2.2. <strong>Grooming type modifiers</strong>
+            </p>
+            <p>
+                * ‘Grooming Type Modifiers’ are sub-categories of Baths and Hair Cuts. Let’s take for example, the ‘Bad Shape’ modifier.
+                At the time of reservations, the user can select the reservation to be a ‘Bath,’ a ‘Hair Cut,’ a ‘Bad Shape Bath,’ or a ‘Bad Shape Bath.’
+                If using the last non-zero grooming price options, prices for each grooming modifier will be memorized separately.
+                Each grooming modifier when selected can adjust the price automatically if the ‘Change Price’ is set to ‘Y.’
+                The price adjustment will be calculated by multiplying the ‘Multiplier’ value to the default price.
+            </p>
+            <p>
+                NOTES: <br />
+                <i class="fa fa-check">&nbsp;</i> Most business DO NOT use automatic pricing but DO use the last non-zero price options.<br />
+                <i class="fa fa-check">&nbsp;</i> We recommend starting with a simple pricing strategy, and as you get more proficient using the software to take advantage of automation and grooming modifiers.<br />
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.9.5.png' | baseUrl}}" alt="" />
+            <br />
+            <hr />
+            <h5><strong>Grooming services</strong></h5>
+            <p>
+                9.3.  Go to "Options" -> "Reservation" -> "Reservation options" -> "Grooming" -> "Services"
+            </p>
+            <p>
+                <i class="fa fa-check">&nbsp;</i>  Summary: ‘Grooming Services’ are add-ons that can be added to a grooming reservation or at any
+                            time during the grooming process. ‘Grooming Services’ can have an additional fee that will be added to the base grooming price
+                            if desired. The service fee can be configured depending on the pet’s size. For example, a ‘Flee Treatment’ service can be $15
+                            for ‘Small Dogs’ and $20 for ‘Large Dogs.’ A breakdown of services will be itemized on the client’s bill so including services
+                            that you provide free of charge reminds them of all the work you did on their pet.<br />
+                <i class="fa fa-check">&nbsp;</i> Who can skip this step? Nobody. Even business that do not have any additional
+                                            grooming services will have to turn off all default services that will not be used.<br />
+            </p>
+            <p>9.3.1. For the ‘Select type of grooming,’ choose ‘Bath’ or ‘Hair Cut.’</p>
+            <p>9.3.2. Enter the service name and price for each pet’s size. If the service is the same price regardless of the
+                pet’s size enter the same price in each size column. Make sure the ‘In Use’ column its checked.
+                If a service is not needed, simply uncheck the ‘In Use’ column.
+                There are a total of 16 different spaces to enter services. The 16 spaces appear in four columns from left
+                to right with four in each column. You may overwrite those already there and group similar services together
+                or those most often used at the top or in one column.</p>
+            <p>
+                NOTES: <br />
+                <i class="fa fa-check">&nbsp;</i> When scheduling a groom, it will display the services, where you can check mark those you
+                                            choose and it will automatically update the price according to what you have set up for that service, i.e.
+                                            it will add the service price to the grooming base price. <br />
+                <i class="fa fa-check">&nbsp;</i> Don’t leave any columns blank. If a service is not needed, just uncheck the ‘In Use’ column. <br />
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.9.6.png' | baseUrl}}" alt="" />
+            <br /><br /><br />
+            <p>
+                9.4. <strong>Grooming commissions</strong> <br />
+                Go to "Options" -> "Settings" -> "Commissions"
+            </p>
+            <p>
+                * Summary: in this step all groomer commissions will be configured. Each groomer can have a different
+                percentage commission as well as additional bonuses depending on their performance.
+                Commissions are fully automatic; you don’t have to do anything except for the initial
+                set up. When paying commissions, there is a report available called ‘Grooming Commissions’
+                that can be ran between any two dates. <br />
+                * Who can skip this step? Single groomers or businesses that do not pay grooming commissions.
+            </p>
+            <p>
+                9.4.1. Under ‘Grooming Commissions’ use the drop down box to select the groomer. Then write the percentage
+                commission in that space. If that groomer is not entitled to commissions do not leave the number blank, put 0 (zero) in it.
+            </p>
+            <p>
+                9.4.2.  If you offer an increased % or $ bonus for grooming amount performance over any selected period of time
+                continue on and complete the remainder of the ‘Grooming Commissions’ box by selecting the dollar level, the modifier
+                as a % or $, and the amount. If this is not needed click on the check marks to remove the defaults.
+            </p>
+            <p>
+                <i class="fa fa-check">&nbsp;</i>
+                To search for commissions open up reports, click all reports,
+                check commissions under the grooming section and hit Open Reports.
+            </p>
+            <img ng-src="{{'img_help/help.9.7.png' | baseUrl}}" alt="" />
+        </div>
+        <div id="diets-meds-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>10. Diets and medications setup</h4>
+            <hr />
+            <p>
+                * Summary: in this step the diets and medications system is configured, including setup of charges and inventory. <br />
+                * Who can skip this step? Businesses that do not charge or track diets and medications. <br />
+            </p>
+            <p>10.1 Go to "Options" -> "Reservation" -> "Reservation meds & diets"</p>
+            <p>10.2 Select "medications" or "diets" to add / edit / delete. Also remember to set a price for it</p>
+            <p>10.3 You can also find medications / diets types, dosages and dosages types </p>
+            <br />
+            <img ng-src="{{'img_help/help.10.1.png' | baseUrl}}" alt="" />
+            <br />
+            <img ng-src="{{'img_help/help.10.2.png' | baseUrl}}" alt="" />
+        </div>
+        <div id="pets-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>11. Pets setup</h4>
+            <hr />
+            <p>
+              * There are different set up options under "Options" - "Pet Options". <br />
+                Set up options for pet include: type, breed, size, color, status.
+            </p>
+            <p>
+                11.1. Summary: by default the system already has most of the known and widely used breeds, color combinations,
+                and pet types. However, if a new entry is needed just go to that set up screen, enter the desired information and click ‘Add.’ <br />
+                * Who can skip this step? Most businesses. This step is explained for references purposes.
+            </p>
+            <p>
+                11.2. <strong>Pet status setup</strong> <br />
+                *     Summary: pet status allows classification of pets according with the desired business model.
+                    For example, some businesses want to classify pets based on medical conditions, others on character, etc. <br />
+                *     Who can skip this step? Most businesses initially. Is useful to classify pets; however,
+                    often users will initially skip configuring new statuses until they get more experience with the system. <br />
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.11.1.png' | baseUrl}}" alt="" />
+        </div>
+        <div id="rewards-program-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>12. Rewards program setup</h4>
+            <hr />
+            <p>
+                * <strong>Summary</strong>: a ‘Rewards Program’ is a feature similar to ‘Frequent Flier’ programs offered by the air line industry.
+                    It allows the business to reward clients for money spend, as well as offer incentives for new client referrals.
+                    Every time money is paid, your client will automatically earn ‘Reward Points’ depending on the amount spend.
+                    Receipts will include the amount of ‘Reward Points’ earned for the current payment as well as total amount till date. <br />
+                <br />
+                * Who can skip this step? Businesses that currently do not offer a rewards program.
+                    We don’t recommend configuring the rewards program if one is not already in place.
+                    Nevertheless, we recommend reading this section if considering the start of a
+                    rewards program to assess the overall capabilities of the system. <br />
+            </p>
+            <p>
+                12.1. <strong>Configure</strong>, go to "Options" - "Settings" - "Rewards program" <br />
+                1. Make sure the option ‘Rewards Program Active’ is checked. <br />
+                2. In the ‘Point per Dollar’ fill in the desired amount to be given for every dollar spent. We recommend not having a simple 1-to-1 scheme; otherwise, it will be very easy for clients to know how much money they spend in the facility.<br />
+                3. If friend referrals are being tracked, enter the amount for ‘Points per Referral’ if desired, otherwise enter 0.<br />
+                4. Click 'Save'<br /><br />
+                <img ng-src="{{'img_help/help.12.1.png' | baseUrl}}" alt="" />
+                <br />
+            </p>
+            <p>
+                12.2. <strong>Promotions setup</strong> <br />
+                1. Fill in the promotion’s code, name, description, number of points, expiration date. <br />
+                2. Click ‘Update’<br />
+                3. To edit click on desired promotion edit button <br />
+                4. For deletion same <br />
+                <br />
+                * If a negative number of points is specified, the ‘Promotion’ will be used to redeem points instead of awarding points to a client.<br />
+                * After all promotions have been created print a ‘Promotions Sheet’ by clicking the report icon located to the far right.
+                    With a ‘Promotions Sheet’ employees can use the ‘Promotion Code’ or scan the barcode to award or redeem points. <br /><br />
+                <img ng-src="{{'img_help/help.12.2.png' | baseUrl}}" alt="" />
+                <br />
+            </p>
+        </div>
+        <div id="retail-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>13. Retail setup</h4>
+            <hr />
+            <p>
+                * Go to "Options" - "Settings" - "Retail" <br />
+                    <strong>Summary</strong>: in this step the entire point of sale and inventory system will be configured.
+                    Retail items can be sold to walk-in clients or clients on-file. Sales can be attached to a particular grooming visit,
+                    charged to a client’s account to be paid later, or paid at the point-of-sale. <br /><br />
+                * Who can skip this step? Businesses that currently do not sale any retail items or carry inventory.
+            </p>
+            <p>
+                13.1. <strong>Retail classes setup</strong> <br />
+                * In this step ‘Retail Classes’ will be created for organizational purposes.
+                  Each retail product in the inventory will later be assigned to a ‘Retail Class.’
+                  Classes are useful to group different products that are similar in nature within retail reports.
+                  For example, all shampoo products can be grouped under the ‘Shampoo’ class, while all toys will be under ‘Toys.’
+                  Also, default properties for markup or margin profit and discount levels can be defined. Default properties
+                  automatically are used when adding a new inventory product of a given ‘Retail Class.’ <br />
+                <br />
+                * Configure <br />
+                1. Click on any defined classes or on "Add" button to add a new one     Enter a class name (bedding, bones, etc…). <br />
+                2. Enter the default profit margin or markup. All new products of the class will automatically be assigned the defined profit
+                    based on the product’s cost (the product price can be manually adjusted after it has been created if necessary).
+                   If a default profit is not needed just set the values of both margin and markup to 0. <br />
+                3. Enter the default ‘Levels Discounts Percentages’ if needed; otherwise, just set to 0. <br />
+                4. Click the check button to save. <br />
+                <br />
+                * also you can set in use or not in use by ticking the check mark, and you can delete class if not necessary, be very carefull
+                with this because there may be products assigned to it and it will alter reports. <br />
+                <br />
+                <img ng-src="{{'img_help/help.13.1.png' | baseUrl}}" alt="" />
+                <br />
+                <br />
+
+                13.2. <strong>Inventory products setup</strong> <br />
+                <br />
+                1. Click on ‘Inventory products’ <br />
+                2. Click on "Add" or on an inventory to edit. Enter the ‘Product Code,’ we recommend using the vendor’s UPC or SKU, or create one using only numbers (otherwise barcodes will not work). <br />
+                3. Enter the ‘Product Name.’ The name should descriptive and accurately identify the product; for example, a good name would be ‘Eukanuba Dog Food 20 lbs,’ while a bad name for the same item would be ‘Dog Food.’ <br />
+                4. Enter price, i.e. amount corresponding to the current inventory’s cost.<br />
+                5. Enter ‘Quantity’ (inventory at hand), ‘Reorder At’ (quantity at which the system will request new products
+                   to be ordered), and ‘Reorder To’ (quantity to which the system will suggest to place an order for products
+                    that have reached the ‘Reorder At’ quantity). If ‘Reorder At’ or ‘Reorder To’ numbers are not needed just set their values to 0.<br />
+                6. Choose a value for the ‘Taxable’ selection. <br />
+                7. Select a ‘Product Class.’ <br />
+                8. Click the check button to save. <br />
+                <br />
+                <img ng-src="{{'img_help/help.13.2.png' | baseUrl}}" alt="" />
+                <br />
+                <br />
+                <strong>Changing a product code or name, changing product quantity</strong> <br />
+                * Changing the ‘Product Code’ or ‘Product Name’ is typically not recommended. Doing so, might lead to inaccuracies in reports or lost
+                of valuable sales historical data. However, during the initial set up of the inventory changes might be needed. <br />
+                1. Search and select the desired product. <br />
+                2. Click on “Product Code”, “Product Name” or "Quantity" <br />
+                3. Change the current ‘Product Code’, ‘Product Name’ or 'Quantity' <br />
+                4. Click check button to save. <br />
+                <br />
+                * In most cases, is better to keep the existing item instead of overriding it. Keeping an item will ensure all previous
+                  sales records remain intact. The exception to this rule is setting up new inventory, without any transactions attached.<br />
+                <br /><br />
+                13.3. <strong>Vendors setup</strong> <br />
+                <hr /> <br />
+                <p>
+                    * Summary: in this step retail vendors used in the business are configured.
+                      Vendors represent other businesses used to order products from, e.g. PetsMart, Petco, etc <br />
+                    1. Go to top "Vendors" button. <br />
+                    2. Click "Add new vendor", or search existing one and select from under the input. <br />
+                    3. Add vendor information, name, account, contact phone, alternate contact, street, city, state, zip,
+                        website, email, notes, terms and set to "active" / "inactive" <br />
+                    4. Then click the check button to save <br />
+                </p>
+                <br />
+                <img ng-src="{{'img_help/help.13.3.png' | baseUrl}}" alt="" />
+                <br />
+                13.4. <strong>Product to vendor setup</strong> <br />
+                <hr />
+                <p>
+                    1. Go to "Product to vendor" button on top <br />
+                    2. Search vendor / product on "Searching inventory and products" <br />
+                    3. Select from the list each one by clicking on them, on top at "Product by vendor setup" you have vendor name, product name and price.
+                    4. On right it can be added the cost and reorder number <br />
+                    5. Click "add relationship" to add <br />
+                    6. Relationships can be searched, edited (by clicking desired field) and deleted (be carefull with this option)<br />
+                </p>
+                <img ng-src="{{'img_help/help.13.4.png' | baseUrl}}" alt="" />
+                <br /><br /><br /><br />
+                13.5. <strong>Import classes / products / vendors / product to vendor</strong> <br />
+                <hr />
+                <p>
+                    * Select each category you wish to import, click "browse" to select desired "*.csv" file, then click the save button.
+                      Each list will be populated with the data. Its important for the format to be exactly as describe, if editing in windows notepad,
+                    First line should contain the values, eg: <strong>"class_name", "margin", "markup", "sale", "damage", "whole", "comp", "employee"</strong>
+                    Then the second line should contain the values seprated by comma, eg: <strong>"Toys","10","0","12.20","13.4","0","0","0"</strong>
+                    as well this can be edited using software such as Microsoft Excell. Please see bellow image <br />
+                </p>
+                <img ng-src="{{'img_help/help.13.5.png' | baseUrl}}" alt="" />
+                <br />
+            </p>
+        </div>
+        <div id="vet-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>14. Vet setup</h4>
+            <hr />
+            <p>
+                * Summary: in this step all vets within the service area can be configured in the system.
+                  Vets are assigned to individual pets, and vet referrals can be tracked for new clients. <br />
+                * Go to "Options" - "Veterinary" <br />
+            </p>
+            <p>
+                14.1. Here you can "search" vets, "Add" / "Edit" new ones or delete existing ones <br />
+                14.2. Edit "status" (active / inactive), name, contact, email, street etc. and veterinary notes <br />
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.14.1.png' | baseUrl}}" alt="" />
+            <br /><br /><br />
+            <img ng-src="{{'img_help/help.14.2.png' | baseUrl}}" alt="" />
+            <br /><br /><br /><br />
+            <p>
+                14.3. <strong>Refferals</strong> Veterinaries can be also used as refferals <br />
+                <hr />
+                <p>
+                    * If needed, the ‘Survey’ feature is enabled inside "Options" - "Settings" - "Survey" - "Client survey" <br />
+                    * Also from here you can set the demographic income on "Options" - "Extra" - "Survey income" <br />
+                    * This feature is available on "Main" screen on edit client, client options and kennel survey, select "Veterinarian" <br />
+                </p>
+            </p>
+            <br />
+            <img ng-src="{{'img_help/help.14.3.png' | baseUrl}}" alt="" />
+        </div>
+        <div id="additional-general-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>15. Additional general setup</h4>
+            <hr />
+            <p>
+                15.1. <strong>Payment Types</strong> <br />
+                *  Who can skip this step? Most business. All common payment types are already configured in the system. <br />
+                1. Go to 'Options' - 'Extra' - 'Payment types' <br />
+                2. Do NOT leave any values blank and is highly recommend that you do NOT delete any payment types.  If you do not wish to accept a payment type just set to ‘Inactive’ <br />
+                3. Here you can add, activate/inactivate payments types, and configure payment types to allow tips (some businesses only accept tips for certain payment types). <br />
+            </p>
+            <hr />
+            <p>
+                15.3. <strong>Survey findout</strong> <br />
+                Summary: survey configuration for new clients. <br />
+                1. Go to 'Options' - 'Extra' - 'Survey findout' <br />
+                2. Who can skip this step? Most businesses. All common entries are already configured. <br />
+                3. We highly recommend not removing or changing ‘Friend Referral’ and ‘Vet’ if the system is to track referrals for existing clients or vets. For example,
+                   if ‘Veterinarian’ is selected when completing the survey for a new client, a list of all vets in the system will display for the user to assign the
+                   particular vet that referred that client. Changing the survey entry ‘Vet’ for anything else (even for Veterinary) will remove this feature from the system. <br />
+            </p>
+            <hr />
+            <p>
+                15.4. <strong>Survey income</strong> <br />
+                Summary: survey income configuration for new clients. <br />
+                1. Go to 'Options' - 'Extra' - 'Survey income' <br />
+                2. Same as survey findout <br />
+            </p>
+            <hr />
+            <p>
+                15.5. <strong>Tax settings</strong> <br />
+                Who can skip this step? Nobody. If you don’t wish or need to track taxes, just set your tax rate to 0 (zero). <br />
+                1. Go to ‘Options’ - ‘Extra’ - ‘Tax settings’ <br />
+                2. Enter your state tax rate and check pertinent taxable items. <br />
+                3. Click ‘Save.’ <br />
+                4. If a secondary tax is needed repeat steps 2-3 for the ‘Optional Tax.’ <br />
+                <br />
+                <img ng-src="{{'img_help/help.15.1.png' | baseUrl}}" alt="" />
+            </p>
+        </div>
+        <div id="user-interface-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>16. User interface setup</h4>
+            <hr />
+            <p>
+                Summary: in this step general user interfaces options will be configured. This is important step so features you won’t use do not get in the way if day-to-day operations. <br />
+                * Who can skip this step? Nobody. <br />
+                * How to get here? ‘Options’ - ‘Settings’ - ‘User Interface’ <br />
+                <hr />
+                <p>
+                    16.1. <strong>Credit card setup</strong> <br /> <br />
+                    * ‘Disable credit card storage’ prevents any user from storing client credit card information, i.e. credit card number, expiration date, type (e.g. Visa or MasterCard), and billing address. <br />
+                      Once a credit card number is stored it cannot be viewed again except for the last four digits. However, the credit card on file can be used with our credit card integration system.  <br />
+                    *     Access to credit card storage requires 'Credit Card' access in Security Center Configuration.  <br />
+                    *     Attempts to login to credit card storage are logged by the Security Log (including failed attempts).
+                </p>
+                <p> 16.2. ‘Require address when creating client’ will force the street and zip code to be required when creating a new client. </p>
+                <p> 16.3. ‘Require email when creating client’ will force the email to be required when creating a new client. </p>
+                <p> 16.4. ‘Show survey when creating client’ will force a survey to be completed when adding new clients. The survey is a list of different ways that client heard about your business. Most businesses use this option. </p>
+                <p> 16.5. `Time clock usage setup` Check yes if you will be using the built in time clock for clocking employee's time in and out. </p>
+                <p>
+                    16.6. <strong>User interface advanced setup</strong> <br /><br />
+                    1. With ‘Alarm pets when older than x years’ the age displays alarmed in the pet’s file.<br />
+                    2. ‘Enable membership’ is needed only if the business uses client membership numbers.<br />
+                    3. ‘Enable email’ only if needed to store email information.<br />
+                    4. ‘Enable contract’ is needed only if the business requires contracts/release for clients.<br />
+                    5. ‘Enable pet ID’ only if needed to store identification for pets (e.g. microchip)<br />
+                    6. ‘Show income survey when creating client’ will force an income survey to be completed when adding new clients. Most businesses do not use this option.<br />
+                    7. ‘Show clock status’ will show for each logged in employee if they are clocked in or out for the day. Most businesses use this option if they are using the time clock capabilities.<br />
+                    8. ‘POS general items’ allows sales on-the-fly of items that are not currently in inventory.<br />
+                    9. ‘POS price levels’ allows point of sale purchases at different levels of discounts (e.g. employee, wholesale, etc)<br />
+                    10. ‘Send email at check out’ gives the option to email a bill to the client.<br />
+                    11. ‘Allow ‘Sold By’ for retail sales’ allows tracking of the salesperson for retail items. Needed if paying commissions for retail sales.<br />
+                    12. ‘Enable manual discounts at checkout’ allows arbitrary discounts to be specified for each client at check out. This option is different than the automatic system discounts,
+                        such as frequent grooming. If employees are not allowed to freely give discounts this option can be turned off, or employees can be prevented from using it based on their security settings.<br />
+                    <br />
+                    <img ng-src="{{'img_help/help.16.1.png' | baseUrl}}" alt="" />
+                </p>
+            </p>
+        </div>
+        <div id="layout-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>17. Layout setup</h4>
+            <hr />
+            <p>
+                Summary: in this step your facility’s floor plan is configured. <br />
+                *     Who can skip this step? Nobody. <br />
+                *     How to get here? 'Options' - 'Settings' - 'Layout' <br />
+                <br />
+                <strong>Layout configuration</strong> <br />
+                There are two main steps in the configuration of the layout: (1) the configuration of the ‘Layout Sections’ and the configuration of the ‘Runs.’<br />
+                <br />
+                Layout Sections:<br />
+                <br />
+                The ‘Layout Sections’ can be found in the top left of the layout set up screen. Here different areas or buildings are configured.
+                There is really no ‘right” way of doing this, it is a matter of choice, of how you want your layout organized.
+                Small facilities tend to have one section, while larger facilities usually have multiple sections. At least one section is required (Section 1).<br />
+                <br />
+                1.      Turn on the ‘In Use’ checkmark for the desired section.<br />
+                2.      Enter the desired ‘Section Name’.<br />
+                3.      Click ‘Save.’<br />
+                <br />
+                *     Use sections continuously, i.e. do not skip sections.<br />
+                <br />
+                <img ng-src="{{'img_help/help.17.1.png' | baseUrl}}" alt="" />
+                <br />
+                Configuration of the Runs:<br />
+                In this configuration step you “build” your virtual facility. Each run is defined by four things: the ‘run number,’ the ‘layout section,’ the ‘run type,’ and the ‘position on the layout screen.’<br />
+                <br />
+                <img ng-src="{{'img_help/help.17.2.png' | baseUrl}}" alt="" />
+                <br />
+                To add a run to your layout: <br />
+                Enter the ‘Run Number.’ The run number should be a mnemonic representation of the run it refers to. For example, a good mnemonic representation for your
+                    Indoor runs could be ‘I 01,’ ‘I 02,’ ‘I 03,’ etc. Indoor/outdoor runs could be named ‘IO 01,’ ‘IO 02,’ etc. Cat runs could be ‘C 01,’ and so on. Notice the use of a ‘01’ instead of ‘1.’<br />
+                * Run names are very important since the sorting of runs in reports and screens in the K9 Koordinator is an ‘alphabetical sort.’<br />
+                2. Select a section. This will be the section where the run is physically located.<br />
+                3. Select the ‘run type.’ In the example earlier the run type for run ‘I 01’ is Indoor while the ‘IO 01’ could be Indoor/Outdoor.<br />
+                4. Select the position on the layout screen. The position represents a place in the virtual layout you are creating. See the section ‘The Run Positions’ for a detailed
+                    template of positions, just use the position where you want the layout to appear in. For example, the lower left corner is position 0, and the upper right corner is position 239. <br />
+                <br />
+                *     The position on the layout does not have anything to do with the name of the run (run number).<br />
+                <br />
+                5. Click ‘Save run to layout.’ <br />
+                <br />
+                * You can also edit runs by clicking the 'edit' button, or delete runs as well <br />
+                * Make your layout be as close as possible to the real thing. It helps new employees map the virtual buildings as they relate to the real buildings. <br />
+                <br />
+                <img ng-src="{{'img_help/help.17.3.png' | baseUrl}}" alt="" />
+                <br />
+                The Run Positions: <br />
+                Here is the template for all run positions for each section and a sample layout underneath it.<br />
+                <br />
+                <img ng-src="{{'img_help/help.17.4.png' | baseUrl}}" alt="" />
+                <br />
+                <br />
+                Click on the left side menu, on "Layout" to reveal the modal with the current layout configuration <br />
+                <img ng-src="{{'img_help/help.17.5.png' | baseUrl}}" alt="" />
+                <br />
+            </p>
+        </div>
+        <div id="runs-and-charges-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>18. Runs and charges setup</h4>
+            <hr />
+            <p>
+                Summary: in this step the boarding charges and basic information for runs is configured. <br />
+                *     Who can skip this step? Nobody. Businesses that do not offer overnight boarding services still need­ to configure basic information about runs and other charges. <br />
+                *     How to get here: ‘Options,’ ‘Settings,’ and ‘Charges.’ <br />
+                <br />
+                <strong>Runs and charges</strong> <br />
+                Summary: in this step you determine the general boarding pricing structure of your business. <br />
+                *     Who can skip this step? Nobody.<br />
+                <br />
+                1.      In the area for ‘General Charges’ choose either default to ‘Charge by Run Type’ or ‘Charge by Pet Size’ depending on your business model.
+                        When charging by ‘run type’ the size of the pet will not have any effect on the boarding charges. On the other hand, when charging by ‘pet size’
+                        runs can be configured to ‘override’ the pet size’s rate. ‘Overriding’ rates is necessary when you have specific run types (e.g. suites) that can
+                        have a fixed rate regardless of pets that are in them. <br />
+                <img ng-src="{{'img_help/help.18.2.png' | baseUrl}}" alt="" />
+                <br />
+                *     Regardless of your standard charge policy (runs or sizes), both pet’s sizes and runs need to be set up. All pets are defined to be of a given
+                    size (this information is used for analysis of pets and visits in reports). For example, Fluffy can be a ‘Small’ or ‘Large’ animal, regardless of the run Fluffy might be staying in.<br />
+                <br />
+                2.      In the area for ‘Pet Size and Rates Set Up’ enter all desired names for your pet sizes.<br />
+                <br />
+                *     There are 12 available pet sizes, if you don’t wish to use one of them don’t clear any fields just set the ‘In Use’ column to unchecked. You can’t add or delete ‘Pet Sizes.’<br />
+                *     If you don’t wish to worry about recording the pet’s sizes, just create a single size and call it ‘Regular.’ At least one pet size will be needed for the system to work properly.<br />
+                <br />
+                <img ng-src="{{'img_help/help.18.1.png' | baseUrl}}" alt="" />
+                <br /><br />
+                3.      If you charge by the pet size, enter the ‘Rate’ and the ‘Half Day Rate’ for all sizes with ‘In Use’ set to checked, The ‘Rate’ represents the daily rate if the pet checks out after
+                    the ‘Check Out Time’ (just like in a hotel). The ‘Check Out Time’ will be configured later. If you don’t charge anything if checking out before the ‘Check Out Time’ set the ‘Half Day Rate’ to zero. <br />
+                4.      If you charge by the run type you can skip to the next step. In the area for ‘Run Types and Rates Set Up’ make sure all columns for ‘Override’ are set to unchecked, unless you want that run
+                        type’s rate to override the pet size’s rate. For example. Let’s say Fluffy is of size ‘Regular’ and the ‘Rate’ for that size is 14. If all runs are set to unchecked for ‘Override,’ Fluffy
+                        will be charge a daily fee of 14 regardless of the run he is in. However, if a run let’s say ‘Suite’ is set to ‘Y’ ‘Override’ with a rate of 20, then Fluffy will be charged 20 per day instead of the 14. <br />
+                5.      In the area for ‘Run Types and Rates Set Up’ enter all desired names for your run types.. Even if you charge by the pet size, you still need to configure what types of runs you have available. <br />
+                <br />
+                *     The first run type called ‘No Charge’ is required by the system and can’t be modified in any way.<br />
+                *     You can’t delete run types. If you don’t want to use a given run type just set the ‘In Use’ value to unchecked Do not leave any values blank..<br />
+                <br />
+                6.      Make sure all desired run types have ‘In Use’ set to checked and a limit greater than 0. The ‘Limit’ is used to calculate vacancies.
+                        Is important to have very accurate limits for each one of your runs. <br />
+                <br />
+                *     If you only have one type of run, you can have one single run type called ‘Regular.’<br />
+                <br />
+                <img ng-src="{{'img_help/help.18.3.png' | baseUrl}}" alt="" />
+                <br /><br />
+                <h4>Example of boarding charges</h4>
+                <br />
+                <p>
+                    Boarding Charges (Not Using Half Day Rates) <br />
+                    <br />
+                    The following example illustrates how boarding charges apply. This example assumes half day boarding is not being used. Charges for a pet that checks in 9/1 leaves 9/7 will be: <br />
+                    <br />
+                    *     if check in time (e.g. 11:30 AM on 9/1) is AFTER check out time (e.g. 11:25 AM on 9/7) <br />
+                    o   Charges: 6 full boarding days <br />
+                    *     if check in time (e.g. 10:00 AM on 9/1) is BEFORE check out time (e.g. 11:25 AM on 9/7) <br />
+                    o   Charges: 7 full boarding days <br />
+                    <br />
+                    Check Out time: The check out time can be configured 'Boarding settings' as either rigid (e.g. 1:00 PM) <br />
+                    or flexible based on the check in time per pet plus a given number of hours <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.18.4.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+                <br />
+                <strong>Boarding commissions setup</strong> <br />
+                <br />
+                <p>
+                    Summary: in this step new client commissions will be configured. <br />
+                    *     Who can skip this step? Businesses that do not pay new client boarding commissions. <br />
+                    *     How to get here? Go to ‘Options’ ‘Settings,’ ‘Commissions,’ <br />
+                    <br />
+                    1.      This is where you can select if an employee will receive a commission for signing up a new client who boards. Simply set an amount and it will credit that employee with the commission. <br />
+                    2.      If you are not using this feature set the amount to 0.<br />
+                    <br />
+                    *     Whoever enters the new client will be the person receiving the commission.<br />
+                    <br />
+                    *     To search for commissions open up reports, click all reports, check commissions under the boarding section and hit Open Reports.<br />
+                    <img ng-src="{{'img_help/help.18.5.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+                <strong>Boarding discounts setup</strong> <br />
+                <br />
+                <p>
+                    Summary: in this step boarding discounts are configured, including long term boarding, total bill discount (e.g. military, senior citizen), first time client, and multiple pets boarding together. <br />
+                    *     Who can skip this step? Businesses that do not offer boarding discounts.<br />
+                    *     How to get here: ‘Set Up,’ ‘Settings,’ and ‘Discounts,' and 'Boarding.'<br />
+                    <br />
+                    1. Check this if you wish to set up long term discounts. <br />
+                    2. If you check the option a separate section will show up underneath.<br />
+                    3. The long term discount refers to pets boarding over a given number of days. If a pet qualifies for the ‘2nd Long Term’ discount it will not be given a
+                       ‘Long Term’ (1st term) discount. For example, let’s say the daily rate for Fluffy is 10 with a long term of 10% after 5 days, and 20% of after 15 days.
+                       If Fluffy stays 5 days, there will be no discount and a boarding total of 50. If Fluffy stays 6 days the boarding total is 54 (60 total minus a 10% discount).
+                       If Fluffy stays 15 days the boarding total will be 120 (150 minus 20% discount). Every day is discounted, there is no way to only discount the days after the long term threshold.<br />
+                    <br />
+                    *     Long Term discounts apply before any season adjustments, i.e. the discount is based on the base price before the season adjustment is computed.<br />
+                    <br />
+                    <img ng-src="{{'img_help/help.18.6.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+                <strong>Multiple pet discount setup</strong> <br />
+                <br />
+                <p>
+                    1. If using multiple pet discounts, make sure the check mark ‘Check this option if using multiple pet discounts’ is checked. <br />
+                    2. If your multiple pet discounts only apply to pets in the same family that board in the same run type, then make sure the mark is check for ‘Only discount pets in the same run type.’ <br />
+                    3. The run numbers refer to the ‘ID’ column under ‘Options’ ‘Setting,’ and ‘Charges’ for the ‘Run Types and Rates Set Up’ grid. Don’t leave any values blank, if you don’t wish to discount a particular run type set the value to zero. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.18.7.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+                <strong>New client discount setup</strong> <br />
+                <br />
+                <p>
+                    1. If you are using a new client discount then check the box to allow it. <br />
+                    2. Select whether the discount will be a percent or dollar amount.<br />
+                    3. Input the discount amount.<br />
+                    4. Hit 'Save'<br />
+                    <br />
+                    <img ng-src="{{'img_help/help.18.8.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+                <strong>Priority club discount setup</strong> <br />
+                <br />
+                <p>
+                    1. ‘Priority Club Boarding Discounts’ is designed for businesses that reward frequent visitors. Only a full discount amount is available, i.e. there are no priority club discounts by percentage. <br />
+                    2. Click ‘Save.’ <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.18.9.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+
+            </p>
+        </div>
+        <div id="holiday-and-season-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>19. Holiday and season setup</h4>
+            <hr />
+            <p>
+                Summary: in this step boarding discounts are configured, including long term boarding, total bill discount (e.g. military, senior citizen), first time client, and multiple pets boarding together. <br />
+                *     Who can skip this step? Nobody. Even if your rates are consistent through the year you want to label your seasons and specify all pertinent holidays. Labeled season dates and holidays will show in the vacancy screen for reference purposes. <br />
+                *     How to get here: ‘Options’ ‘Settings,’ and ‘Holiday and Seasons.’ <br />
+                <br />
+                1.      In the area for ‘Holiday Set Up’ type any holiday names you deem necessary, select the date, and specify is your business will be closed or not. Click ‘Add.’ <br />
+                2.      In the area for ‘Seasons Set Up’ specify your ‘Special Rate Seasons.’ Make sure the ‘In Use’ mark is checked. If you don’t wish to affect the rate do not leave the ‘Rate’ value blank, just type zero in it. <br />
+                3.      Using the ‘Adding New Dates’ you can add and delete one or multiple dates to your season calendar. <br />
+                <br />
+                <img ng-src="{{'img_help/help.19.1.png' | baseUrl}}" alt="" />
+                <br />
+            </p>
+        </div>
+        <div id="daycare-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>20. Daycare setup</h4>
+            <hr />
+            <p>
+                Summary: in this step daycare groups and rates are configured. <br />
+                *     Who can skip this step? Businesses that do not offer pet daycare services.<br />
+                *     How to get here: ‘Options’ ‘Reservation,’ ‘Reservation options’ and 'Daycare'<br />
+                <br />
+                <strong>Creating Daycare Groups and Charges Configuration</strong> <br />
+                <br />
+                <p>
+                    Go to "Options" - "Reservations" - "Reservation options" - "Daycare" - "Group & day setup" <br />
+                    1.      In the area for ‘Daycare Groups’ enter the ‘Group Name.’ <br />
+                    2.      If you charge by the hour skip this step (step #2). Enter the ‘Day Rate’ and the ‘Half Day Rate.’ If you charge the same for pets regardless of the time they leave,
+                            then set the ‘Half Day Rate’ to be the same as the ‘Day Rate.’ If your ‘Half Day Rate’ is set to zero, the system will not charge for those pets that are considered
+                            to be in half day daycare (the half day criteria will be configured later). <br />
+                    3.      If you charge by the hour, enter the ‘Hour rate.’<br />
+                    4.      Click ‘Add.’<br />
+                    5.      It is good practice to set the group’s ‘Limit,’ which is use in reports to compute occupancy levels. If you don’t have a limit, use an estimate of what would
+                        be a reasonable capacity given your facility size and number of employees. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.20.1.png' | baseUrl}}" alt="" /> <br />
+                    *     Most daycares charge by the day (not by the hour), and charge the same regardless of when the pet leaves.<br />
+                    <br />
+                    In the area for ‘Daycare Day Set Up:’<br />
+                    <br />
+                    1.      ‘Enable Fast Check In (without reservation)’ should be checked if you wish to allow pets to be checked in without a prior reservation being made.<br />
+                    <br />
+                    *     For fast check in to be available, a pet’s preferred group needs to be configured.<br />
+                    <br />
+                    2.      If not charging by the hour, skip to step #5. If charging by the hour, make sure the ‘Default to Charge pet Hour’ is checked.<br />
+                    3.      If not charging by the hour, skip to step #5. If charging by the hour and you want the ‘Day Rate’ to be charged after X hours,
+                            make sure the number of hours is properly configured under ‘After X hours charge day rate.’<br />
+                    4.      If not charging by the hour, skip to step #5. If needed, specify the ‘Minimum number of hours to charge’ (set to zero if not needed).<br />
+                    5.      ‘Daycare pets that stay over 1 days penalty’ is a surcharge for pets that checked in for daycare but check out on a different
+                            date than then check in date. Most businesses do not use this option.<br />
+                    6.      Configuring default groups for new pets is covered later.<br />
+                    7.      Select desired option for ‘When scheduling reservation, check the group’s limit.’ If you are not worried about overbooking, set to ‘Don’t check.’<br />
+                    8.      If the option ‘Print collar automatically on check in’ is marked, every pet checked in for daycare will have a collar printed automatically.<br />
+                    9.      Click ‘Save.’<br />
+                    <br />
+                    <img ng-src="{{'img_help/help.20.2.png' | baseUrl}}" alt="" />
+                    <br />
+                    <strong>Preferred Daycare Group</strong> <br />
+                    <p>
+                        In the area for ‘Daycare Day Set Up:’<br />
+                        <br />
+                        1.      If you only have a single daycare group, you can have all new pets to be set to that particular preferred group by default. If desired,
+                                check the mark for ‘Default groups for new pets’ and specify the proper group from the dropdown. <br />
+                        2.      Checking the mark ‘Assign to all existing pets’ will mark all pets in the system to that group as their preferred group.
+                                This feature is useful if you are converting from a different software package. <br />
+                        3.      By clicking the refresh icon, it will unselect the selected default group. If the mark is checked for ‘Assign to all existing pets’
+                                it will revert all pets back to having no preferred group. <br />
+                        <br />
+                        To set a pet’s preferred group: <br />
+                        <br />
+                        1.      Open the pet’s file <br />
+                        2.      Click ‘Records.’ <br />
+                        3.      Choose the desired ‘Daycare.’ <br />
+                        4.      Click ‘Save.’<br />
+                        <br />
+                        <img ng-src="{{'img_help/help.20.3.png' | baseUrl}}" alt="" />
+                        <br />
+                        <img ng-src="{{'img_help/help.20.4.png' | baseUrl}}" alt="" />
+                        <br />
+                    </p>
+                </p>
+            </p>
+        </div>
+        <div id="training-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>21. Training setup</h4>
+            <hr />
+            <p>
+                *     Summary: There are two main components to the pet training system: the training groups and the training classes.
+                        Different classes will be scheduled in advance through the year for each of the available training groups.
+                        A training reservation for a pet can be booked for any scheduled class. Alternatively, pets can be checked in on-the-fly
+                        (without the need for a reservation, or a class scheduled in advance) for any training group using the ‘Fast Check In’ feature. <br />
+                *     Who can skip this step? Businesses that do not offer pet training services.<br />
+                <br />
+                <strong>Trainers setup</strong> <br />
+                <p>
+                    *     Summary: A trainer is someone who conducts training sessions for classes such as: obedience, sit, stay, etc.  Any employees that receive training
+                            commissions or have training sessions scheduled for them by name need to be configured as Trainers. <br />
+                    *     How to get here: ‘Options’, ‘Employees’ and ‘Trainers.’ <br />
+                    <br />
+                    * In the ‘Staff Information’ there is a check box titled ‘This Employee is a Trainer.’ To make an employee a trainer, check this box and click ‘Save’. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.21.1.png' | baseUrl}}" alt="" />
+                    <br />
+                    *     Any existing employees can be marked as being a trainer. Do not create a new employee profile for a trainer; just configure the existing staff member as being a trainer.<br />
+                    *     It is often convenient to create a ‘Business Trainer’ general employee, if some training services do not require specific trainers. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.21.2.png' | baseUrl}}" alt="" />
+                </p>
+                <br /><br />
+                <strong>Training groups</strong> <br />
+                <br />
+                <p>
+                    Summary: A training group refers to different types of training offered. Think about high school, you have math, physics, biology all those are types of
+                    trainings offered in high school. Examples of training groups are obedience, agility, in-house, 1-hour personal sessions, 2-hour personal sessions, etc. <br />
+                    *     How to get here: ‘Options’, ‘Reservations’, ’Reservation options’, ‘Training’, ’Groups & options’ <br />
+                    <br />
+                    1.      Enter the Training Group ‘Name,’ e.g. Agility, Puppy, etc. <br />
+                    <br />
+                    *     Always use fully descriptive names for the groups. For example, if you offer an obedience class for small dogs and one for large dogs,
+                            create two different groups one ‘Obedience Small Dogs’ and one ‘Obedience Large Dogs.’<br />
+                    <br />
+                    2.      Enter the ‘Price.’<br />
+                    3.      The ‘Limit’ refers to how many pets can be included in one single class.<br />
+                    4.      Click ‘Add.’<br />
+                    <br />
+                    *     There is no limitation to the number of training groups that can be created.<br />
+                    <br />
+                    <img ng-src="{{'img_help/help.21.3.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                    In the Area for 'Training Options/Focus Areas' <br />
+                    <br />
+                    1.      Under each training group there is the training options window where price and specific training can be set.
+                            Example: Under Pet and Owner training a group option would be sit and stay. <br />
+                    2.      To add enter a name and hit the add button.<br />
+                    3.      You can then add a description and price for the option. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.21.4.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+                <br />
+                <strong>Training classes</strong> <br />
+                <br />
+                <p>
+                    Summary: A training class is an instance of ‘Training Group.’ Think about high school, if math, physics, and biology are ‘Training Groups;’ then,
+                    ‘Training Classes’ are ‘Senior Math,’ or ‘Freshman Physics.’ ‘Trainers’ and ‘Training Groups’ must be created before scheduling ‘Training Classes.’ <br />
+                    *     How to get here: ‘Options’, ‘Reservations’, ’Reservation options’, ‘Training’, ’Class scheduler’ <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.21.5.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+            </p>
+        </div>
+        <div id="services-setup">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>22. Services setup</h4>
+            <hr />
+            <p>
+                Summary: in this step services are configured. <br />
+                *     Who can skip this step? Businesses that do not offer services, or packages for clients to purchase many visits in advance.<br />
+                *     How to get here: 'Options' - 'Reservation' - 'Reservation options' - 'Services' - 'Schedule services' <br />
+                <br />
+                <img ng-src="{{'img_help/help.22.1.png' | baseUrl}}" alt="" />
+                <br /><br />
+                1.      To set up a services first add a service name <br />
+                2.      Then add a description<br />
+                3.      Add a price<br />
+                4.      Then Select the Order you want them to show<br />
+                5.      Click add<br />
+                6.      After the service is added you can add modifiers from the bottom chart.<br />
+                7.      HCP means Handle Carefully price and is an addition customers can request and the charge for that can be added to the service.<br />
+                8.      Limit is how many a customer can have in one bill.<br />
+                9.      Inactive will allow you to set services you do not use to inactive.<br />
+                <br />
+                *     Click on 'Order' arrows and it will array all the services in the order you specified.<br />
+                <br /><br />
+                <img ng-src="{{'img_help/help.22.2.png' | baseUrl}}" alt="" />
+                <br /><br />
+                <strong>Pickup and delivery setup</strong> <br />
+                <p>
+                    1.      This menu is to set up certain services that will show in a report under Daycare called "Pickup and Delivery."
+                            This report lists each service booked, the owner, and the address. <br />
+                    2.      To set up a service to be set as Pickup and Delivery, Select the service you would like to change. <br />
+                    3.      Change the option 'checked' or 'unchecked <br />
+                </p>
+                <br /><br />
+                <strong>Daycare service setup</strong> <br />
+                <br />
+                <p>
+                    1.      This window will allow you set up services for dayboarding so that these services can be selected on a per day basis instead of every day of boarding like dayboard <br />
+                    2.      To set up a service for this select the service, choose the daycare group, then click save. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.22.3.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+                <br />
+                <strong>Service commissions setup</strong> <br />
+                <br />
+                <p>
+                    1.      Select the Service <br />
+                    2.      Change the commission amount<br />
+                    <br />
+                    *     You can also set all commissions to one value.<br />
+                    <br />
+                    <img ng-src="{{'img_help/help.22.4.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+
+            </p>
+        </div>
+        <div id="how-to-use">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>23. HOW TO USE</h4>
+            <hr />
+            <p>
+                This user’s guide focuses in daily and routine tasks performed with the K9 Koordinator, not in the set up and configuration process.
+                Items that are explained in more detail in the ‘Set Up Guide’ will show with a ‘tools and set up’ icon in this guide. <br />
+                <br />
+                Description: If you have not read the ‘Set Up Guide’ please stop reading now and complete the
+                Set up portion of the program. This user’s guide assumes you have fully read the ‘Set Up Guide’ and completed the configuration process. <br />
+                <br />
+                Description: this user’s guide a lock icon will show in every section where security is a concern. Make sure your security settings are properly
+                    defined accordingly to your business model. Failure to poorly define security settings will most likely cause headaches/problems in the future.
+                    Security set up is explained in the ‘Set Up Guide.’ <br />
+                <br />
+                <strong>Symbols and icons</strong> <br />
+                <p>
+                    <ul class="no-list-type">
+                        <li>
+                            <img ng-src="{{'img_help/icon1.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Add new item button</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon2.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Edit existing item button</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon3.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Delete existing item button</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon4.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Order list items</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon5.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Table o items icon</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon6.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Information icon</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon7.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Search icon</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon8.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Show calendar icon</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon9.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Upload image button</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon10.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Close / hide certain window</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon11.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Scroll to top position</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon12.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Show timeicker icon</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon13.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Sticky notes icon</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon14.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left" style="margin-top: 20px;">Print / report button</p>
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon15.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Show on screen report</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon16.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Print using browser button</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                        <li>
+                            <img ng-src="{{'img_help/icon17.png' | baseUrl}}" alt="" class="left mr10" />
+                            <p class="left">Download report, for later printing</p>
+                            <div class="clearfix">&nbsp;</div>
+                        </li>
+                    </ul>
+                </p>
+            </p>
+        </div>
+        <div id="working-with-employees">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>24. Working with employees</h4>
+            <hr />
+            <p>
+                <strong>Employee time clock setup</strong> <br />
+                <br />
+                <p>
+                *     Security Level Management Entry: ‘Edit Time Clock’ <br />
+                *     Why is important to restrict access to this feature? If employees have access to modify their own time sheets it allows them to freely enter what days, times they worked. <br />
+                Go to "Options" - "Tools" - "Time Clock". It is this screen on which employee time sheets can be adjusted. <br />
+                <br />
+                To edit a time clock entry: <br />
+                1.      Click on the desired entry. <br />
+                2.      Fill in the appropriate date and time in the entry and click the 'check' button.’ <br />
+                <br />
+                Employees could occasionally forget to clock in. To manually add a new time clock entry: <br />
+                1.      Under ‘Add a New Time Clock Entry’ select start and ending date and times. <br />
+                2.      Click the 'check' button <br />
+                <br />
+                <img ng-src="{{'img_help/help.24.1.png' | baseUrl}}" alt="" />
+                <br />
+                <p>
+                    NOTES: You can pick different dates to show, reports for certain employee. <br />
+                    * You can print your report, show on screen or download for later use. <br />
+                    * The downloaded report automaticaly generates current date and time on its name, for better organizing <br />
+                    * The printing feature dosen't require only to have installed printer, the browser recognizes it.
+                    <br />
+                    Here is an example of a generated report, it has the report image, contact details, all can be set on "Options" - "Settings" - "Basic information" <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.24.2.png' | baseUrl}}" alt="" />
+                    <br />
+                </p>
+            </p>
+        </div>
+        <div id="working-with-clients">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>25. Working with clients</h4>
+            <hr />
+            <p>
+                <h5>25.1. Adding new client</h5>
+                <p>
+                    Click on the top button "Add Client", here a window will appear in which you complete all the client contact information, as well as pet information. <br />
+                    If you wish to upload image just click on the "Choose file" buttons for client / pet, it will upload instant and it can be viewed by clicking on it, also removed by clicking "no image"<br />
+                    After you are finished click on the "Save client & pet information" button, a new client will be added to the main screen. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.25.1.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>25.2. Deleting clients</h5>
+                <p>
+                    Security Level Management Entry: ‘Delete Client, Pets, Meds & Diets.’ <br />
+                    *     Why is important to restrict access to this feature? Once deleted, there is no way to recover the client’s information.<br />
+                    <br />
+                    To delete a client click on the right "edit" button of the client then in "Client options" we have the "Delete client" button. <br />
+                    We strongly recommend not deleting any clients. Instead set them to ‘Inactive.’<br />
+                    <br />
+                </p>
+                <h5>25.3. Finding a client</h5>
+                <p>
+                    There are 4 options in which you can search for a client / pet. "Last/First name" of the client, "Pet name", "Phone" or "Type / breed". <br />
+                    Just click the desired search feature and write / select your keywords. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.25.2.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>25.4. Client survey and refferals</h5>
+                <p>
+                    Click on the edit button of certain client, go to "Client options" - "Kennel survey". <br />
+                    Here you can select demographic survey (client income), and how did he find the kennel. <br />
+                    If selected the friend / vet, a list will appear to set refference to. <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.25.3.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>25.5. Client status</h5>
+                <p>
+                    1.      Locate the status drop-down menu on the Client/Pet Screen. <br />
+                    2.      Set status of client, and click ‘Save.’<br />
+                    <br />
+                    To add / edit / delete a client status go to "Options" - "Extra" - "Client status" <br />
+                    <br />
+                    <img ng-src="{{'img_help/help.25.4.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>25.6. Client membership cards</h5>
+                <p>
+                    Membership cards are used for efficient access to client accounts. Membership cards with barcodes or magnetic strips can be used for this purpose. When ordering pre-printed cards from a vendor consider the following: <br />
+                    <br />
+                    1.      Order multiple copies for each client number. This is useful when a couple want each a different card to access the same account.<br />
+                    2.      Consider different types of card, such as key chains. Some clients will only use cards they feel comfortable carrying around.<br />
+                    3.      All client numbers should be of the same length (this is required for the system to work properly). For example, if numbers are of length 4, the number 1 would be represented by 0001.<br />
+                    <br />
+                    <h6>Activate membershitp</h6>
+                    <p>
+                        Go to "Options" - "Settings" - "User interface", click on the "Enable membership" option, click "Save" <br />
+                        <strong>Assing a membership number</strong> <br />
+                        1.      Open a client’s file. <br />
+                        2.      Click on ‘Membership.’<br />
+                        3.      Enter the membership number under ‘Membership.’<br />
+                        4.      Enter an expiration date if needed.<br />
+                        5.      Click ‘Save.’<br />
+                        <br />
+                        <strong>Printing a membership card</strong>
+                        1.      Open a client’s file. <br />
+                        2.      Click on ‘Membership.’ <br />
+                        3.      Select ‘Options’, especialy valability, "Save". <br />
+                        4.      Click ‘Generate Card.’<br />
+                        <br /><br />
+                        <img ng-src="{{'img_help/help.25.5.png' | baseUrl}}" alt="" />
+                        <br /><br />
+                        <img ng-src="{{'img_help/help.25.6.png' | baseUrl}}" alt="" />
+                        <br />
+                    </p>
+                </p>
+            </p>
+        </div>
+        <div id="working-with-pets">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>26. Working with pets</h4>
+            <hr />
+            <p>
+                <h5>26.1. Selecting pets</h5>
+                <p>
+                    A pet can be selected on the client search menu, by "pet name", or by "pet type / breed", "pet_id" <br />
+                    (if this searches are activated in "Options" - "Settings" - "General features") <br />
+                    Clicking on the client, it will bring a yellow highlight that is selected and will show on right the pet information. <br />
+                    Clicking on the wrench icon or on top right "edit", will open the editing of client and pet. <br />
+                    <img ng-src="{{'img_help/help.26.1.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>26.2. Adding pets</h5>
+                <p>
+                    After clicking the edit client button, click "New pet", fill with the new pet information, all fields required then click "save client & pet information" <br />
+                    Each client can have / own an unlimited number of pets <br />
+                    <img ng-src="{{'img_help/help.26.2.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>26.3. How to mark a pet as deceased</h5>
+                <p>
+                    Retrieve the pet file, place asterik in front of the pet's name, e.g. *Fluffy, click "save" and the pet will become flagged as such.
+                </p>
+                <br /><br />
+                <h5>26.4. How to delete a pet</h5>
+                <p>
+                    *     Security Level Management Entry: ‘Delete Client, Pets, Meds & Diets.’ <br />
+                    *     Why is important to restrict access to this feature? Once deleted, there is no way to recover the pet’s information. <br />
+                    <br />
+                    To delete a pet, simply click on the trashcan icon ("delete" button) in the upper right hand corner of the Client/Pet Screen. <br />
+                    We strongly recommend that you set to ‘Inactive’ rather than deleting a pet. <br />
+                    <br />
+                    *     If you don’t see a trashcan icon: that means that you are not allowed to perform that task given your current security level. <br />
+                    <img ng-src="{{'img_help/help.26.3.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>26.5. Deal with pet vaccines</h5>
+                <p>
+                    * Ensure that "vaccinations" are enabled, go to "Options" - "Settings" - "General features", and select he "Vaccinations" checkbox <br />
+                    * From the main screen, on top of menu select "Main" <br />
+                    * Select / search a client, select pet if multiple, click on the "Vaccinations". Here you select the veterinary and add the vaccines for Rabbies, etc. according
+                       to the type of animal, dog / cat. <br />
+                    * Veterinary can be edited from "Options" - "Veterinary" <br />
+                    <img ng-src="{{'img_help/help.26.4.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>26.6. Change ownership of a pet</h5>
+                <p>
+                    A pet ownership can be transferred from one client’s record to another. This can happen in many cases such as when a pet is adopted, sold, divorce, etc.
+                    To transfer ownership of a pet follow this steps: <br />
+                    * Select the client you wish to transfer to, then select the transfered pet and remember or note on a paper the "Client ID" and "Pet ID" on the right screen <br />
+                    * Go to "Options" - "Tools" - "Pet ownership" <br />
+                    * Here enter the "pet ID" and the new "client ID" then click the check button <br />
+                    * Refresh the browser for the changes to take effect <br />
+                    <img ng-src="{{'img_help/help.26.5.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>26.7. Pet status</h5>
+                <p>
+                    * Open for edit a pet file then edit in the screen the "pet status" <br />
+                    * You can add / edit / delete multiple pet statuses by going to "Options" - "Pet Options" - "Status" <br />
+                    <img ng-src="{{'img_help/help.26.6.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+            </p>
+        </div>
+        <div id="working-with-medication-diets">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>27. Working with pet medication or diet</h4>
+            <hr />
+            <p>
+                <h5>27.1. Accessing records</h5>
+                <p>
+                    1.      Open the pet’s file for which a medication or diet is to be added. <br />
+                    2.      On the ‘Pet Screen,’ click on ‘Records.’<br />
+                    3.      On the ‘Records’ screen click on ‘Meds’ or ‘Diets.’ <br />
+                    4.      Inside, you can toggle between ‘Meds’ and ‘Diets’ screens by changing the value of the dropdown under ‘Search Inventory.’<br />
+                </p>
+                <h5>27.2. Adding medication or diet to the inventory</h5>
+                <p>
+                    To add items not currently listed in the inventory:<br />
+                    1.      Access the medication or diet screen.<br />
+                    2.      Click on ‘Add new Item to Inventory.’<br />
+                    3.      Enter the name in the field that appears.<br />
+                    4.      Click the check button and the new diet or medication will be listed in the inventory.<br />
+                    5.      "X" to exit the inventory <br />
+                    <img ng-src="{{'img_help/help.27.1.png' | baseUrl}}" alt="" />
+                    <br /><br />
+                </p>
+                <h5>27.3. Delete a medication or diet</h5>
+                <p>
+                    * Be carefull, once deleted the medication or diet will no longer appear on records, and will affect reservations as well <br />
+                    * Go to "Options" - "Reservations" - "Reservations meds & diets" and select "Meds" or "Diets" <br />
+                    * Here you can delete by selecting the "trash icon"<br />
+                </p>
+                <h5>27.4. Applying a medication or diet to the inventory</h5>
+                <p>
+                    1.      Open the pet’s file for which a medication or diet is to be applied. <br />
+                    2.      On the ‘Pet Screen,’ click on ‘Records.’<br />
+                    3.      On the ‘Pet Records’ screen click on ‘Meds’ or ‘Diets.’<br />
+                    4.      Select a medication or diet. Typing in the first letters of the medication in the search box will search existing items in inventory.<br />
+                    5.      Specify administration times (Morning, Afternoon, Evening and As Needed), amount and type. Selecting ‘Daily’ will add it to every day of the stay. Use ‘On Date’ to add an item to specific dates only.<br />
+                    6.      Provide specific dosage/administration instructions and indicate number of charges per day as well as if it is to be given if the pet is only in for Daycare.<br />
+                    7.      Click ‘Add Item’ to apply charges.<br />
+                </p>
+            </p>
+        </div>
+        <div id="working-with-pos">
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="clearfix">&nbsp;</div>
+            <h4>28. Working with POS</h4>
+            <hr />
+            <p>
+                The point of sale deals with selling retail to clients or walk in sale clients. This feature can be set from "Options" - "Settings" - "General features" <br />
+                To configure products, vendors, inventory go to "Options" - "Settings" - "Retail" <br />
+                <br />
+                How to use: <br />
+                * Search, or select a client from main screen. It can be a walk in sale client as well.<br />
+                * On the right we have the invetory listing with items, from here we add the quantity  <br />
+                * The total will be calculated on the bottom left of the screen <br />
+                * We can print a bill by selecting a language, print to screen, or details <br />
+                * We can then process the payment, the payments can be set from "Options" - "Extra" - "Payment types" <br />
+                * The language can be set from "Options" - "Settings" - "Languages" <br />
+                * To set default language and payment type go to "Options" - "Settings" - "General settings" <br />
+                * We can make a payment from "Deposits" as well <br />
+                <img ng-src="{{'img_help/help.28.1.png' | baseUrl}}" alt="" />
+                <br /><br />
+            </p>
+
+        </div>
+    </div>
+</div>

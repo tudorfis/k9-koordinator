@@ -1,0 +1,136 @@
+<script id="tpl/r-diets-mod" type="text/ng-template">
+    <div ng-switch="do">
+        <div ng-switch-when="1">
+            <div id="diets"
+                 ng-show="$root.section == 'diets' && access.checkDiets()">
+                <div class="small-9 column" ng-hide="$root.partial_show">
+                    <form form-submit submit-btn="true" t="r_diets_mod" table="r_diets" submit-btn-text="Add diet" data-abide="true">
+                        <div class="small-10 column">
+                            <div class="small-6 column">
+                                <input-select
+                                    title="Select diet"
+                                    ng-model="$root.r_diets_mod.diet_id" s="diets"
+                                    required="required" error-text="Please select diet to be programmed">
+                                </input-select>
+                            </div>
+                            <div class="small-6 column">
+                                <input-text
+                                    title="Instructions"
+                                    ng-model="$root.r_diets_mod.diet_instructions">
+                                </input-text>
+                            </div>
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="small-6 column">
+                                <input-select
+                                    title="Select diet type" required="required"
+                                    error-text="Please select diet type"
+                                    ng-model="$root.r_diets_mod.diet_type_id" s="diets_type">
+                                </input-select>
+                            </div>
+                            <div class="small-3 column">
+                                <input-select
+                                    title="Dose" ng-required="!$root.r_diets_mod.diet_dose_type_id"
+                                    error-text="Select type of dose, only one required"
+                                    ng-model="$root.r_diets_mod.diet_dosage_id" s="md_dosage">
+                                </input-select>
+                            </div>
+                            <div class="small-3 column">
+                                <input-select
+                                    title="Dose" ng-required="!$root.r_diets_mod.diet_dosage_id"
+                                    error-text="Select type of dose, only one required"
+                                    ng-model="$root.r_diets_mod.diet_dose_type_id" s="md_dose_type">
+                                </input-select>
+                            </div>
+                        </div>
+                        <div class="small-2 column">
+                            <input-checkbox
+                                title="Morning" id="diet_morning"
+                                ng-model="$root.r_diets_mod.diet_morning">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="Afternoon" id="diet_afternoon"
+                                ng-model="$root.r_diets_mod.diet_afternoon">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="Evening" id="diet_evening"
+                                ng-model="$root.r_diets_mod.diet_evening">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="As needed" id="diet_as_needed"
+                                ng-change="doCheckboxesMd('{{scope_id}}', 'r_diets_mod', 'diet_as_needed', 'diet', 'diet')"
+                                ng-model="$root.r_diets_mod.diet_as_needed">
+                            </input-checkbox>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Chose date" class="datepicker"
+                                ng-required="!$root.r_diets_mod.diet_everyday"
+                                error-text="Please select date for diet, or select everyday"
+                                ng-model="$root.r_diets_mod.diet_date">
+                            </input-text>
+                            <input-checkbox
+                                title="On everyday"
+                                ng-model="$root.r_diets_mod.diet_everyday">
+                            </input-checkbox>
+                        </div>
+                        <hr />
+                        <div class="left small-6">
+                            <add-records-diets-btn
+                                scope_id="{{scope_id}}"
+                                r_type="{{r_type}}"
+                                r_type_mod="{{r_type_mod}}">
+                            </add-records-diets-btn>
+                        </div>
+                    </form>
+                </div>
+                <div class="small-3 column" ng-hide="$root.partial_show">
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-anchor"></i> Usefull links
+                        </legend>
+                        <ul class="no-list-type">
+                            <li>
+                                <content-link
+                                    link="crud/diets" title="Diets"
+                                    ui-sref="diets" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                            <li>
+                                <content-link
+                                    link="crud/diets_type" title="Diets types"
+                                    ui-sref="meds_type" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                            <li>
+                                <content-link
+                                    link="crud/md_dosage" title="Dosages"
+                                    ui-sref="md_dosage" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                            <li>
+                                <content-link
+                                    link="crud/md_dose_type" title="Dosages types"
+                                    ui-sref="md_dose_type" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <hr />
+                <div class="small-12" ng-show="!{{r_type_in}} || ma({{r_type_in}}).length == 0">
+                    <h5>No diets programmed</h5>
+                </div>
+                <div class="small-12" ng-show="{{r_type_in}} && ma({{r_type_in}}).length > 0">
+                    <diets-table
+                        scope_id="{{scope_id}}"
+                        r_type="{{r_type}}"
+                        r_type_mod="{{r_type_mod}}"
+                        r_type_in="{{r_type_in}}">
+                    </diets-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

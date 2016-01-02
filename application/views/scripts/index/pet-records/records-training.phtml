@@ -1,0 +1,42 @@
+<form form-submit hide-show-al-content="true" submit-btn="true" t="current_rt"
+      table="records_training" data-abide="true" set-table-after-submit="true">
+    <div class="small-6 column">
+        <fieldset>
+            <legend>Current trainings</legend>
+            <p>No. training sessions: {{ma($root.pet.r_training).length || '0'}}</p>
+            <table class="small-12">
+                <thead>
+                <tr>
+                    <th>Class name</th>
+                    <th>Date</th>
+                    <th>Trainer</th>
+                    <th>Rate</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="rt in $root.pet.r_training">
+                    <td>{{training_groups[rt.tg_id].v}}</td>
+                    <td>{{rt.date_in}}</td>
+                    <td>{{trainers[rt.t_id].v}}</td>
+                    <td>-</td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="small-6 column">
+        <fieldset>
+            <legend>Training information</legend>
+            <div ng-include="'tpl/cp-info'"></div>
+            <input-select
+                title="Preferred trainer" no-error="true"
+                line-value="- select trainer -"
+                ng-model="$root.current_rt.trainer_id" s="trainers">
+            </input-select>
+            <input-textarea
+                title="Trainer's Notepad" style="height: 100px;"
+                ng-model="$root.current_rt.trainer_notepad">
+            </input-textarea>
+        </fieldset>
+    </div>
+</form>

@@ -1,0 +1,40 @@
+<fieldset class="small-12 none-bg">
+    <legend><i class="fa fa-file-o"></i> Pet ownership</legend>
+    <p style="color: #666; font-size: 11px;">Note: You will find the "Pet" and "Client" IDs in the pet's file, "Pet Informations"</p>
+
+    <div class="small-7 column">
+        <input-text
+            title="Pet ID" no-error="true"
+            type="number" ng-model="po.pet_id">
+        </input-text>
+    </div>
+    <div class="small-5 column">
+        <label>&nbsp;</label>
+        <a class="button tiny radius"
+           ng-click="verifyPet()">Verify</a>
+    </div>
+    <div class="small-7 column">
+        <input-text
+            title="Enter the client ID for the new owner" no-error="true"
+            type="number" ng-model="po.client_id">
+        </input-text>
+    </div>
+    <div class="small-5 column">
+        <label>&nbsp;</label>
+        <a class="button tiny radius"
+           ng-click="verifyClient()">Verify</a>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="small-12">
+        <div data-alert="" class="alert-box"
+             ng-show="po.message"
+             ng-class="{'success': !po.is_error, 'alert': po.is_error}">
+            {{po.message}}
+        </div>
+    </div>
+    <hr />
+    <save-button
+        name="po" function="savePo()"
+        icon-class="fa fa-check" title="">
+    </save-button>
+</fieldset>

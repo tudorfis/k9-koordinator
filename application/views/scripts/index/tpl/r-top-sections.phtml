@@ -1,0 +1,23 @@
+<script id="tpl/r-top-sections" type="text/ng-template">
+    <div class="small-12 oolumn right">
+        <div class="right">
+            <a class="button tiny"
+               ng-click="$root.section = 'check_in_out'"
+               ng-class="{'actv': $root.section == 'check_in_out'}">Check in / out</a>
+            <a class="button tiny"
+               ng-show="{{r_type_mod}}['id'] && access.checkServices()"
+               ng-click="$root.section = 'schedule_services'"
+               ng-class="{'actv': $root.section == 'schedule_services'}">Schedule services</a>
+            <a class="button tiny"
+               ng-show="{{r_type_mod}}['id'] && access.checkMeds()"
+               ng-click="$root.section = 'meds'"
+               ng-class="{'actv': $root.section == 'meds'}">Meds</a>
+            <a class="button tiny"
+               ng-show="{{r_type_mod}}['id'] && access.checkDiets()"
+               ng-click="$root.section = 'diets'"
+               ng-class="{'actv': $root.section == 'diets'}">Diets</a>
+        </div>
+        <hr />
+        <div class="clearfix">&nbsp;</div>
+    </div>
+</script>

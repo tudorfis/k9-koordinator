@@ -1,0 +1,14 @@
+<script id="tpl/from-to-dates" type="text/ng-template">
+    <div class="small-6 column">
+        <input-text
+            title="From:" no-error="true" class="datepicker"
+            ng-model="d_dates.date_in" ng-change="d_dates.ngChange()">
+        </input-text>
+    </div>
+    <div class="small-6 column">
+        <input-text
+            title="To:" no-error="true" class="datepicker"
+            ng-model="d_dates.date_out" ng-change="d_dates.ngChange()">
+        </input-text>
+    </div>
+</script>

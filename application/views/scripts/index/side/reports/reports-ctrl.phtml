@@ -1,0 +1,92 @@
+<div id="ReportsCtrl" data-ng-controller="ReportsCtrl"
+     class="reveal-modal xlarge exclude" data-reveal>
+    <div class="small-3 column">
+        <fieldset>
+            <legend>Daily scheduling</legend>
+            <div class="small-6 column">
+                <a class="button tiny radius">Board check in</a>
+            </div>
+            <div class="small-6 column">
+                <a class="button tiny radius">Board check out</a>
+            </div>
+            <div class="small-6 column">
+                <a class="button tiny radius">Daycare check out</a>
+            </div>
+            <div class="small-6 column">
+                <a class="button tiny radius">Groom check in</a>
+            </div>
+            <br />
+            <input-select
+                title="" ng-model="gci_groomer_id"
+                no-error="true" s="groomers"
+                none-option-value="All groomers">
+            </input-select>
+            <br />
+            <div class="small-8 column">
+                <a class="button tiny radius">Services</a> <br />
+            </div>
+            <div class="small-4 column">
+                <input-checkbox
+                    title="by Runtype"
+                    ng-model="services_by_runtype">
+                </input-checkbox>
+            </div>
+            <input-select
+                title="" ng-model="ss_id"
+                no-error="true" s="schedule_services"
+                none-option-value="All services">
+            </input-select>
+            <br />
+            <div class=" small-7 column">
+                <a class="button tiny radius">Diets</a> <br />
+                <a class="button tiny radius">Meds</a> <br />
+            </div>
+            <div class=" small-5 column">
+                <input-checkbox
+                    title="Morning"
+                    ng-model="morning">
+                </input-checkbox>
+                <input-checkbox
+                    title="Afternoon"
+                    ng-model="afternoon">
+                </input-checkbox>
+                <input-checkbox
+                    title="Evening"
+                    ng-model="evening">
+                </input-checkbox>
+            </div>
+            <hr />
+            <div class="small-6 column">
+                <a class="button tiny radius">Pets in kennel</a>
+            </div>
+            <div class="small-6 column">
+                <a class="button tiny radius">Daycare in kennel</a>
+            </div>
+            <div class="small-6 column">
+                <a class="button tiny radius">Training</a>
+            </div>
+            <div class="small-6 column">
+                <a class="button tiny radius">Run transfers</a>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Important Notes</legend>
+            <div style="color: #999;">
+                <p> 1. Print all for the "Start" selected date in the "Choose dates to be used in report."
+                Note: Luggage dosen't prin with this feature </p>
+                <p> 2. Except Groomers with last name 'Kennel' </p>
+                <p> 3. Print all for all pets checked in </p>
+            </div>
+        </fieldset>
+    </div>
+    <div class="small-3 column">
+
+    </div>
+    <div class="small-3 column">
+
+    </div>
+    <div class="small-3 column">
+
+    </div>
+    <a class="close-reveal-modal close-item"></a>
+</div>

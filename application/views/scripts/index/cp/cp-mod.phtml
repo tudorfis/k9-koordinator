@@ -1,0 +1,439 @@
+<div class="al_form small-12" style="display: none;">
+    <img ng-src="{{'img/ajax-big.gif' | baseUrl }}" alt="" />
+</div>
+<form id="cpForm" data-abide="true">
+    <div class="small-6 column">
+        <fieldset>
+            <legend><i class="fa fa-user"></i> Client Information</legend>
+            <div class="small-12 columns">
+                <div class="small-4 columns">
+                    <div class="th-img">
+                        <image-no-image
+                            t="client" n="image_id" s="files" ajax="true"
+                            st="path" stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+                        </image-no-image>
+                    </div>
+                    <div style="margin-top: 50px;"
+                         ng-show="client.id && access.checkSticky()">
+                        <i class="fa fa-file-text"
+                           style="cursor: pointer;"
+                           ng-click="fadeInElement('#clients-sticky')"> Sticky</i>
+                    </div>
+                </div>
+                <div class="small-4 columns">
+                    <input-select
+                        title="Status" t="client" n="client_status_id" tabindex="1"
+                        s="client_status" none-filter="true">
+                    </input-select>
+                    <input-text
+                        title="Name" t="client" n="first_name" autofocus="true"
+                        class="" required="required" tabindex="2">
+                    </input-text>
+                    <input-text
+                        title="Last" t="client" n="last_name"
+                        class="" required="required" tabindex="3">
+                    </input-text>
+                </div>
+                <div class="small-4 columns">
+                    <div ng-include="'tpl/last-visits'"></div>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <hr />
+                <div class="clearfix">&nbsp;</div>
+                <dl class="tabs" data-tab="">
+                    <dd class="active">
+                        <a href="#panel_client_1" aria-selected="true" tabindex="0">
+                            <i class="fa fa-angle-double-up"></i> Contact information
+                        </a>
+                    </dd>
+                    <dd ng-show="$root.client.id">
+                        <a href="#panel_client_2" aria-selected="true" tabindex="0">
+                            <i class="fa fa-angle-double-up"></i> Client options
+                        </a>
+                    </dd>
+                    <dd ng-show="$root.client.id">
+                        <a href="#panel_client_3" aria-selected="true" tabindex="0">
+                            <i class="fa fa-angle-double-up"></i> Private
+                        </a>
+                    </dd>
+                </dl>
+                <div class="tabs-content">
+                    <div class="content active" id="panel_client_1" tabindex="-1" aria-hidden="false">
+                        <fieldset class="small-12">
+                            <legend>Contact Information</legend>
+                            <div class="small-12" ng-show="access.enableEmail()">
+                                <prefix i="fa fa-envelope" pl="2" dl="10">
+                                    <input-text
+                                        title="Email" tabindex="4" ng-model="client.email"
+                                        ng-required="access.requireEmailClient() && access.enableEmail()"
+                                        error-text="Required, must be a valid email account">
+                                    </input-text>
+                                </prefix>
+                                <hr />
+                            </div>
+                            <div class="small-6 columns">
+                                <div ng-controller="clientPhone" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#CpCtrl';
+                                        i_class = 'fa fa-phone'; title = 'Contact phone'; t = 'client'; n = 'contact_phone'; placeholder = 'Enter contact phone';
+                                        tel_format = 'phone_format_id'; tabindex = '5'; pattern = 'phone_number'; required = 1;"></div>
+                                <div ng-controller="clientCell" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#CpCtrl';
+                                        i_class = 'fa fa-mobile'; title = 'Contact cell'; t = 'client'; n = 'contact_cell'; placeholder = 'Enter cell number';
+                                        tel_format = 'cell_format_id'; tabindex = '6'; pattern = 'cell_number'; required = 0;"></div>
+                                <div ng-controller="clientWork" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#CpCtrl';
+                                        i_class = 'fa fa-phone'; title = 'Work phone'; t = 'client'; n = 'contact_work_phone'; placeholder = 'Enter work phone';
+                                        tel_format = 'phone_format_id'; tabindex = '7'; pattern = 'phone_number'; required = 0;"></div>
+                            </div>
+                            <div class="small-6 columns">
+                                <input-text
+                                    title="Emergency Name" tabindex="8"
+                                    t="client" n="emergency_name">
+                                </input-text>
+                                <div ng-controller="clientEmerg" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#CpCtrl'; i_class = 'fa fa-phone';
+                                        title = 'Emerg. phone'; t = 'client'; n = 'emergency_phone'; placeholder = 'Enter emergency phone'; tel_format = 'phone_format_id';
+                                         tabindex = '9'; pattern = 'phone_number'; required = 0;"></div>
+                                <div class="clearfix">&nbsp;</div>
+                                <input-select
+                                    title="Preffered phone" tabindex="10" ng-change="checkClientPrefferedPhone()"
+                                    ng-model="client.preffered_phone_id" s="preffered_phone">
+                                </input-select>
+                            </div>
+                            <hr />
+                            <div class="small-12">
+                                <div class="small-4 column" ng-show="client.id">
+                                    <a class="button tiny radius"
+                                       ng-click="deleteCp('clients', client.id, pet.id)">
+                                        <i class="fi-trash"></i> Delete Client
+                                    </a>
+                                </div>
+                                <div class="small-4 column" ng-show="client.id && access.checkSurvey()">
+                                    <a class="button tiny radius"
+                                       ng-click="getClientSurvey(); $root.revealModal('#clientSurveyModal')">
+                                        <i class="fi-graph-bar"></i> Kennel Survey
+                                    </a>
+                                </div>
+                                <div class="small-4 column" ng-show="client.id && access.checkMembership()">
+                                    <a class="button tiny radius"
+                                       ng-click="getClientMembership(); $root.revealModal('#clientMembershipModal')">
+                                        <i class="fa fa-barcode"></i> Membership
+                                    </a>
+                                </div>
+                            </div>
+                            <hr />
+                            <fieldset class="small-12">
+                                <legend>Address</legend>
+                                <input-text
+                                    title="Street" ng-model="client.address_street"
+                                    tabindex="11" ng-required="access.requireAddressClient()">
+                                </input-text>
+                                <input-text
+                                    title="City" ng-model="client.address_city"
+                                    tabindex="12" ng-required="access.requireAddressClient()">
+                                </input-text>
+                                <div class="small-6 columns">
+                                    <input-text
+                                        title="State" ng-model="client.address_state" pattern="alpha"
+                                        ng-required="access.requireAddressClient()"
+                                        ng-keyup="convertToUpperCase('#CpCtrl', 'client', 'address_state');
+                                                  convertToMaxlength('#CpCtrl', 'client', 'address_state',
+                                                                $root.user_interface_settings.state_length)"
+                                        tabindex="12" ng-required="access.requireAddressClient()"
+                                        no-error="true" extra-html="true">
+                                    </input-text>
+                                    <small class="error">
+                                        This field is required, must be letters, maximum length
+                                        <div ng-bind="$root.user_interface_settings.state_length"></div>
+                                    </small>
+                                </div>
+                                <div class="small-6 columns">
+                                    <input-text
+                                        title="Zip" ng-model="client.address_zip" tabindex="14"
+                                        ng-change="getGeoAddress('#CpCtrl', $root.client.address_zip)" pattern="number"
+                                        ng-required="access.requireAddressClient()" no-error="true" extra-html="true"
+                                        ng-keyup="convertToMaxlength('#CpCtrl', 'client', 'address_zip', $root.user_interface_settings.zip_postcode_length)">
+                                    </input-text>
+                                    <small class="error">
+                                        This field is required, must be numeric, maximum length
+                                        <div ng-bind="$root.user_interface_settings.zip_postcode_length"></div>
+                                    </small>
+                                </div>
+                                <hr />
+                                <input-checkbox
+                                    title="Auto select state & city based on zip"
+                                    ng-model="$root.autoselect_zip"
+                                    ng-change="getGeoAddress('#CpCtrl', $root.client.address_zip)">
+                                </input-checkbox>
+                            </fieldset>
+                        </fieldset>
+                    </div>
+                    <div class="content" id="panel_client_2" tabindex="-1" aria-hidden="false">
+                        <fieldset class="small-12 column">
+                            <legend>Client options</legend>
+                            <div class="small-12 column">
+                                <a class="button radius left ml10" ng-click="printFinancial()">
+                                    <i class="fa fa-dollar"></i> Financial
+                                </a>
+                                <a class="button radius left ml10" ng-click="printRetail()">
+                                    <i class="fa fa-dollar"></i> Retail
+                                </a>
+                                <a class="button radius left ml10" ng-click="openTransactions()">
+                                    <i class="fa fa-book"></i> Transactions
+                                </a>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="content" id="panel_client_3" tabindex="-1" aria-hidden="false">
+                        <fieldset class="small-12">
+                            <legend><i class="fa fa-info"></i> Private informations</legend>
+                            <div class="small-6 column">
+                                <input-text
+                                    title="Driver's license" no-error="true"
+                                    ng-model="client.client_private.drivers_license">
+                                </input-text>
+                            </div>
+                            <div class="small-6 column">
+                                <input-text
+                                    title="Date of birth" no-error="true" class="datepicker"
+                                    ng-model="client.client_private.dob">
+                                </input-text>
+                            </div>
+                            <input-checkbox
+                                title="This client is senior"
+                                ng-model="client.client_private.is_senior">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="This client is military"
+                                ng-model="client.client_private.is_military">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="This client is tax exempt"
+                                ng-model="client.client_private.is_tax_exempt">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="Exclude client from mass mailing list"
+                                ng-model="client.client_private.exclude_from_mailing_list">
+                            </input-checkbox>
+                            <div class="clearfix">&nbsp;</div>
+                            <input-select
+                                title="Default retail level" no-error="true"
+                                ng-model="client.client_private.default_retail_level_id"
+                                s="default_retail_level">
+                            </input-select>
+                            <hr />
+                            <postfix pl="4" dl="8" i="fa fa-credit-card">
+                                <input-text
+                                    title="Card holder name" no-error="true"
+                                    ng-model="client.client_private.cc_holder_name">
+                                </input-text>
+                            </postfix>
+                            <div class="small-5 column">
+                                <input-select
+                                    title="Credit card type" no-error="true"
+                                    ng-model="client.client_private.cc_type_id"
+                                    s="cc_types">
+                                </input-select>
+                            </div>
+                            <div class="small-7 column">
+                                <input-text
+                                    title="Credid card number" no-error="true" pattern="number"
+                                    ng-model="client.client_private.cc_number">
+                                </input-text>
+                            </div>
+                            <div class="small-6 column">
+                                <input-select
+                                    title="Exp. month" no-error="true"
+                                    ng-model="client.client_private.cc_exp_month_id"
+                                    s="cc_exp_month">
+                                </input-select>
+                            </div>
+                            <div class="small-6 column">
+                                <input-select
+                                    title="Exp. year" no-error="true"
+                                    ng-model="client.client_private.cc_exp_year"
+                                    ng-options="ey for ey in cc_exp_year">
+                                </input-select>
+                            </div>
+                            <hr />
+                            <save-button
+                                name="sp" function="saveClientPrivate()"
+                                icon-class="fa fa-check" title="Save">
+                            </save-button>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="left">
+                    <button
+                        type="submit" tabindex="24"
+                        class="button submit radius success">
+                            <i class="fi-check"></i> Save client & pet information
+                    </button>
+                    <i class="fa fa-spin fa-spinner fa-3x al" style="display: none;"></i>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="small-6 column">
+        <fieldset>
+            <legend><i class="fa fa-paw"></i> Pet Information</legend>
+            <div class="small-8 column"
+                 ng-show="$root.cp[$root.client.id].length > 0">
+                <a class="button tiny radius small-3 column"
+                   ng-disabled="$root.pet.id == $root.cp[$root.client.id][0]"
+                   ng-click="selectPet('previous')">
+                    <i class="fi-arrow-left"></i>
+                </a>
+                <span class="small-6 column text-center"
+                      style="border: 1px solid #ccc; padding: 5px 0">
+                    <div ng-show="pet.id">
+                        <strong>{{$root.pet.pet_name}}</strong>
+                        <i>{{$root.pet.pet_breed.v}}</i>
+                    </div>
+                    <div ng-hide="pet.id">
+                        <i>- add new pet -</i>
+                    </div>
+                </span>
+                <a class="button tiny radius small-3 column"
+                   ng-disabled="$root.pet.id == $root.cp[$root.client.id][$root.cp[$root.client.id].length-1]"
+                   ng-click="selectPet('next')">
+                    <i class="fi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="right"
+                 ng-show="$root.cp[$root.client.id].length > 1">
+                <a class="button tiny radius"
+                   ng-click="deleteCp('pets', client.id, pet.id)">
+                    <i class="fi-trash"></i> Delete pet
+                </a>
+            </div>
+            <div class="right mr10"
+                 ng-show="pet.id">
+                <a class="button tiny radius"
+                   ng-click="addPet()">
+                    <i class="fi-page-add"></i> New pet
+                </a>
+            </div>
+            <div class="right mr10"
+                 ng-hide="pet.id || !client.id">
+                <a class="button tiny radius"
+                   ng-click="restorePet()">
+                    <i class="fi-arrows-compress"></i> Back
+                </a>
+            </div>
+            <div class="clearfix">
+                <hr />
+            </div>
+            <div>
+                <div class="small-4 columns">
+                    <div class="th-img">
+                        <image-no-image
+                            t="pet" n="image_id" s="files" ajax="true"
+                            st="path" stt="path_thumb" fancybox="true">
+                        </image-no-image>
+                    </div>
+                    <input-select
+                        title="Pet status" error-text="Select pet status"
+                        t="pet" n="pet_status_id" s="pet_status" none-filter="true" tabindex="15">
+                    </input-select>
+                    <div class="clearfix">&nbsp;</div>
+                    <div ng-include="'tpl/visits-table'"></div>
+                </div>
+                <div class="small-8 columns">
+                    <dl class="tabs" data-tab="">
+                        <dd class="active">
+                            <a href="#panel_pet_1" aria-selected="true" tabindex="0">
+                                <i class="fa fa-angle-double-up"></i> Pet information
+                            </a>
+                        </dd>
+                        <dd ng-show="pet.id && access.checkRsv()">
+                            <a href="#panel_pet_2" aria-selected="true" tabindex="0">
+                                <i class="fa fa-angle-double-up"></i> Reservations
+                            </a>
+                        </dd>
+                    </dl>
+                    <div class="clearable">&nbsp;</div>
+                    <i class="fa fa-file-text right"
+                       style="cursor: pointer;"
+                       ng-show="pet.id && access.checkSticky()"
+                       ng-click="fadeInElement('#pets-sticky')"> Sticky</i>
+                    <div class="tabs-content">
+                        <div class="content active" id="panel_pet_1" tabindex="-1" aria-hidden="false">
+                            <fieldset class="small-12">
+                                <legend>Pet Information</legend>
+                                <input-text
+                                    title="Pet name" t="pet" n="pet_name" class=""
+                                    required="required" tabindex="16">
+                                </input-text>
+                                <input-select
+                                    title="Pet type" required="required" error-text="Please select pet type" tabindex="17"
+                                    t="pet" n="pet_type_id" s="pet_type" none-filter="true">
+                                </input-select>
+                                <input-select
+                                    title="Pet color" required="required" error-text="Please select pet color" tabindex="18"
+                                    s="pet_color" n="pet_color_id" t="pet" none-filter="true">
+                                </input-select>
+                                <input-select
+                                    title="Pet size" required="required" error-text="Please select pet size" tabindex="19"
+                                    s="pet_size" n="pet_size_id" t="pet" none-filter="true">
+                                </input-select>
+                                <input-select
+                                    title="Pet sex" required="required" error-text="Please select pet sex" tabindex="20"
+                                    s="pet_sex" n="pet_sex_id" t="pet" none-filter="true">
+                                </input-select>
+                                <input-select
+                                    title="Pet breed" required="required" error-text="Please select pet breed" tabindex="21"
+                                    t="pet" n="pet_breed_id" s="pet_breed" none-filter="true" filter-select="filter:{pet_type_id:pet.pet_type_id}">
+                                </input-select>
+                                <input-text
+                                    title="Weight" required="required" error-text="Required filed, must be numeric value"
+                                    tabindex="22" pattern="number" n="pet_weight" t="pet" placeholder="Please enter pet weigth">
+                                </input-text>
+                                <input-text
+                                    type="text" title="Date of birth" class="datepicker-us" required="required" pattern="us_date"
+                                    error-text="Please add a valid date of this format 20/03/2014" t="pet" n="dob" tabindex="23"
+                                    placeholder="Enter date of birth">
+                                </input-text>
+                                <div class="clearfix">&nbsp;</div>
+                                <strong>Pet age:</strong> <br />
+                                <span>{{pet.dob ? (pet.dob | dobString) : ''}}</span>
+                                <div class="clearfix">&nbsp;</div>
+                                <h5 class="label alert"
+                                    ng-show="access.alarmPetAge() && (pet.dob | dobStringYear)">
+                                    This pet is older than <b>{{access.alarmPetAgeValue()}}</b> year{{(access.alarmPetAgeValue() > 1 ? 's' : '')}}
+                                </h5>
+                            </fieldset>
+                        </div>
+                        <div class="content active" id="panel_pet_2"
+                             ng-show="$root.pet.id && access.checkRsv()"
+                             tabindex="-1" aria-hidden="false">
+                            <fieldset class="small-12">
+                                <legend>Reservations</legend>
+                                <a class="button tiny radius small-6 left"
+                                   ng-show="access.checkBoarding()"
+                                   ng-click="$root.prd_selected = 'r_boarding'; $root.closeModal('#cpModal');"
+                                   ng-class="{'actv': $root.prd_selected == 'r_boarding'}">
+                                    <i class="fa fa-th-large"></i> Boarding
+                                </a>
+                                <a class="button tiny radius small-6 left"
+                                   ng-show="access.checkDaycare()"
+                                   ng-click="$root.prd_selected = 'r_daycare'; $root.closeModal('#cpModal');"
+                                   ng-class="{'actv': $root.prd_selected == 'r_daycare'}">
+                                    <i class="fa fa-th-list"></i> Daycare
+                                </a>
+                                <a class="button tiny radius small-6 left"
+                                   ng-show="access.checkGrooming()"
+                                   ng-click="$root.prd_selected = 'r_grooms'; $root.closeModal('#cpModal');"
+                                   ng-class="{'actv': $root.prd_selected == 'grooms'}">
+                                    <i class="fa fa-th"></i> Grooms
+                                </a>
+                                <a class="button tiny radius small-6 left"
+                                   ng-show="access.checkTraining()"
+                                   ng-click="$root.prd_selected = 'r_training'; $root.closeModal('#cpModal');"
+                                   ng-class="{'actv': $root.prd_selected == 'training'}">
+                                    <i class="fa fa-list-alt"></i> Training
+                                </a>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</form>

@@ -1,0 +1,154 @@
+<?php if (!isNE($this->identity)) : ?>
+    <section class="top-bar-section">
+        <ul>
+            <li class="divider"></li>
+            <menu-link link="index" title="<b>- MAIN -</b>" ui-sref="main"></menu-link>
+            <li class="divider"></li>
+            <li class="has-dropdown">
+                <a href="#">Options</a>
+                <ul class="dropdown">
+                    <li class="has-dropdown">
+                        <a href="#"><i class="fi-wrench"> Settings</i></a>
+                        <ul class="dropdown">
+                            <menu-link link="tbl/settings/general-settings" title="General settings" icon-class="fi-wrench" ui-sref="general-settings"></menu-link>
+                            <menu-link link="tbl/settings/basic-information" title="Basic information" icon-class="fi-info" ui-sref="basic-information"></menu-link>
+                            <li class="has-dropdown">
+                                <a href="#"><i class="fa fa-key"> Security</i></a>
+                                <ul class="dropdown">
+                                    <menu-link link="tbl/settings/security/password-management" title="Password management" ui-sref="password_management"></menu-link>
+                                    <menu-link link="tbl/settings/security/security-center" title="Security center" ui-sref="security_center"></menu-link>
+                                    <menu-link link="tbl/settings/security/security-levels" title="Security levels" ui-sref="security_levels"></menu-link>
+                                </ul>
+                            </li>
+                            <menu-link link="tbl/settings/general-features" title="General features" icon-class="fa fa-bars" ui-sref="general_features"></menu-link>
+                            <menu-link link="tbl/settings/user-interface" title="User interface" icon-class="fa fa-bookmark-o" ui-sref="user_interface"></menu-link>
+                            <menu-link link="tbl/settings/layout" title="Layout" icon-class="fa fa-circle-thin" ui-sref="layout"></menu-link>
+                            <menu-link link="tbl/settings/commissions" title="Commissions" icon-class="fa fa-line-chart" ui-sref="commissions"></menu-link>
+                            <li class="has-dropdown">
+                                <a href="#"><i class="fa fa-twitch"> Discounts</i></a>
+                                <ul class="dropdown">
+                                    <menu-link link="tbl/settings/discounts/boarding" title="Boarding" ui-sref="discounts_boarding" show="access.checkBoarding()"></menu-link>
+                                </ul>
+                            </li>
+                            <menu-link link="tbl/settings/rewards-program" icon-class="fa fa-dollar" title="Rewards program" ui-sref="rewards_program" show="access.checkRewards()"></menu-link>
+                            <menu-link link="tbl/settings/holiday-and-season" icon-class="fa fa-gift" title="Holiday and season" ui-sref="holiday_and_season"></menu-link>
+                            <menu-link link="tbl/settings/retail" icon-class="fa fa-sheqel" title="Retail" ui-sref="retail"></menu-link>
+                            <menu-link link="tbl/settings/languages" icon-class="fi-flag" title="Languages" ui-sref="languages"></menu-link>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#"><i class="fi-torso"> Employees</i></a>
+                        <ul class="dropdown">
+                            <menu-link link="crud/users" title="Staff" ui-sref="users"></menu-link>
+                            <menu-link link="crud/groomers" title="Groomers" ui-sref="groomers" show="access.checkGrooming()"></menu-link>
+                            <menu-link link="crud/trainers" title="Trainers" ui-sref="trainers" show="access.checkTraining()"></menu-link>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#"><i class="fi-calendar"> Reservation</i></a>
+                        <ul class="dropdown">
+                            <li class="has-dropdown">
+                                <a href="#">Reservation options</a>
+                                <ul class="dropdown">
+                                    <li class="has-dropdown" ng-show="access.checkBoarding()">
+                                        <a href="#">Boarding</a>
+                                        <ul class="dropdown">
+                                            <menu-link link="tbl/reservations/boarding/boarding-settings" title="Boarding settings & charges" ui-sref="reservations_boarding_settings"></menu-link>
+                                            <menu-link link="crud/stay_reasons" title="Boarding stay reasons" ui-sref="stay_reasons"></menu-link>
+                                        </ul>
+                                    </li>
+                                    <li class="has-dropdown" ng-show="access.checkGrooming()">
+                                        <a href="#">Grooming</a>
+                                        <ul class="dropdown">
+                                            <menu-link link="tbl/reservations/grooming/grooming-general" title="General" ui-sref="reservations_grooming_general"></menu-link>
+                                            <menu-link link="tbl/reservations/grooming/grooming-rates" title="Rates" ui-sref="reservations_grooming_rates"></menu-link>
+                                            <menu-link link="tbl/reservations/grooming/grooming-services" title="Services" ui-sref="reservations_grooming_services"></menu-link>
+                                        </ul>
+                                    </li>
+                                    <li class="has-dropdown" ng-show="access.checkTraining()">
+                                        <a href="#">Training</a>
+                                        <ul class="dropdown">
+                                            <menu-link link="tbl/reservations/training/training-groups" title="Groups & options" ui-sref="reservation_training_groups"></menu-link>
+                                            <menu-link link="tbl/reservations/training/training-schedule" title="Class scheduler" ui-sref="reservation_training_schedule"></menu-link>
+                                        </ul>
+                                    </li>
+                                    <li class="has-dropdown" ng-show="access.checkDaycare()">
+                                        <a href="#">Daycare</a>
+                                        <ul class="dropdown">
+                                            <menu-link link="tbl/reservations/daycare/groups-and-day" title="Groups & day setup" ui-sref="reservations_daycare_groups"></menu-link>
+                                        </ul>
+                                    </li>
+                                    <li class="has-dropdown" ng-show="access.checkServices()">
+                                        <a href="#">Services</a>
+                                        <ul class="dropdown">
+                                            <menu-link link="crud/schedule_services" title="Schedule services" ui-sref="schedule_services"></menu-link>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="has-dropdown" ng-show="access.checkMeds() || access.checkDiets()">
+                                <a href="#">Reservation meds & diets</a>
+                                <ul class="dropdown">
+                                    <menu-link link="crud/meds" title="Medications" ui-sref="meds" show="access.checkMeds()"></menu-link>
+                                    <menu-link link="crud/meds_type" title="Medication types" ui-sref="meds_type" show="access.checkMeds()"></menu-link>
+                                    <menu-link link="crud/diets" title="Diets" ui-sref="diets" show="access.checkDiets()"></menu-link>
+                                    <menu-link link="crud/diets_type" title="Diets types" ui-sref="diets_type" show="access.checkDiets()"></menu-link>
+                                    <menu-link link="crud/md_dosage" title="Dosages" ui-sref="md_dosage" show="access.checkMeds() || access.checkDiets()"></menu-link>
+                                    <menu-link link="crud/md_dose_type" title="Dosages types" ui-sref="md_dose_type" show="access.checkMeds() || access.checkDiets()"></menu-link>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#"><i class="fi-heart"> Pet options</i></a>
+                        <ul class="dropdown">
+                            <menu-link link="crud/pet_color" title="Pet color" ui-sref="pet_color"></menu-link>
+                            <menu-link link="crud/pet_type" title="Pet type" ui-sref="pet_type"></menu-link>
+                            <menu-link link="crud/pet_breed" title="Pet breed" ui-sref="pet_breed"></menu-link>
+                            <menu-link link="crud/pet_status" title="Pet status" ui-sref="pet_status"></menu-link>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#"><i class="fa fa-cubes"> Tools</i></a>
+                        <ul class="dropdown">
+                            <menu-link link="tbl/tools/time-clock" title="Time clock" ui-sref="time_clock"></menu-link>
+                            <menu-link link="tbl/tools/pet-ownership" title="Pet ownership" ui-sref="pet_ownership"></menu-link>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#"><i class="fi-pricetag-multiple"> Extra</i></a>
+                        <ul class="dropdown">
+                            <menu-link link="crud/client_status" title="Client status" ui-sref="client_status"></menu-link>
+                            <menu-link link="crud/payment_types" title="Payment types" ui-sref="payment_types"></menu-link>
+                            <menu-link link="crud/client_survey_findout" title="Survey findout" ui-sref="client_survey_findout"></menu-link>
+                            <menu-link link="crud/client_survey_income" title="Survey income" ui-sref="client_survey_income"></menu-link>
+                            <menu-link link="tbl/extra/tax-settings" title="Tax settings" ui-sref="tax-settings"></menu-link>
+                        </ul>
+                    </li>
+                    <menu-link link="crud/vets" icon-class="fi-male" title="Veterinary" ui-sref="vets" show="access.checkVaccinations()"></menu-link>
+                </ul>
+            </li>
+            <li class="divider"></li>
+            <li class="divider"></li>
+            <menu-link link="tbl/settings/my-account" icon-class="fi-torso" title="My Account" ui-sref="my_account"></menu-link>
+            <menu-link link="select-kennel" icon-class="fa fa-plug" title="Select kennel" ui-sref="select-kennel" show="access.isKennel()"></menu-link>
+            <menu-link link="help" icon-class="fa fa-info-circle" title="Help" ui-sref="help"></menu-link>
+            <li class="divider"></li>
+            <menu-link link="logout" icon-class="fi-power" title="Logout"></menu-link>
+        </ul>
+        <ul class="right">
+            <li class="divider">&nbsp;</li>
+        </ul>
+    </section>
+<?php else : ?>
+    <section class="top-bar-section">
+        <ul class="left">
+            <li class="divider"></li>
+            <menu-link link="login" icon-class="fi-unlock" title="Login"></menu-link>
+            <menu-link link="select-kennel" icon-class="fa fa-plug" title="Select kennel"></menu-link>
+            <li class="divider"></li>
+            <li><a href="admin-kennel"><i class="fa fa-sign-in"></i> Kennel ADMIN</a></li>
+        </ul>
+    </section>
+<?php endif ?>

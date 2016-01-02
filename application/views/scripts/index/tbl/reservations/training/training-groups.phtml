@@ -1,0 +1,54 @@
+
+<div class="small-7 column">
+    <fieldset class="none-bg">
+        <legend><i class="fa fa-folder"></i> Training groups</legend>
+        <div class="small-8">
+            <input-text
+                title="Search training groups" no-error="true"
+                ng-model="search_training_groups" class="clearable">
+            </input-text>
+        </div>
+        <editable-table
+            ts="trainingGroups" filter=" | filter:search_training_groups"
+            with-delete="true" with-add="true" tr-select="selectTgId" tr-extra-id="tg_id"
+            class="small-12" empty-message="No training groups defined">
+        </editable-table>
+    </fieldset>
+</div>
+<div class="small-5 column">
+    <fieldset>
+        <legend><i class="fa fa-folder-open"></i> Training options / focus areas</legend>
+        <div ng-show="tg_id">
+            <editable-table
+                ts="trainingOptions" tr-extra-id="tg_id"
+                with-delete="true" with-add="true"
+                class="small-12" empty-message="No training options defined for this group">
+            </editable-table>
+        </div>
+        <div ng-show="!tg_id">
+            <p style="color: #999;">
+                * No training group selected, <br />
+                click on a training group to reveal training options
+            </p>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>
+            <i class="fa fa-anchor"></i> Usefull links
+        </legend>
+        <ul class="no-list-type">
+            <li>
+                <content-link
+                    link="tbl/reservations/training/training-schedule" title="Training class scheduler"
+                    ui-sref="reservation_training_schedule" icon-class="fa fa-asterisk">
+                </content-link>
+            </li>
+            <li>
+                <content-link
+                    link="crud/trainers" title="Trainers"
+                    ui-sref="trainers" icon-class="fa fa-asterisk">
+                </content-link>
+            </li>
+        </ul>
+    </fieldset>
+</div>

@@ -1,0 +1,126 @@
+<div class="small-6 column">
+    <fieldset>
+        <legend>Features</legend>
+        <div class="small-6 column">
+            <div ng-repeat="gf in general_features | array | slice:0:3">
+                <input-checkbox
+                    title="{{gf.title}}" ng-model="general_features['{{gf.id}}'].v">
+                </input-checkbox>
+            </div>
+            <div>
+                <input-checkbox
+                    title="{{general_features[14].title}}"
+                    ng-model="general_features[14].v">
+                </input-checkbox>
+            </div>
+        </div>
+        <div class="small-6 column">
+            <div ng-repeat="gf in general_features | array | slice:3:6">
+                <input-checkbox
+                    title="{{gf.title}}" ng-model="general_features['{{gf.id}}'].v">
+                </input-checkbox>
+            </div>
+            <div>
+                <input-checkbox
+                    title="{{general_features[15].title}}"
+                    ng-model="general_features[15].v">
+                </input-checkbox>
+            </div>
+        </div>
+    </fieldset>
+    <div class="clearfix">&nbsp;</div>
+    <fieldset>
+        <legend>General features</legend>
+        <div class="small-6 column">
+            <div ng-repeat="gf in general_features | array | slice:6:8">
+                <input-checkbox
+                    title="{{gf.title}}" ng-model="general_features['{{gf.id}}'].v">
+                </input-checkbox>
+            </div>
+        </div>
+        <div class="small-6 column">
+            <input-checkbox
+                title="{{general_features[16].title}}" ng-model="general_features[16].v">
+            </input-checkbox>
+            <input-checkbox
+                title="{{general_features[17].title}}" ng-model="general_features[17].v">
+            </input-checkbox>
+            <input-checkbox
+                title="{{general_features[18].title}}" ng-model="general_features[18].v">
+            </input-checkbox>
+            <input-checkbox
+                title="{{general_features[19].title}}" ng-model="general_features[19].v">
+            </input-checkbox>
+        </div>
+    </fieldset>
+    <div class="clearfix">&nbsp;</div>
+    <fieldset>
+        <legend>Search options</legend>
+        <div ng-show="access.checkMembership()">
+            <input-checkbox
+                title="{{general_features[20].title}}"
+                ng-model="general_features.20.v"
+                ng-change="rebuildDso()">
+            </input-checkbox>
+        </div>
+        <input-checkbox
+            title="{{general_features[21].title}}"
+            ng-model="general_features.21.v"
+            ng-change="rebuildDso()">
+        </input-checkbox>
+        <input-checkbox
+            title="{{general_features[22].title}}"
+            ng-model="general_features.22.v"
+            ng-change="rebuildDso()">
+        </input-checkbox>
+        <input-select
+            title="Default search" no-error="true"
+            ng-change="setClientSearchBy()"
+            ng-model="general_features[23].v" s="default_search_options">
+        </input-select>
+    </fieldset>
+</div>
+<div class="small-6 column">
+    <fieldset>
+        <legend>Left side menu</legend>
+        <div class="small-6 column">
+            <div ng-repeat="gf in general_features | array | slice:23:26">
+                <input-checkbox
+                    title="{{gf.title}}" ng-model="general_features['{{gf.id}}'].v">
+                </input-checkbox>
+            </div>
+        </div>
+        <div class="small-6 column">
+            <div ng-repeat="gf in general_features | array | slice:26:29">
+                <input-checkbox
+                    title="{{gf.title}}" ng-model="general_features['{{gf.id}}'].v">
+                </input-checkbox>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Grooming</legend>
+        <div ng-repeat="gf in general_features | array | slice:9:11">
+            <input-checkbox
+                title="{{gf.title}}" ng-model="general_features['{{gf.id}}'].v">
+            </input-checkbox>
+        </div>
+    </fieldset>
+    <div class="clearfix">&nbsp;</div>
+    <fieldset>
+        <legend>Communication features</legend>
+        <input-checkbox
+            title="{{general_features[12].title}}" ng-model="general_features[12].v">
+        </input-checkbox>
+        <br />
+        <p>
+            {{general_features[13].title}}
+            <input ng-model="general_features.13.v" />
+        </p>
+    </fieldset>
+    <hr />
+    <save-button
+        name="save_gf" function="saveGf()"
+        icon-class="fa fa-check" title="Save features">
+    </save-button>
+</div>

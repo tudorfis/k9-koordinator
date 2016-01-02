@@ -1,0 +1,10 @@
+<div id="leftMenu" class="small-1 column" ng-show="access.checkSideMenu() && !access.isOnSelectKennel()">
+	<ul class="no-list-type">
+		<li ng-show="access.checkPointOfSale()"><a href="javascript:;" ng-click="revealModal('#PosCtrl'); initPos()"><i class="ms-ic5"></i> POS</a></li>
+		<li ng-show="access.checkDeposits()"><a href="javascript:;" ng-click="revealModal('#DepositsCtrl'); initDeposits()"><i class="ms-ic2"></i> Deposits</a></li>
+		<li ng-show="access.checkReports()"><a href="javascript:;" ng-click="revealModal('#ReportsCtrl'); initReports()"><i class="ms-ic4"></i> Reports</a></li>
+		<li ng-show="access.checkLayout()"><a href="javascript:;" ng-click="revealModal('#LayoutCtrl'); initLayout()"><i class="ms-ic7"></i> Layout</a></li>
+		<li ng-show="access.checkManager()"><a href="javascript:;" ng-click="revealModal('#ManagerCtrl'); initManager()"><i class="ms-ic8"></i> Manager</a></li>
+		<li ng-show="access.checkVacancies()"><a href="javascript:;" ng-click="revealModal('#VaccanciesCtrl'); initVaccancies()"><i class="ms-ic9"></i> Vacancies</a></li>
+	</ul>
+</div>

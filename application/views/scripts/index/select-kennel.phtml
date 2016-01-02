@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K9 - select kennel</title>
+    <link rel="stylesheet" href="<?= $this->baseUrl('css/foundation.min.css?v=1.1') ?>" />
+    <link rel="stylesheet" href="<?= $this->baseUrl('css/font-awesome.min.css') ?>" />
+</head>
+<body>
+<?php
+    $kennels = api(array('table' => 'kennels'), '', 0, 1, 0, 0, 1);
+    $kennels = $kennels['data'];
+?>
+    <div style="height: 50px; width: 70%; margin: 0 auto; position: fixed; top: 10%; left: 15%; background-color: #333;">
+        <fieldset style="margin: 70px 25px;">
+            <legend>Select kennel</legend>
+            <h4>
+                <a href="admin-kennel">
+                    <i class="fa fa-sign-in"></i> Kennel administration panel
+                </a>
+            </h4>
+            <hr />
+            <?php if (isset($_COOKIE['kennel'])) : ?>
+                <div style="float: right;">
+                    <strong>Current kennel: <i><?= $_COOKIE['kennel'] ?></i></strong>
+                    <div style="clear: both">&nbsp;</div>
+                </div>
+            <?php endif ?>
+            <table style="width: 100%">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Image</th>
+                        <th>Owner</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($kennels as $k) : ?>
+                        <tr>
+                            <td>
+                                <a href="?kennel=<?= $k['v'] ?>">
+                                    <button style="cursor: pointer;">
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </button>
+                                </a>
+                            </td>
+                            <td><?= $k['v'] ?></td>
+                            <td><?= $k['description'] ?></td>
+                            <td>
+                                <?php if (!empty($k['image'])) : ?>
+                                    <img src="<?= l($k['image']) ?>" alt="" style="height: 50px; width: auto;" />
+                                <?php else : ?>
+                                    <img src="<?= $this->baseUrl('img/no_image.png') ?>" alt="" style="height: 50px; width: auto;" />
+                                <?php endif ?>
+                            </td>
+                            <td>
+                                <i class="fa fa-user"></i> <?= ($k['owner'] ? $k['owner'] : '-') ?>
+                            </td>
+                            <td>
+                                <i class="fa fa-envelope"></i> <?= ($k['email'] ? $k['email'] : '-') ?>
+                            </td>
+                            <td>
+                                <i class="fa fa-phone"></i> <?= ($k['phone'] ? $k['phone'] : '-') ?>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</body>
+</html>

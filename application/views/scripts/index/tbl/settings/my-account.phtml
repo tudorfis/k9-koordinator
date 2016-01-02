@@ -1,0 +1,92 @@
+<div id="MyAccountCtrl" ng-controller="MyAccountCtrl" class="small-12">
+    <fieldset>
+        <legend>
+            <i class="fi-torso"></i> My account
+        </legend>
+        <form form-submit hide-show-al-content="true" submit-btn="true" t="identity" table="users" data-abide="true">
+            <div class="small-2 column">
+                <div class="th-img">
+                    <image-no-image
+                        t="identity" n="image_id" s="files" ajax="true"
+                        st="path" stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+                    </image-no-image>
+                </div>
+            </div>
+            <div class="small-10 column">
+                <div class="small-6 column">
+                    <input-text title="First name" t="identity" n="first_name" required="required"></input-text>
+                    <input-text title="Last name" t="identity" n="last_name" required="required"></input-text>
+                    <hr />
+                    <div class="small-6 column">
+                        <div ng-controller="myAccountPhone" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#MyAccountCtrl';
+                            i_class = 'fa fa-phone'; title = 'Phone'; t = 'identity'; n = 'phone'; placeholder = 'Enter contact phone';
+                            tel_format = 'phone_format_id'; pattern = 'phone_number'; required = 1;">
+                        </div>
+                    </div>
+                    <div class="small-6 column">
+                        <div ng-controller="myAccountCell" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#MyAccountCtrl';
+                            i_class = 'fa fa-mobile'; title = 'Cell'; t = 'identity'; n = 'cell'; placeholder = 'Enter cell number';
+                            tel_format = 'cell_format_id'; pattern = 'cell_number'; required = 0;">
+                        </div>
+                    </div>
+                    <hr />
+                    <prefix i="fa fa-user" pl="2" dl="10">
+                        <input-text
+                            title="Username" t="identity" n="username" required="required"
+                            error-text="Username required and must not be taken">
+                        </input-text>
+                    </prefix>
+                    <prefix i="fa fa-envelope" pl="2" dl="10">
+                        <input-text
+                            title="Email" t="identity" n="email"
+                            error-text="Email must be of this format example@test.com"
+                            type="email" required="required">
+                        </input-text>
+                    </prefix>
+                </div>
+                <div class="small-6 column">
+                    <fieldset>
+                        <legend>Address</legend>
+                        <input-text
+                            title="Street" ng-model="identity.street">
+                        </input-text>
+                        <input-text
+                            title="City" ng-model="identity.city">
+                        </input-text>
+                        <div class="small-6 column">
+                            <input-text
+                                title="State" ng-model="identity.state" pattern="alpha"
+                                no-error="true" ng-keyup="convertToUpperCase('#MyAccountCtrl', 'identity', 'state');
+                                                          convertToMaxlength('#MyAccountCtrl', 'identity', 'state', $root.user_interface_settings.state_length)">
+                            </input-text>
+                        </div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Zip" ng-model="identity.zip" tabindex="14"
+                                ng-change="getGeoAddress('#MyAccountCtrl', identity.zip)" pattern="number" no-error="true"
+                                ng-keyup="convertToMaxlength('#MyAccountCtrl', 'identity', 'zip', $root.user_interface_settings.zip_postcode_length)">
+                            </input-text>
+                        </div>
+                        <hr />
+                        <input-checkbox
+                            title="Auto select state & city based on zip"
+                            ng-model="$root.autoselect_zip"
+                            ng-change="getGeoAddress('#MyAccountCtrl', identity.zip)">
+                        </input-checkbox>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Change password</legend>
+                        <input-text
+                            title="Password" t="identity" n="password"
+                            type="password" id="password"></input-text>
+                        <input-text
+                            title="Confirm password" t="identity" n="c_password"
+                            error-text="Passwords must match" type="password" id="c_password"
+                            required="required" equalto="password"></input-text>
+                        <small style="color: #888;">Note: leave empty to keep old password</small>
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>

@@ -1,0 +1,405 @@
+<div id="RetailCtrl" ng-controller="RetailCtrl">
+    <fieldset>
+        <legend>Retail setup</legend>
+        <div class="small-12" id="tabContents">
+            <dl class="tabs">
+                <dd class="active" id="panel1_tab">
+                    <a ng-click="openTab('#tabContents', '#panel1', '#panel1_tab')">
+                        <i class="fi-indent-more"></i> Classes
+                    </a>
+                </dd>
+                <dd id="panel2_tab">
+                    <a ng-click="openTab('#tabContents', '#panel2', '#panel2_tab')">
+                        <i class="fi-list-bullet"></i> Inventory products
+                    </a>
+                </dd>
+                <dd id="panel3_tab">
+                    <a ng-click="openTab('#tabContents', '#panel3', '#panel3_tab')">
+                        <i class="fi-braille"></i> Vendors
+                    </a>
+                </dd>
+                <dd id="panel4_tab">
+                    <a ng-click="openTab('#tabContents', '#panel4', '#panel4_tab')">
+                        <i class="fa fa-area-chart"></i> Product to vendor
+                    </a>
+                </dd>
+                <dd id="panel5_tab">
+                    <a ng-click="openTab('#tabContents', '#panel5', '#panel5_tab')">
+                        <i class="fa fa-table"></i> Import
+                    </a>
+                </dd>
+            </dl>
+            <hr />
+            <div class="tabs-content">
+                <div class="content active" id="panel1">
+                    <div class="small-4 column">
+                        <input-text
+                            title="Search classes" no-error="true"
+                            ng-model="search_classes" class="clearable">
+                        </input-text>
+                    </div>
+                    <div class="small-8 column">
+                        <p style="color: #888; font-size: 12px;">
+                            Note: Set only "margin" or "markup", not both <br />
+                            sale, damage product, wholesale, complementary, employee -> level discounts percentages
+                        </p>
+                    </div>
+                    <div class="clearfix">
+                        <hr />
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="small-12">
+                        <editable-table
+                            ts="retailClasses" class="small-12"
+                            filter=" | filter:search_classes" with-delete="true" with-add="true"
+                            empty-message="* No retail classes defined">
+                        </editable-table>
+                    </div>
+                </div>
+                <div class="content" id="panel2">
+                    <div class="small-3 column">
+                        <input-text
+                            title="Search product code, name in inventory"
+                            ng-model="search_inventory" no-error="true" class="clearable">
+                        </input-text>
+                    </div>
+                    <div class="small-3 column">
+                        <input-select
+                            title="Select a class" ng-v="class_name" line-value="- all -"
+                            ng-model="class_id" s="$root.retail_classes" no-error="true">
+                        </input-select>
+                    </div>
+                    <div class="small-6 column">
+                        <p style="color: #888; font-size: 12px;">
+                            Note: for barcodes to print 'product codes' they need to be all numbers <br />
+                            Qty: current inventory quantity <br />
+                            At: quantity at which the system will request new products to be ordered <br />
+                            To: quantity to which the system will suggest to place an order for products that have reached the ‘Reorder At’ quantity <br />
+                            If ‘Reorder At’ or ‘Reorder To’ numbers are not needed just set their values to 0. <br />
+                            Tax: Is this item taxable ?
+                        </p>
+                    </div>
+                    <div class="clearfix">
+                        <hr />
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="small-12">
+                        <editable-table
+                            ts="retailInventory"
+                            filter=" | array | filter:((class_id != null) ? {class_id: class_id} : {}) | filter:search_inventory"
+                            with-delete="true" with-add="true" class="small-12" empty-message="No retail inventory defined">
+                        </editable-table>
+                    </div>
+                </div>
+                <div class="content" id="panel3">
+                    <div class="small-4 column">
+                        <fieldset>
+                            <legend>Retail vendors setup</legend>
+                            <a class="button tiny radius right"
+                               ng-click="retail_vendor_mod = {}; retail_vendor_mod.status_id = 1;">
+                                <i class="fi-plus"></i> Add new vendor
+                            </a>
+                            <div class="clearfix">&nbsp;</div>
+                            <input-text
+                                title="Search vendor" no-error="true"
+                                ng-model="search_vendors" class="clearable">
+                            </input-text>
+                            <hr />
+                            <ul class="no-bullet">
+                                <li ng-repeat="rv in retail_vendors | array | filter:search_vendors">
+                                    <a ng-click="getRv(rv)">
+                                       {{rv.id}} - {{rv.name}} <i class="fi-check"></i>
+                                    </a>
+                                    <hr />
+                                </li>
+                            </ul>
+                            <div ng-hide="$root.ma(retail_vendors).length > 0">* No vendors</div>
+                        </fieldset>
+                    </div>
+                    <div class="small-8 column">
+                        <fieldset>
+                            <legend>Vendor Information</legend>
+                            <form form-submit hide-show-al-content="true" submit-btn="true" t="retail_vendor_mod" table="retail_vendors"
+                                  id="retailVendorForm" action="" method="post" enctype="multipart/form-data" data-abide="true" set-table-after-submit="true">
+                                <div class="small-6 column">
+                                    <input-text title="Vendor" n="name" t="retail_vendor_mod" required="required"></input-text>
+                                    <prefix i="fa fa-sort-numeric-asc">
+                                        <input-text title="Account" n="account" t="retail_vendor_mod"></input-text>
+                                    </prefix>
+                                    <prefix i="fa fa-phone">
+                                        <input-text title="Contact" n="contact" t="retail_vendor_mod"></input-text>
+                                    </prefix>
+                                    <prefix i="fa fa-phone-square">
+                                        <input-text title="Alt. Contact" n="alt_contact" t="retail_vendor_mod"></input-text>
+                                    </prefix>
+                                    <input-text title="Street" n="street" t="retail_vendor_mod"></input-text>
+                                    <input-text title="City" n="city" t="retail_vendor_mod"></input-text>
+                                    <div class="small-6 column">
+                                        <input-text title="State" n="state" t="retail_vendor_mod"></input-text>
+                                    </div>
+                                    <div class="small-6 column">
+                                        <input-text title="Zip" n="zip" t="retail_vendor_mod"></input-text>
+                                    </div>
+                                    <div class="small-6 column">
+                                        <prefix i="fa fa-mobile" pl="4" dl="8">
+                                            <input-text title="Phone" n="phone" t="retail_vendor_mod"></input-text>
+                                        </prefix>
+                                    </div>
+                                    <div class="small-6 column">
+                                        <prefix i="fa fa-phone" pl="4" dl="8">
+                                            <input-text title="Fax" n="fax" t="retail_vendor_mod"></input-text>
+                                        </prefix>
+                                    </div>
+                                    <div class="small-6 column">
+                                        <input-text title="Alt. Phone" n="alt_phone" t="retail_vendor_mod"></input-text>
+                                    </div>
+                                    <div class="small-6 column">
+                                        <input-text title="Other" n="other" t="retail_vendor_mod"></input-text>
+                                    </div>
+                                </div>
+                                <div class="small-6 column">
+                                    <input-select
+                                        title="Status" t="retail_vendor_mod"
+                                        n="status_id" s="status" required="true">
+                                    </input-select>
+                                    <input-textarea
+                                        title="Comments"
+                                        t="retail_vendor_mod" n="comments" style="height: 300px;">
+                                    </input-textarea>
+                                    <div class="small-4 column">
+                                        <label>&nbsp;</label>
+                                        <a href="{{retail_vendor_mod.website}}" target="_blank" class="button tiny radius">
+                                            <i class="fi-web"></i> Go to website
+                                        </a>
+                                    </div>
+                                    <div class="small-8 column">
+                                        <input-text
+                                            type="url" title="Website" n="website" t="retail_vendor_mod"
+                                            error-text="Please enter valid url, eg: http://www.google.com">
+                                        </input-text>
+                                    </div>
+                                    <hr />
+                                    <div class="small-4 column">
+                                        <label>&nbsp;</label>
+                                        <a href="mailto:{{retail_vendor_mod.email}}" class="button tiny radius">
+                                            <i class="fi-mail"></i> Send email
+                                        </a>
+                                    </div>
+                                    <div class="small-8 column">
+                                        <prefix i="fa fa-envelope-o" pl="4" dl="8">
+                                            <input-text
+                                                type="email" title="Email" n="email" t="retail_vendor_mod"
+                                                error-text="Please enter valid email address, eg: test@info.com">
+                                            </input-text>
+                                        </prefix>
+                                    </div>
+                                </div>
+                                <div class="clearfix">&nbsp;</div>
+                                <div class="small-10 column">
+                                    <input-textarea
+                                        title="Vendor Terms"
+                                        t="retail_vendor_mod" n="terms" style="height: 80px;">
+                                    </input-textarea>
+                                </div>
+                                <div class="small-2 column">
+                                    <fieldset> </fieldset>
+                                </div>
+                            </form>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="content" id="panel4">
+                    <div class="small-12">
+                        <fieldset>
+                            <legend>Product by vendor setup</legend>
+                            <div class="small-6 column">
+                                <table class="small-12 tbl-spaces">
+                                    <thead>
+                                        <tr>
+                                            <th>Vendor name</th>
+                                            <th>Product name</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{rvi.rv.name}}</td>
+                                            <td>{{rvi.ri.product_name}}</td>
+                                            <td>
+                                               <i ng-show="rvi.ri.price"
+                                                  class="fa fa-dollar"></i> {{rvi.ri.price}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="small-6 column">
+                                <form id="retailViForm" data-abide>
+                                    <div class="small-5 column">
+                                        <prefix i="fa fa-dollar">
+                                            <input-text
+                                                type="number" title="Our cost"
+                                                t="rvi" n="our_cost" required="required"
+                                                error-text="This field is required and must be a number, eg: 5.60"
+                                            </input-text>
+                                        </prefix>
+                                    </div>
+                                    <div class="small-3 column">
+                                        <input-text
+                                            type="number" title="Reorder number"
+                                            ng-model="rvi.reorder_number"
+                                        </input-text>
+                                    </div>
+                                    <div class="small-4 column">
+                                        <button
+                                            type="submit"
+                                            class="button medium radius">
+                                                <i class="fa fa-plus-circle"></i>
+                                            Add relationship
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="small-6 column">
+                        <fieldset class="small-12">
+                            <legend>Searching invetory and products</legend>
+                            <div class="small-6 column">
+                                <input-text title="Search vendor" class="clearable"
+                                            ng-model="search_rv" no-error="true"></input-text>
+                            </div>
+                            <div class="small-6 column">
+                                <input-text title="Search product" class="clearable"
+                                            ng-model="search_ri" no-error="true"></input-text>
+                            </div>
+                        </fieldset>
+                        <div class="small-6 column">
+                            <table class="small-12 tbl-spaces">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Vendor name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-click="setRv(rv)"
+                                        ng-repeat="rv in retail_vendors | array | filter:search_rv"
+                                        style="cursor: pointer;">
+                                        <td>
+                                            <i ng-show="rvi.rv.id == rv.id"
+                                               class="fa fa-arrow-circle-right"></i>
+                                        </td>
+                                        <td>{{rv.name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="small-6 column">
+                            <table class="small-12 tbl-spaces">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Product code</th>
+                                    <th>Product name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-click="setRi(ri)"
+                                    ng-repeat="ri in retail_inventory | array | filter:search_ri"
+                                    style="cursor: pointer;">
+                                    <td>
+                                        <i ng-show="rvi.ri.id == ri.id"
+                                           class="fa fa-arrow-circle-right"></i>
+                                    </td>
+                                    <td>{{ri.product_code}}</td>
+                                    <td>{{ri.product_name}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="small-6 column">
+                        <fieldset>
+                            <legend>Searching relationships</legend>
+                                <input-text
+                                    title="Search" ng-model="search_rvi" class="clearable" no-error="true"
+                                    ng-change="$root.searchAdvancedObj('#RetailCtrl', 'search_rvi', 'search_rvi_r',
+                                        [{tbl: 'retail_inventory', id: 'retail_inventory_id', v: ['product_code','product_name']},
+                                         {tbl: 'retail_vendors',   id: 'retail_vendor_id', v: ['name']}])">
+                                </input-text>
+                        </fieldset>
+                        <div class="small-12">
+                            <editable-table
+                                ts="retailVi"
+                                filter=" | array | filterExcludeObjIds:search_rvi_r"
+                                with-delete="true" with-add="false" class="small-12"
+                                empty-message="No relationships defined">
+                            </editable-table>
+                        </div>
+                    </div>
+                </div>
+                <div class="content" id="panel5">
+                    <div class="small-12 column">
+                        <form action="" enctype="multipart/form-data" method="post">
+                            <div class="small-6 column">
+                                <import-retail
+                                   p-values='<b>Values:</b><br /> "class_name", "margin", "markup", "sale", "damage", "whole", "comp", "employee"'
+                                   title="Import classes"
+                                   icon="fi-indent-more"
+                                   table="retail_classes">
+                                </import-retail>
+                            </div>
+                            <div class="small-6 column">
+                                <import-retail
+                                    p-values='<b>Values:</b><br /> "product_code", "product_name", "price", "quantity", "at", "to", "tax"<br /> "class_id" - set the ID of the class, see from list'
+                                    title="Import inventory products"
+                                    icon="fi-list-bullet"
+                                    table="retail_inventory">
+                                </import-retail>
+                            </div>
+                            <div class="small-6 column">
+                                <import-retail
+                                    p-values='<b>Values:</b><br /> "name", "account", "contact", "alt_contact", "street", "city", "state", "zip", "phone", "fax", "alt_phone", "other", "terms", "comments", "website", "email"'
+                                    title="Import vendors"
+                                    icon="fi-braille"
+                                    table="retail_vendors">
+                                </import-retail>
+                            </div>
+                            <div class="small-6 column">
+                                <import-retail
+                                    p-values='<b>Values:</b><br /> "our_cost", "reorder_number"<br /> "retail_vendor_id" - set ID of the vendor (see list)<br /> "retail_inventory_id" - set ID of the product (see list)'
+                                    title="Import product to vendor"
+                                    icon="fa fa-area-chart"
+                                    table="retail_vi">
+                                </import-retail>
+                            </div>
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="small-12">
+                                <fieldset>
+                                    <legend>Example of .csv file</legend>
+                                    <div class="small-12 column">
+                                        <p>Excell</p>
+                                        <img src="img/import_retail_example.png" />
+                                    </div>
+                                    <div class="clearfix">&nbsp;</div>
+                                    <hr />
+                                    <div class="small-12 column">
+                                        <p>Notepad</p>
+                                        <strong>"class_name","margin","markup","sale","damage","whole","comp","employee"</strong><br />
+                                        "Accessories","0","50","10","20","20","100","10"<br />
+                                        "Animal Medic Inc","20","0","10","20","0","100","7"<br />
+                                        "Artemis","25","0","10","20","0","100","7"<br />
+                                        "Beds for pets","30","0","10","20","0","100","7"<br />
+                                        "Cloud star","25","0","10","20","0","100","15"<br />
+                                        "Juice","0","0","0","0","0","0","0"<br />
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>

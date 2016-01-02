@@ -1,0 +1,34 @@
+<div id="clients-sticky"
+     class="sticky-note bg-gr-green">
+    <a class="close-item"
+       ng-click="fadeOutElement('#clients-sticky')"></a>
+    <div class="small-4 column">
+        <i class="fa fa-2x fa-trash left"
+           ng-show="client.sticky.user_id"
+           style="cursor: pointer; margin-right: 10px;"
+           ng-click="deleteSticky('pet')"></i>
+        <i class="fa fa-2x fa-save left"
+           style="cursor: pointer;"
+           ng-click="saveSticky('client')"></i>
+    </div>
+    <div class="small-8 column"
+         ng-show="client.sticky.user_id">
+        <i>by "{{$root.users[client.sticky.user_id].first_name}}, {{$root.users[client.sticky.user_id].last_name}}"</i> <br />
+        <sub>Updated - {{client.sticky.date}}</sub> <br />
+        <sub>{{client.first_name}}, {{client.last_name}}</sub>
+    </div>
+    <div class="small-8 column"
+         ng-hide="client.sticky.user_id">
+        <i>by "{{identity.first_name}}, {{identity.last_name}}"</i> <br />
+        <sub>Date / Time - {{getCDT()}}</sub> <br />
+        <sub>{{client.first_name}}, {{client.last_name}}</sub>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="small-12">
+        <input-textarea
+            title="" no-error="true"
+            placeholder="Enter your message ..."
+            ng-model="client.sticky.v">
+        </input-textarea>
+    </div>
+</div>

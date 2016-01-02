@@ -1,0 +1,50 @@
+<form action="login" method="post">
+    <fieldset class="small-8 small-centered columns">
+        <h3 style="color: #333;">{{settings.layout_title}}</h3>
+        <h5 style="color: #777;"><i class="fi-unlock"></i> Login, and  get started</h5>
+        <div class="clearfix">&nbsp;</div>
+        <h6 style="color: #333;">Kennel: <strong>{{cookies.kennel}}</strong></h6>
+        <hr />
+        <div class="row collapse">
+            <label>Username</label>
+            <div class="small-2  columns">
+                <span class="prefix"><i class="fi-torso-female"></i></span>
+            </div>
+            <div class="small-10  columns">
+                <select name="username" id="username" multiple style="height: 200px;">
+                    <?php
+                        foreach($this->users_array as $role_v => $users) {
+                            echo '<optgroup label="'. $role_v .'">';
+                            foreach($users as $user) {
+                                echo '<option value="'. $user['username'] .'">'.$user['first_name'].' '.$user['last_name'].' ['.$user['username'].']'.'</option>';
+                            }
+                            echo '</optgroup>';
+                        }
+                    ?>
+                </select>
+            </div>
+        </div>
+        <div class="row collapse">
+            <label>Password</label>
+            <div class="small-2  columns">
+                <span class="prefix"><i class="fi-lock"></i></span>
+            </div>
+            <div class="small-10  columns">
+                <input type="password" name="password" id="password" value="" placeholder="Enter password ..." />
+            </div>
+            <div class="small-8 column">
+                <?php if( $this->errorMessage ): ?>
+                    <div data-alert id="login-error" class="alert-box warning round">
+                        <?= $this->errorMessage ?>
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                <?php endif ?>
+            </div>
+            <div class="small-4 column">
+                <button type="submit" name="submit" class="button radius right">
+                    <i class="fi-heart"> Login</i>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>

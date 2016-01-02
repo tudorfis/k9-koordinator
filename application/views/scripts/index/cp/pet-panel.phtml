@@ -1,0 +1,491 @@
+<fieldset class="white-bg">
+    <legend><i class="fa fa-paw"></i> Pet Informations</legend>
+    <div ng-hide="pet.id">
+        <div class="small-6 columns">
+            <i>This client has no pets</i>
+        </div>
+    </div>
+    <div ng-show="pet.id">
+        <div class="small-5 column">
+            <div class="th-img">
+                <image-no-image
+                    t="pet" n="image_id" s="files"
+                    st="path" stt="path_thumb" fancybox="true">
+                </image-no-image>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <a ng-show="$root.cp[$root.client.id].length > 1" href="javascript:;"
+               class="button tiny split">
+                Select pet <span data-dropdown="select-pet-panel"></span>
+            </a>
+            <ul id="select-pet-panel" data-dropdown-content="" class="f-dropdown content open">
+                <li ng-repeat="pet_id in $root.cp[$root.client.id]">
+                    <a ng-click="selectPet('', pet_id);"
+                       ng-class="{'actv': pet_id == $root.pet.id}"
+                       href="javascript:;"
+                       class="button tiny radius">
+                        <img ng-src="{{files[pets[pet_id].image_id].path_thumb | l}}"
+                             style="width: 20px; height: 20px; margin-right: 10px;" />
+                        {{$root.pets[pet_id].pet_name}}
+                    </a>
+                </li>
+            </ul>
+            <a ng-click="revealModal('#cpModal');"
+               class="button tiny radius">
+                <i class="fi-wrench"></i> Edit
+            </a>
+            <i class="fa fa-file-text"
+               style="cursor: pointer;"
+               ng-show="access.checkSticky()"
+               ng-click="fadeInElement('#pets-sticky')"> Sticky</i>
+        </div>
+        <div class="small-7 column">
+            <ul class="no-list-type">
+                <li>
+                    <span class="gray-c">Pet name:</span>
+                    <span>{{pet.pet_name}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Date of birth:</span>
+                    <span>{{pet.dob}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Pet weight:</span>
+                    <span>{{pet.pet_weight}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Pet type:</span>
+                    <span>{{$root.pet_type[pet.pet_type_id].v}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Breed:</span>
+                    <span>{{$root.pet_breed[pet.pet_breed_id].v}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Sex:</span>
+                    <span>{{$root.pet_sex[pet.pet_sex_id].v}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Size:</span>
+                    <span>{{$root.pet_size[pet.pet_size_id].v}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Color:</span>
+                    <span>{{$root.pet_color[pet.pet_color_id].v}}</span>
+                </li>
+                <li ng-show="pet.pet_status_id && pet.pet_status_id != 0">
+                    <span class="gray-c">Pet status:</span>
+                    <span>{{$root.pet_status[pet.pet_status_id].v}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Client ID: </span>
+                    <span>{{$root.client.id}}</span>
+                    <span> | </span>
+                    <span class="gray-c">Pet ID: </span>
+                    <span>{{$root.pet.id}}</span>
+                </li>
+                <li>
+                    <span class="gray-c">Pet age:</span>
+                    <span>{{pet.dob ? (pet.dob | dobString) : ''}}</span>
+                    <h5 class="label alert"
+                        ng-show="access.alarmPetAge() && (pet.dob | dobStringYear)">
+                        This pet is older than <b>{{access.alarmPetAgeValue()}}</b> year{{(access.alarmPetAgeValue() > 1 ? 's' : '')}}
+                    </h5>
+                </li>
+            </ul>
+            <div class="small-12" ng-show="(client.pp.pending.length > 0 || client.bp.pending.length > 0 || client.dp.pending.length > 0 || client.gp.pending.length > 0 || client.tp.pending.length > 0) && !client_pending_show">
+               <div class="clearfix">&nbsp;</div>
+                <fieldset>
+                    <legend>
+                        <i class="fa fa-desktop"></i>
+                        <b>{{client.pp.pending.length + client.bp.pending.length + client.dp.pending.length + client.gp.pending.length + client.tp.pending.length}}</b> Pending bills
+                    </legend>
+                    <a class="button tiny radius alert"
+                       ng-click="client_pending_show = 1">
+                        <i class="fa fa-info"></i> View
+                    </a>
+                </fieldset>
+            </div>
+        </div>
+        <div class="small-12" ng-show="(client.pp.pending_total > 0 || client.bp.pending_total > 0 || client.dp.pending_total > 0 || client.gp.pending_total > 0 || client.tp.pending_total > 0) && client_pending_show">
+            <hr />
+            <div class="small-12">
+                <p class="left"><i class="fa fa-info-circle"></i> Pending bills </p>
+                <a ng-click="client_pending_show = 0;" class="close-item right" title="Close"
+                   style="right: -20px; top: 30px; position: relative;" href="javascript:;"></a>
+                <a class="button tiny radius right" ng-click="$root.revealModal('#PendingCtrl'); $root.initPending()">
+                    <i class="fa fa-dollar"></i> Make payment
+                </a>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="small-12" style="height: 180px; overflow: auto;">
+                <div ng-show="client.pp.pending.length > 0">
+                    <h5>POS pending bills</h5>
+                    <table class="small-12">
+                        <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>TOTAL</td>
+                            <td>Paid:</td>
+                            <td>Unpaid:</td>
+                            <td>Date:</td>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="ppp in client.pp.pending">
+                            <td>POS</td>
+                            <td>{{ppp.required}} $</td>
+                            <td>+ {{ppp.paid}} $</td>
+                            <td>- {{ppp.unpaid}} $</td>
+                            <td>{{ppp.date_created}}</td>
+                        </tr>
+                    </table>
+                    <h4 ng-show="client.pp.pending.length == 0">- no pos pending bills for this client -</h4>
+                </div>
+                <div ng-show="client.bp.pending.length > 0">
+                    <h5>Boarding pending bills</h5>
+                    <table class="small-12">
+                        <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>TOTAL</td>
+                            <td>Paid:</td>
+                            <td>Unpaid:</td>
+                            <td>Date:</td>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="bpp in client.bp.pending">
+                            <td>Boarding</td>
+                            <td>{{bpp.required}} $</td>
+                            <td>+ {{bpp.paid}} $</td>
+                            <td>- {{bpp.unpaid}} $</td>
+                            <td>{{bpp.date_created}}</td>
+                        </tr>
+                    </table>
+                    <h4 ng-show="client.bp.pending.length == 0">- no boarding pending bills for this client -</h4>
+                </div>
+                <div ng-show="client.dp.pending.length > 0">
+                    <h5>Daycare pending bills</h5>
+                    <table class="small-12">
+                        <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>TOTAL</td>
+                            <td>Paid:</td>
+                            <td>Unpaid:</td>
+                            <td>Date:</td>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="dpp in client.dp.pending">
+                            <td>Daycare</td>
+                            <td>{{dpp.required}} $</td>
+                            <td>+ {{dpp.paid}} $</td>
+                            <td>- {{dpp.unpaid}} $</td>
+                            <td>{{dpp.date_created}}</td>
+                        </tr>
+                    </table>
+                    <h4 ng-show="client.dp.pending.length == 0">- no daycare pending bills for this client -</h4>
+                </div>
+                <div ng-show="client.gp.pending.length > 0">
+                    <h5>Grooming pending bills</h5>
+                    <table class="small-12">
+                        <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>TOTAL</td>
+                            <td>Paid:</td>
+                            <td>Unpaid:</td>
+                            <td>Date:</td>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="gpp in client.gp.pending">
+                            <td>Grooming</td>
+                            <td>{{gpp.required}} $</td>
+                            <td>+ {{gpp.paid}} $</td>
+                            <td>- {{gpp.unpaid}} $</td>
+                            <td>{{gpp.date_created}}</td>
+                        </tr>
+                    </table>
+                    <h4 ng-show="client.gp.pending.length == 0">- no grooming pending bills for this client -</h4>
+                </div>
+                <div ng-show="client.tp.pending.length > 0">
+                    <h5>Training pending bills</h5>
+                    <table class="small-12">
+                        <thead>
+                        <tr>
+                            <td>Type</td>
+                            <td>TOTAL</td>
+                            <td>Paid:</td>
+                            <td>Unpaid:</td>
+                            <td>Date:</td>
+                        </tr>
+                        </thead>
+                        <tr ng-repeat="tpp in client.tp.pending">
+                            <td>Training</td>
+                            <td>{{tpp.required}} $</td>
+                            <td>+ {{tpp.paid}} $</td>
+                            <td>- {{tpp.unpaid}} $</td>
+                            <td>{{tpp.date_created}}</td>
+                        </tr>
+                    </table>
+                    <h4 ng-show="client.tp.pending.length == 0">- no training pending bills for this client -</h4>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="small-12 column">
+            <a href="javascript:;"
+               ng-show="access.checkPetRecords()"
+               class="button tiny split">
+                    <i class="fa fa-level-down"></i>
+                    Quick checkin <span data-dropdown="select-checkin-panel"></span>
+
+            </a>
+            <ul id="select-checkin-panel" data-dropdown-content=""
+                ng-show="access.checkRsv()"
+                class="f-dropdown content open">
+                <li ng-show="access.checkBoarding()">
+                    <a ng-click="checkInBoarding();"
+                       class="button tiny radius right">
+                        <i class="fa fa-th-large"></i> Boarding
+                    </a>
+                </li>
+                <li ng-show="access.checkDaycare()">
+                    <a ng-click="checkInDaycare();"
+                       class="button tiny radius right">
+                        <i class="fa fa-th-list"></i> Daycare
+                    </a>
+                </li>
+                <li ng-show="access.checkGrooming()">
+                    <a ng-click="checkInGrooms();"
+                       class="button tiny radius right">
+                        <i class="fa fa-th"></i> Grooms
+                    </a>
+                </li>
+                <li ng-show="access.checkTraining()">
+                    <a ng-click="checkInTraining();"
+                       class="button tiny radius right">
+                        <i class="fa fa-list-alt"></i> Training
+                    </a>
+                </li>
+            </ul>
+            <a ng-click="revealModal('#notepadsModal');"
+               ng-show="access.checkNotepads()"
+               class="button tiny radius right">
+                <i class="fa fa-folder-open-o"></i> Notepads
+            </a>
+        </div>
+        <dl class="tabs column" data-tab="">
+            <dd class="active">
+                <a href="#panel2-1" aria-selected="true" tabindex="0">
+                    <i class="fa fa-angle-double-up"></i> Visits
+                </a>
+            </dd>
+            <dd class="" ng-show="access.checkRsv()">
+                <a href="#panel2-2" aria-selected="false" tabindex="-1">
+                    <i class="fa fa-angle-double-up"></i> Reservations
+                </a>
+            </dd>
+            <dd class="" ng-show="(pet.pet_type_id == '1' || pet.pet_type_id == '2') && (access.checkVaccinations())">
+                <a href="#panel2-3" aria-selected="false" tabindex="-1">
+                    <i class="fa fa-angle-double-up"></i> Vaccinations
+                </a>
+            </dd>
+            <dd class="">
+                <a href="#panel2-4" aria-selected="false" tabindex="-1"
+                   ng-show="access.checkPetRecords()">
+                    <i class="fa fa-angle-double-up"></i> Records
+                </a>
+            </dd>
+        </dl>
+        <div class="tabs-content">
+            <div class="content active" id="panel2-1" tabindex="-1" aria-hidden="false">
+                <div class="small-12">
+                    <div class="small-4 column">
+                        <div ng-include="'tpl/last-visits'"></div>
+                    </div>
+                    <div class="small-5 column">
+                        <div ng-include="'tpl/visits-table'"></div>
+                    </div>
+                    <div class="small-3 column">
+                        <div ng-show="($root.pet.pet_type_id == '1' || $root.pet.pet_type_id == '2') && (access.checkVaccinations())">
+                            <p style="font-weight: bold; border-bottom: 1px solid #ccc;">Vaccination records</p>
+                            <div class="small-12">
+                                <label>
+                                    Veterinary: <strong>{{$root.vets[$root.pet.pet_vet.vet_id].v || '-'}}</strong>
+                                </label>
+                            </div>
+                            <div class="small-12">
+                                <label>
+                                    Rabies: <strong>{{$root.pet.pet_vet.rabies || '-'}}</strong>
+                                </label>
+                            </div>
+                            <div ng-show="$root.pet.pet_type_id == '1'">
+                                <div class="small-12">
+                                    <label>
+                                        D/H/L/P: <strong>{{$root.pet.pet_vet.d_h_l_p || '-'}}</strong>
+                                    </label>
+                                </div>
+                                <div class="small-12">
+                                    <label>
+                                        Bordetella: <strong>{{$root.pet.pet_vet.bordetella || '-'}}</strong>
+                                    </label>
+                                </div>
+                            </div>
+                            <div ng-show="pet.pet_type_id == '2'">
+                                <div class="small-12">
+                                    <label>
+                                        Fe Leuk: <strong>{{$root.pet.pet_vet.fe_leuk || '-'}}</strong>
+                                    </label>
+                                </div>
+                                <div class="small-12">
+                                    <label>
+                                        F/V/R/C/P: <strong>{{$root.pet.pet_vet.f_v_r_c_p || '-'}}</strong>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content" id="panel2-2" aria-hidden="true" tabindex="-1">
+                <div class="small-12" ng-show="access.checkRsv()">
+                    <fieldset class="none-bg" style="padding: 15px">
+                        <legend> Reservations:</legend>
+                        <a class="button tiny radius small-6 left"
+                           ng-show="access.checkBoarding()"
+                           ng-click="$root.prd_selected = 'r_boarding'"
+                           ng-class="{'actv': $root.prd_selected == 'r_boarding'}">
+                            <i class="fa fa-th-large"></i> Boarding
+                        </a>
+                        <a class="button tiny radius small-6 left"
+                           ng-show="access.checkDaycare()"
+                           ng-click="$root.prd_selected = 'r_daycare'"
+                           ng-class="{'actv': $root.prd_selected == 'r_daycare'}">
+                            <i class="fa fa-th-list"></i> Daycare
+                        </a>
+                        <a class="button tiny radius small-6 left"
+                           ng-show="access.checkGrooming()"
+                           ng-click="$root.prd_selected = 'r_grooms'"
+                           ng-class="{'actv': $root.prd_selected == 'r_grooms'}">
+                            <i class="fa fa-th"></i> Grooms
+                        </a>
+                        <a class="button tiny radius small-6 left"
+                           ng-show="access.checkTraining()"
+                           ng-click="$root.prd_selected = 'r_training'"
+                           ng-class="{'actv': $root.prd_selected == 'r_training'}">
+                            <i class="fa fa-list-alt"></i> Training
+                        </a>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="content" id="panel2-3" tabindex="-1" aria-hidden="false"
+                 ng-show="(pet.pet_type_id == '1' || pet.pet_type_id == '2') && (access.checkVaccinations())">
+                <fieldset class="small-12">
+                    <legend>Vaccination records</legend>
+                    <div class="small-8 column">
+                        <input-select
+                            title="Veterinary" t="pet.pet_vet"
+                            n="vet_id" s="vets" no-error="true">
+                        </input-select>
+                    </div>
+                    <div class="small-4 column">
+                        <a class="button tiny radius pvBtn"
+                           ng-click="updatePetVet()">
+                            <i class="fi-check"></i> Save
+                        </a>
+                        <img style="display: none;" class="al pvAl"
+                             ng-src="{{'img/ajax.gif' | baseUrl}}">
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="small-4 column">
+                        <input-text
+                            type="text" title="Rabies" class="datepicker"
+                            t="pet.pet_vet" n="rabies" no-error="true" >
+                        </input-text>
+                    </div>
+                    <div class="small-4 column"
+                         ng-show="pet.pet_type_id == '1'">
+                        <input-text
+                            type="text" title="D/H/L/P" class="datepicker"
+                            t="pet.pet_vet" n="d_h_l_p" no-error="true" >
+                        </input-text>
+                    </div>
+                    <div class="small-4 column"
+                         ng-show="pet.pet_type_id == '1'">
+                        <input-text
+                            type="text" title="Bordetella" class="datepicker"
+                            t="pet.pet_vet" n="bordetella" no-error="true" >
+                        </input-text>
+                    </div>
+                    <div class="small-4 column"
+                         ng-show="pet.pet_type_id == '2'">
+                        <input-text
+                            type="text" title="Fe Leuk" class="datepicker"
+                            t="pet.pet_vet" n="fe_leuk" no-error="true" >
+                        </input-text>
+                    </div>
+                    <div class="small-4 column"
+                         ng-show="pet.pet_type_id == '2'">
+                        <input-text
+                            type="text" title="F/V/R/C/P" class="datepicker"
+                            t="pet.pet_vet" n="f_v_r_c_p" no-error="true" >
+                        </input-text>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="content" id="panel2-4" tabindex="-1" aria-hidden="false">
+                <div class="small-8 column">
+                    <fieldset>
+                        <legend>Records</legend>
+                        <a class="button tiny radius btn-less-padding"
+                           ng-click="getRecords('records_boarding','records_boarding_mod','#recordsBoardingModal')">
+                                <i class="fa fa-table"></i> Boarding
+                        </a>
+                        <a class="button tiny radius btn-less-padding"
+                           ng-click="getRecords('records_daycare','records_daycare_mod','#recordsDaycareModal')">
+                                <i class="fa fa-th-list"></i> Daycare
+                        </a>
+                        <a class="button tiny radius btn-less-padding"
+                           ng-click="getRecordsServices()">
+                                <i class="fa fa-adn"></i> Services
+                        </a>
+                        <a class="button tiny radius btn-less-padding"
+                           ng-click="getRecordsGrooming()">
+                                <i class="fa fa-th"></i> Grooming
+                        </a>
+                        <a class="button tiny radius btn-less-padding"
+                           ng-click="getRecordsTraining()">
+                            <i class="fa fa-list-alt"></i> Training
+                        </a>
+                        <a class="button tiny radius btn-less-padding"
+                           ng-click="getRecordsMedsDiets(1)">
+                            <i class=""></i> Meds
+                        </a>
+                        <a class="button tiny radius btn-less-padding"
+                           ng-click="getRecordsMedsDiets(2)">
+                            <i class=""></i> Diets
+                        </a>
+                    </fieldset>
+                </div>
+                <div class="small-4 column">
+                    <fieldset style="padding: 10px;">
+                        <legend>Special instructions</legend>
+                        <p style="color: #999; font-size: 9px; margin: 0;">
+                            Note: shows in most reports and kennel cards, use for allergies and important remarks
+                        </p>
+                        <input-textarea
+                            title="" no-error="true" style="height: 50px;"
+                            t="pet" n="special_instructions">
+                        </input-textarea>
+                        <a class="button tiny radius petBtn"
+                           ng-click="updatePet()">
+                            <i class="fi-check"></i> Save
+                        </a>
+                        <img style="display: none;" class="al petAl"
+                             ng-src="{{'img/ajax.gif' | baseUrl}}">
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

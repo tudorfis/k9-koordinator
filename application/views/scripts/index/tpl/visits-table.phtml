@@ -1,0 +1,46 @@
+<script id="tpl/visits-table" type="text/ng-template">
+    <div ng-show="$root.pet.id">
+        <table class="small-12 tbl-no-padding-v">
+            <tr>
+                <td>Reward points</td>
+                <td>{{client.reward_points || "0"}}</td>
+                </tr>
+            <tr>
+                <td>Referrals</td>
+                <td>{{client.refferals || "0"}}</td>
+                </tr>
+            <tr>
+                <td><strong>No. Visits</strong></td>
+                <td>{{pet.no_visits || "0"}}</td>
+                </tr>
+            <tr ng-show="access.checkBoarding()">
+                <td>Board No.</td>
+                <td>{{ma(pet.r_boarding).length || "0"}}</td>
+                </tr>
+            <tr ng-show="access.checkGrooming()">
+                <td>Groom No.</td>
+                <td>{{ma(pet.r_grooms).length || "0"}}</td>
+                </tr>
+            <tr ng-show="access.checkTraining()">
+                <td>Training No.</td>
+                <td>{{ma(pet.r_training).length || "0"}}</td>
+                </tr>
+            <tr ng-show="access.checkDaycare()">
+                <td>Daycare No.</td>
+                <td>{{ma(pet.r_daycare).length || "0"}}</td>
+                </tr>
+            <tr>
+                <td>Cancellations</td>
+                <td>{{pet.no_cancellations || "0"}}</td>
+            </tr>
+            <tr>
+                <td>Client since: </td>
+                <td>{{client.date_created.substring(0, 10) || "-"}}</td>
+            </tr>
+            <tr>
+                <td>Pet since: </td>
+                <td>{{pet.date_created.substring(0, 10) || "-"}}</td>
+            </tr>
+        </table>
+    </div>
+</script>

@@ -1,0 +1,119 @@
+<fieldset>
+    <legend><i class="fa fa-level-down"></i> Service information</legend>
+    <div class="small-8 column">
+        <div class="small-12">
+            <div class="small-8 column">
+                <input-select
+                    title="Add new recurring service" no-error="true"
+                    ng-change="setRs({})"
+                    ng-model="$root.ss_id" s="schedule_services">
+                </input-select>
+            </div>
+            <div class="small-4 column">
+                <label>&nbsp;</label>
+                <a class="button tiny radius"
+                   ng-click="addRs()">
+                    <i class="fa fa-check"></i> Add new
+               </a>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-12">
+            <fieldset>
+                <legend>Existing recurring services</legend>
+                <div class="small-6 column">
+                    <div ng-include="'tpl/cp-info'"></div>
+                    <div class="clearfix">&nbsp;</div>
+                    <p ng-hide="ma(pet.records_services).length > 0">- no recurring services</p>
+                    <table ng-show="ma(pet.records_services).length > 0"
+                           class="small-12 tbl-spaces">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Service name</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-click="setRs(rs)"
+                                ng-repeat="rs in $root.pet.records_services | array"
+                                ng-class="{'tr-actv': ($root.current_rs.id == rs.id)}"
+                                style="cursor: pointer;">
+                                <td>
+                                    <i ng-show="$root.current_rs.id == rs.id"
+                                       class="fa fa-arrow-circle-right"></i>
+                                </td>
+                                <td>{{schedule_services[rs.ss_id].v}}</td>
+                                <td>
+                                    <a ng-click="deleteRs(rs.id)">
+                                        <i class="fa fa-trash">&nbsp;</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="small-6 column" ng-hide="$root.current_rs.id">
+                    <p>- select / add service -</p>
+                </div>
+                <div class="small-6 column" ng-show="$root.current_rs.id">
+                    <form form-submit hide-show-al-content="true" submit-btn="true"  submit-btn-text="Save records"
+                          t="current_rs" table="records_services" data-abide="true" set-table-after-submit="true">
+                        <div class="small-12">
+                            <fieldset>
+                                <div class="small-12 column">
+                                    <input-select
+                                        title="No. of charges"
+                                        ng-model="$root.current_rs.no_charges" s="rnt(10)"
+                                        required="required" error-text="This is required">
+                                    </input-select>
+                                    <input-checkbox
+                                        title="Every day"
+                                        ng-model="$root.current_rs.is_every_day">
+                                    </input-checkbox>
+                                    <input-checkbox
+                                        title="Check in date"
+                                        ng-model="$root.current_rs.is_checkin_date">
+                                    </input-checkbox>
+                                    <input-checkbox
+                                        title="Check out date"
+                                        ng-model="$root.current_rs.is_checkout_date">
+                                    </input-checkbox>
+                                    <input-select
+                                        title="Select type" no-error="true"
+                                        ng-model="$root.current_rs.schedule" required="required"
+                                        ng-id="v" ng-v="n" s="rs_schedule">
+                                    </input-select>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="small-4 column">
+        <fieldset>
+            <legend>Service packages</legend>
+            <p style="color: #999; font-size: 10px;">Note: expiration date will be set automatically after the first use</p>
+            <table class="small-12">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Expires</th>
+                        <th>Uses</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</fieldset>

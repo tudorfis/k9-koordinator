@@ -1,0 +1,193 @@
+<div class="small-12">
+    <form form-submit hide-show-al-content="true" submit-btn="true" submit-btn-text="Save boarding settings"
+          t="boarding_settings" table="boarding_settings" data-abide="true" set-table-after-submit="true">
+        <fieldset class="small-12">
+            <legend>
+                <i class="fa fa-th-large"></i> Boarding settings
+            </legend>
+            <div ng-switch="boarding_settings.charge_type">
+                <div ng-switch-when="charge_by_petsize">
+                    <input-select
+                        title="Default pet size for all pets" t="boarding_settings" n="charge_type_id"
+                        s="boarding_petsizes" none-filter="true">
+                    </input-select>
+                </div>
+                <div ng-switch-when="charge_by_runtype">
+                    <input-select
+                        title="Default run type for all pets" t="boarding_settings" n="charge_type_id"
+                        s="boarding_runtypes" none-filter="true">
+                    </input-select>
+                </div>
+            </div>
+            <input-select
+                title="Default stay reason for all pets" t="boarding_settings" n="stay_reason_id"
+                s="stay_reasons" none-filter="true">
+            </input-select>
+            <input-checkbox
+                title="Default mark all pets as 'handle carefully'"
+                t="boarding_settings" n="is_handle_carefully">
+            </input-checkbox>
+            <input-checkbox
+                title="Default mark all pets as 'extra pet by default'"
+                t="boarding_settings" n="is_extra_pet">
+            </input-checkbox>
+        </fieldset>
+        <fieldset>
+            <legend>
+                <i class="fi-dollar-bill"></i> Boarding charges options
+            </legend>
+            <div class="cleafix">&nbsp;</div>
+            <div class="small-3 column">
+                <strong>Opened and available for:</strong>
+            </div>
+            <div class="small-3 column">
+                <input-checkbox
+                    title="Saturdays"
+                    ng-model="boarding_settings.available_for_saturdays">
+                </input-checkbox>
+            </div>
+            <div class="small-3 column">
+                <input-checkbox
+                    title="Sundays"
+                    ng-model="boarding_settings.available_for_sundays">
+                </input-checkbox>
+            </div>
+            <div class="small-3 column">
+                <input-checkbox
+                    title="Holidays"
+                    ng-model="boarding_settings.available_for_holidays">
+                </input-checkbox>
+            </div>
+            <div class="cleafix">&nbsp;</div>
+            <div class="small-12">
+                <div class="small-6 column">
+                    <input-text
+                        title="Openning check in time"
+                        ng-model="boarding_settings.check_in_time"
+                        class="timepicker" required="required"
+                        error-text="This field is required, enter time pattern e.g. 10:00">
+                    </input-text>
+                </div>
+                <div class="small-6 column">
+                    <input-text
+                        title="Closing check out time"
+                        ng-model="boarding_settings.check_out_time"
+                        class="timepicker" required="required"
+                        error-text="This field is required, enter time pattern e.g. 10:00">
+                    </input-text>
+                </div>
+            </div>
+            <div class="cleafix">&nbsp;</div>
+            <hr />
+            <div class="small-12 left">
+                <div class="left">
+                    <input-radio
+                        title="Charge $[amount] per hour after check out time"
+                        ng-model="boarding_settings.charge_after_checkout_option" v="charge_amount_per_hour">
+                    </input-radio>
+                </div>
+                <div class="left ml10">
+                    <prefix i="fa fa-dollar" pl="3" dl="3" wl="true">
+                        <input-text
+                            ng-model="boarding_settings.charge_amount_per_hour_v" no-label="true">
+                        </input-text>
+                    </prefix>
+                </div>
+            </div>
+            <div class="small-12 left">
+                <div class="left">
+                    <input-radio
+                        title="Charge half day rate for [hours] before fullday checkout time"
+                        ng-model="boarding_settings.charge_after_checkout_option" v="charge_no_hours_for_half_day">
+                    </input-radio>
+                </div>
+                <div class="left ml10">
+                    <input-text
+                        ng-model="boarding_settings.charge_no_hours_for_half_day_v" no-label="true">
+                    </input-text>
+                </div>
+            </div>
+            <div class="small-12 left">
+                <label class="left">Charge aditional $[amount] for holiday check out</label>
+                <div class="ml left">
+                    <prefix i="fa fa-dollar" pl="3" dl="9" wl="true">
+                        <input-text
+                            no-label="true"
+                            ng-model="boarding_settings.charge_aditional_amount_for_holidays">
+                        </input-text>
+                    </prefix>
+                </div>
+            </div>
+            <div class="cleafix">&nbsp;</div>
+            <hr />
+            <div class="small-12">
+                <div class="small-6 column">
+                    <input-text
+                        title="Halfday from:"
+                        ng-model="boarding_settings.half_day_from"
+                        class="timepicker" required="required"
+                        error-text="This field is required,  only numeric values">
+                    </input-text>
+                </div>
+                <div class="small-6 column">
+                    <input-text
+                        title="Halfday  to:"
+                        ng-model="boarding_settings.half_day_to"
+                        class="timepicker" required="required"
+                        error-text="This field is required,  only numeric values">
+                    </input-text>
+                </div>
+            </div>
+            <div class="small-12">
+                <div class="small-6 column">
+                    <input-text
+                        title="Fullday from:"
+                        ng-model="boarding_settings.full_day_from"
+                        class="timepicker" required="required"
+                        error-text="This field is required,  only numeric values">
+                    </input-text>
+                </div>
+                <div class="small-6 column">
+                    <input-text
+                        title="Fullday to:"
+                        ng-model="boarding_settings.full_day_to"
+                        class="timepicker" required="required"
+                        error-text="This field is required,  only numeric values">
+                    </input-text>
+                </div>
+            </div>
+            <fieldset class="small-6 column">
+                <p style="font-weight: bold;">Kennel Charge Policy</p>
+                <hr />
+                <input-radio
+                    title="Charge by runtype"
+                    ng-model="boarding_settings.charge_type" v="charge_by_runtype">
+                </input-radio>
+                <input-radio
+                    title="Charge by petsize"
+                    ng-model="boarding_settings.charge_type" v="charge_by_petsize">
+                </input-radio>
+            </fieldset>
+        </fieldset>
+    </form>
+</div>
+<fieldset
+    ng-show="boarding_settings.charge_type == 'charge_by_petsize'"
+    class="none-bg small-12">
+    <legend>Pet size and rates setup</legend>
+    <editable-table
+        ts="boardingPetSizes"
+        with-delete="true" with-add="true"
+        class="small-12" empty-message="No petsizes and rates defined">
+    </editable-table>
+</fieldset>
+<fieldset
+    ng-show="boarding_settings.charge_type == 'charge_by_runtype'"
+    class="none-bg small-12">
+    <legend>Runtypes and rates setup</legend>
+    <editable-table
+        ts="boardingRunTypes"
+        with-delete="true" with-add="true"
+        class="small-12" empty-message="No runtypes and rates defined">
+    </editable-table>
+</fieldset>

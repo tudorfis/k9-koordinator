@@ -1,0 +1,138 @@
+<h4><i class="fa fa-columns"></i> Discounts boarding</h4>
+<div class="small-12">
+    <fieldset>
+        <legend>Multiple pet discounts</legend>
+        <editable-table
+            ts="discountsBoardingMultiplePet"
+            with-delete="true" with-add="true"
+            class="small-12" empty-message="No multiple pet discounts defined">
+        </editable-table>
+    </fieldset>
+</div>
+<div class="small-6 column">
+    <fieldset>
+        <legend>Long term discounts</legend>
+        <p style="color: #999;">Discounts for pets boarding over a give number of days</p>
+        <table class="small-12">
+            <tr>
+                <td>Long term</td>
+                <td>
+                    <input-text
+                        title="After nr days" no-error="true"
+                        ng-model="discounts_boarding_long_term[1].nr_days">
+                    </input-text>
+                </td>
+                <td>
+                    <label>&nbsp;</label>
+                    <input-select
+                        title="" no-error="true" s="modifiers"
+                        ng-model="discounts_boarding_long_term[1].modifier_id">
+                    </input-select>
+                </td>
+                <td>
+                    <input-text
+                        title="Amount" no-error="true"
+                        ng-model="discounts_boarding_long_term[1].amount">
+                    </input-text>
+                </td>
+            </tr>
+            <tr>
+                <td>2nd Long term</td>
+                <td>
+                    <input-text
+                        title="After nr days" no-error="true"
+                        ng-model="discounts_boarding_long_term[2].nr_days">
+                    </input-text>
+                </td>
+                <td>
+                    <label>&nbsp;</label>
+                    <input-select
+                        title="" no-error="true" s="modifiers"
+                        ng-model="discounts_boarding_long_term[2].modifier_id">
+                    </input-select>
+                </td>
+                <td>
+                    <input-text
+                        title="Amount" no-error="true"
+                        ng-model="discounts_boarding_long_term[2].amount">
+                    </input-text>
+                </td>
+            </tr>
+        </table>
+        <div class="clearfix">&nbsp;</div>
+        <p style="color: #999;">Note: this a daily discount. This discount applies before season adjusments</p>
+        <div class="left">
+            <save-button
+                name="sltd" function="saveLtd()"
+                icon-class="fa fa-check" title="Save">
+            </save-button>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>New client discount</legend>
+        <table class="small-12">
+            <tr>
+                <td>
+                    <label>&nbsp;</label>
+                    <input-select
+                        title="" no-error="true" s="modifiers"
+                        ng-model="discounts_boarding_new_client[1].modifier_id">
+                    </input-select>
+                </td>
+                <td>
+                    <input-text
+                        title="Amount" no-error="true"
+                        ng-model="discounts_boarding_new_client[1].amount">
+                    </input-text>
+                </td>
+            </tr>
+        </table>
+        <div class="right">
+            <save-button
+                name="snc" function="saveNc()"
+                icon-class="fa fa-check" title="Save">
+            </save-button>
+        </div>
+        <p style="color: #999;">Note: this is a visit discount (i.e. applies one time, not daily). This discount applies to only the 1st pet's boarding or daycare, it dosen't apply to any pet after the first one</p>
+    </fieldset>
+</div>
+<div class="small-6 column">
+    <fieldset>
+        <legend>Priority club discounts</legend>
+        <table class="small-12">
+            <tr ng-repeat="i in rna(4)">
+                <td>
+                    <input-checkbox
+                        title="Check if using"
+                        ng-model="discounts_boarding_priority_club[{{i}}].in_use">
+                    </input-checkbox>
+                </td>
+                <td>
+                    <input-text
+                        title="Level name" no-error="true"
+                        ng-model="discounts_boarding_priority_club[i].v">
+                    </input-text>
+                </td>
+                <td>
+                    <input-text
+                        title="After nr visits" no-error="true"
+                        ng-model="discounts_boarding_priority_club[i].nr_visits">
+                    </input-text>
+                </td>
+                <td>
+                    <input-text
+                        title="Discount amount" no-error="true"
+                        ng-model="discounts_boarding_priority_club[i].discount_amount">
+                    </input-text>
+                </td>
+            </tr>
+        </table>
+        <p style="color: #999">Note: this is a daily disccount that applies to all pets. This discount deducts a fixed amount daily (not a percentage). Visits refer to client's visits (not pet's visits)</p>
+        <div class="left">
+            <save-button
+                name="spc" function="savePc()"
+                icon-class="fa fa-check" title="Save">
+            </save-button>
+        </div>
+    </fieldset>
+</div>

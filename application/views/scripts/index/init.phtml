@@ -1,0 +1,247 @@
+<?php
+
+if (!isNE($this->identity)) {
+
+    $css_is_minified = 0;
+    $css_default = 'css/minified.li.css';
+    $css_array = array(
+        'css/foundation.min.css?v=1.1',
+        'css/foundation-icons.min.css?v=1.3',
+        'css/font-awesome.min.css',
+        'bower_components/animate.css/animate.min.css',
+        'bower_components/angular-rangeslider/angular.rangeSlider.css',
+        'css/jquery-ui.min.css',
+        'css/jquery.ui.timepicker.min.css?v=0.3.3',
+        'css/jquery.fancybox.min.css?v=2.1.5',
+        'css/spectrum.min.css',
+        'css/styles.css?v=1.3'
+    );
+
+    $js_resources_is_minified = 0;
+    $js_resources_default = 'js/minified/li/minified-resources.js';
+    $js_resources_array = array(
+        'js/vendor/modernizr.min.js?v=2.7.2',
+        'js/vendor/underscore-min.js?v=1.6.0',
+        'js/vendor/chance.min.js',
+        'js/vendor/jquery.min.js?v=2.1.0',
+        'js/jquery/jquery-ui.min.js',
+        'js/jquery/jquery.ui.core.min.js',
+        'js/jquery/jquery.ui.timepicker.min.js?v=0.3.3',
+        'js/jquery/jquery.fancybox.min.js?v=2.1.5',
+        'js/jquery/jquery.spectrum.min.js',
+        'js/foundation/foundation.datepicker.min.js',
+        'bower_components/pdfmake/build/pdfmake.min.js',
+        'bower_components/pdfmake/build/vfs_fonts.js',
+        'bower_components/jsbarcode/CODE128.js',
+        'bower_components/jsbarcode/JsBarcode.js',
+        'js/vendor/foundation.min.js?v=5'
+    );
+
+    $js_angular_is_minified = 0;
+    $js_angular_default = 'js/minified/li/minified-angular.js';
+    $js_angular_array = array(
+        'js/vendor/angular.js?v=1.2.16',
+        'js/angular/angular-cookies.min.js',
+        'js/angular/angular-animate.min.js',
+        'js/angular/angular-webstorage.min.js',
+        'js/angular/angular-ui-router.min.js',
+        'bower_components/angular-rangeslider/angular.rangeSlider.js'
+    );
+
+    $js_ng_is_minified = 0;
+    $js_ng_default = 'js/minified/li/minified-ng.js';
+    $js_ng_array = array(
+        'js/ng/run/viewsRun.js',
+        'js/ng/run/searchRun.js',
+        'js/ng/run/convertsRun.js',
+        'js/ng/run/reportsRun.js',
+        'js/ng/run/scrollUpRun.js',
+        'js/ng/run/loadingMaskRun.js',
+        'js/ng/run/foundationRun.js',
+        'js/ng/run/validatorsRun.js',
+        'js/ng/controllers/mainCtrl.js',
+        'js/ng/controllers/tbl/extra/taxSettings.js',
+        'js/ng/controllers/tbl/reservations/boarding/boardingSettings.js',
+        'js/ng/controllers/tbl/reservations/daycare/daycareGroups.js',
+        'js/ng/controllers/tbl/reservations/grooming/groomingGeneral.js',
+        'js/ng/controllers/tbl/reservations/grooming/groomingRates.js',
+        'js/ng/controllers/tbl/reservations/grooming/groomingServices.js',
+        'js/ng/controllers/tbl/reservations/training/trainingGroups.js',
+        'js/ng/controllers/tbl/reservations/training/trainingSchedule.js',
+        'js/ng/controllers/tbl/settings/basicInformation.js',
+        'js/ng/controllers/tbl/settings/generalSettings.js',
+        'js/ng/controllers/tbl/settings/commissions.js',
+        'js/ng/controllers/tbl/settings/holidayAndSeason.js',
+        'js/ng/controllers/tbl/settings/myAccount.js',
+        'js/ng/controllers/tbl/settings/rewardsProgram.js',
+        'js/ng/controllers/tbl/settings/userInterface.js',
+        'js/ng/controllers/tbl/settings/layout.js',
+        'js/ng/controllers/tbl/settings/discounts/boarding.js',
+        'js/ng/controllers/tbl/settings/security/passwordManagement.js',
+        'js/ng/controllers/tbl/settings/security/securityCenter.js',
+        'js/ng/controllers/tbl/settings/security/securityLevels.js',
+        'js/ng/controllers/tbl/settings/generalFeatures.js',
+        'js/ng/controllers/tbl/settings/retail.js',
+        'js/ng/controllers/tbl/settings/languages.js',
+        'js/ng/controllers/crud/users.js',
+        'js/ng/controllers/tools/timeClock.js',
+        'js/ng/controllers/tools/petOwnership.js',
+        'js/ng/controllers/index/help.js',
+        'js/ng/controllers/index/cp.js',
+        'js/ng/controllers/index/rBoarding.js',
+        'js/ng/controllers/index/rTraining.js',
+        'js/ng/controllers/index/rDaycare.js',
+        'js/ng/controllers/index/rGrooms.js',
+        'js/ng/controllers/index/rServices.js',
+        'js/ng/controllers/index/rMeds.js',
+        'js/ng/controllers/index/rDiets.js',
+        'js/ng/controllers/index/rRecords.js',
+        'js/ng/controllers/side/posCtrl.js',
+        'js/ng/controllers/side/pendingCtrl.js',
+        'js/ng/controllers/side/depositsCtrl.js',
+        'js/ng/controllers/side/reportsCtrl.js',
+        'js/ng/controllers/side/messagesCtrl.js',
+        'js/ng/controllers/side/vaccanciesCtrl.js',
+        'js/ng/controllers/side/layoutCtrl.js',
+        'js/ng/controllers/side/managerCtrl.js',
+        'js/ng/directives/inputFormDirectives.js',
+        'js/ng/directives/imageDirectives.js',
+        'js/ng/directives/commonDirectives.js',
+        'js/ng/directives/tableDirectives.js',
+        'js/ng/factory/transformRequestAsFormPost.js',
+        'js/ng/factory/httpInterceptor.js',
+        'js/ng/factory/qEach.js',
+        'js/ng/services/apiService.js',
+        'js/ng/services/modelsService.js',
+        'js/ng/services/cFuncService.js',
+        'js/ng/services/languageService.js',
+        'js/ng/services/crudService.js',
+        'js/ng/services/calcService.js',
+        'js/ng/services/cpService.js',
+        'js/ng/services/rsvService.js',
+        'js/ng/services/dateTimeService.js',
+        'js/ng/services/pdfService.js',
+        'js/ng/services/accessService.js',
+        'js/ng/services/settingsService.js',
+        'js/ng/prototype/array.js',
+        'js/ng/prototype/string.js',
+        'js/ng/prototype/map.js',
+        'js/ng/filters/commonFilters.js',
+        'js/ng/filters/dateFilters.js',
+        'js/ng/constants/configConstant.js',
+        'js/ng/constants/tablesConstant.js',
+        'js/ng/constants/routerConstant.js',
+        'js/ng/init/li/init.js',
+        'js/ng/config.js',
+        'js/ng/init/li/resources.js',
+        'js/ng/init/li/initModels.js'
+    );
+
+    $js_external_array = array(
+        'https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true'
+    );
+
+} else {
+
+    $css_is_minified = 0;
+    $css_default = 'css/minified.nli.css';
+    $css_array = array(
+        'css/foundation.min.css?v=1.1',
+        'css/foundation-icons.min.css?v=1.3',
+        'css/font-awesome.min.css',
+        'css/styles.css?v=1.3'
+    );
+
+    $js_resources_is_minified = 0;
+    $js_resources_default = 'js/minified/nli/minified-resources.js';
+    $js_resources_array = array(
+        'js/vendor/modernizr.min.js?v=2.7.2',
+        'js/vendor/jquery.min.js?v=2.1.0',
+        'js/vendor/foundation.min.js?v=5'
+    );
+
+    $js_angular_is_minified = 0;
+    $js_angular_default = 'js/minified/nli/minified-angular.js';
+    $js_angular_array = array(
+        'js/vendor/angular.min.js?v=1.2.16',
+        'js/angular/angular-cookies.min.js',
+    );
+
+    $js_ng_is_minified = 0;
+    $js_ng_default = 'js/minified/nli/minified-ng.js';
+    $js_ng_array = array(
+        'js/ng/controllers/mainCtrl.js',
+        'js/ng/factory/transformRequestAsFormPost.js',
+        'js/ng/factory/httpInterceptor.js',
+        'js/ng/services/apiService.js',
+        'js/ng/services/modelsService.js',
+        'js/ng/directives/commonDirectives.js',
+        'js/ng/filters/commonFilters.js',
+        'js/ng/run/convertsRun.js',
+        'js/ng/run/scrollUpRun.js',
+        'js/ng/run/loadingMaskRun.js',
+        'js/ng/run/foundationRun.js',
+        'js/ng/constants/configConstant.js',
+        'js/ng/constants/tablesConstant.js',
+        'js/ng/init/nli/init.js',
+        'js/ng/config.js',
+        'js/ng/init/nli/resources.js',
+        'js/ng/init/nli/initModels.js'
+    );
+
+    $js_external_array = array();
+
+}
+
+    /** do minified version of resource-init */
+    function doMinified($self, $boolean, $array, $type, $minified, $with_base_url) {
+        if (!$boolean) {
+            foreach($array as $array_source) {
+                if ($type == 'css') {
+                    echo '<link rel="stylesheet" href="'. ($with_base_url ? $self->baseUrl($array_source) : $array_source) .'" />'."\n";
+                } elseif ($type == 'js') {
+                    echo '<script type="text/javascript" src="'. ($with_base_url ? $self->baseUrl($array_source) : $array_source) .'"></script>'."\n";
+                }
+            }
+        } else {
+            if ($type == 'css') {
+                echo '<link rel="stylesheet" href="'. $self->baseUrl($minified) .'" />'."\n";
+            } elseif ($type == 'js') {
+                echo '<script type="text/javascript" src="'. $self->baseUrl($minified) .'"></script>'."\n";
+            }
+        }
+    }
+
+    /** @var set for localhost $all_minified */
+    $all_minified = (($_SERVER['HTTP_HOST'] == 'localhost') ? 0 : 1);
+
+    if ($all_minified == 1) {
+        $css_is_minified            = 1;
+        $js_resources_is_minified   = 1;
+        $js_angular_is_minified     = 1;
+        $js_ng_is_minified          = 1;
+    }
+
+    doMinified($this, $css_is_minified,            $css_array,          'css', $css_default, true);
+    doMinified($this, $js_resources_is_minified,   $js_resources_array, 'js',  $js_resources_default, true);
+    doMinified($this, $js_angular_is_minified,     $js_angular_array,   'js',  $js_angular_default, true);
+    doMinified($this, $js_ng_is_minified,          $js_ng_array,        'js',  $js_ng_default, true);
+    doMinified($this, 0, $js_external_array, 'js', '', false);
+
+?>
+<div ng-include="'html/layout.html'"></div>
+<script>
+    $.support.cors = true;
+    mainApp.config(['config', function(config) {
+        config.api      =  '<?= apiUrl() ?>';
+        config.api_r    =  '<?= apiR() ?>';
+        config.api_l    =  '<?= apiL() ?>';
+        config.token    =  '<?= apiToken() ?>';
+        config.env      =  '<?= apiKennel() ?>';
+        config.kennel   =  '<?= apiKennel() ?>';
+    }]);
+    mainApp.run(function(){
+        rs.identity = {<?= array2Json($this->identity) ?>};
+    });
+    mainApp.run(initModels);
+</script>

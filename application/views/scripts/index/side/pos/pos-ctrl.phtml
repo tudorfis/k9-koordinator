@@ -1,0 +1,437 @@
+<div id="PosCtrl" data-ng-controller="PosCtrl"
+     class="reveal-modal xlarge exclude" data-reveal>
+    <div ng-hide="$root.client.id || is_walk_in_sale">
+        <fieldset class="small-12">
+            <legend>Please select client</legend>
+            <div class="small-8 column">
+                <div ng-include="'tpl/cp-search'"></div>
+            </div>
+            <div class="small-4 column">
+                <div class="small-6 column">
+                    <a class="button tiny radius"
+                       ng-click="$root.client = {}; is_walk_in_sale = true; clearAll()">
+                        <i class="fa fa-circle-o"></i> Set as walk in sale
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <hr />
+            <div class="small-12">
+                <ul class="g-active-hover-list no-list-type">
+                    <li style="cursor: pointer;"
+                        ng-click="$root.client = c"
+                        ng-repeat="c in $root.clients | array | filter:search_clients">
+                        {{c.last_name}}, {{c.first_name}}
+                    </li>
+                </ul>
+                <div ng-show="$root.clients | isEmpty">
+                    <h5>* no clients available</h5>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div ng-show="$root.client.id || is_walk_in_sale">
+        <div class="small-7 column" id="pos-mod" pos-mod>
+        <fieldset>
+            <legend><i class="fa fa-dollar"></i> Point of sale</legend>
+            <div class="small-6 column">
+                <div ng-show="!is_walk_in_sale">
+                    <h4 class="red-big">{{client.last_name}}, {{client.first_name}}</h4>
+                </div>
+                <div ng-show="is_walk_in_sale">
+                    <label>&nbsp;</label>
+                    <h4 class="red-big">Walk in client</h4>
+                </div>
+                <div ng-show="access.checkRefundsPos()">
+                    <input-checkbox
+                        title='Is Refund ? <i class="fa fa-arrow-circle-o-left"></i>'
+                        no-error="true" ng-model="is_refund" ng-change="clearAll()"
+                        placeholder="...">
+                    </input-checkbox>
+                </div>
+            </div>
+            <fieldset
+                class="small-3 column" style="margin-top: -20px"
+                ng-show="client.pp.pending.length > 0 && !is_walk_in_sale">
+                <legend>
+                    <i class="fa fa-desktop"></i>
+                    <b>{{client.pp.pending.length}}</b> Pending bills
+                </legend>
+                <a class="button tiny radius alert right"
+                   ng-click="$root.revealModal('#PendingCtrl'); $root.initPending()">
+                    <i class="fa fa-info"></i> View
+                </a>
+            </fieldset>
+            <div class="small-6 column">
+                <a class="button tiny radius right ml10"
+                   ng-click="$root.client = {}; is_walk_in_sale = false; clearAll()">
+                    <i class="fa fa-glass"></i> Select client
+                </a>
+                <a class="button tiny radius right"
+                   ng-click="$root.client = {}; is_walk_in_sale = true; clearAll()">
+                    <i class="fa fa-circle-o"></i> Set as walk in sale
+                </a>
+            </div>
+            <hr />
+            <div class="small-8 column">
+                <table class="small-12">
+                    <tr>
+                        <td><h4 class="red-big">Balance</h4></td>
+                        <td><h4 class="red-big">{{(required || 0) | number:2}} $</h4></td>
+                    </tr>
+                    <tr>
+                        <td>Payment type</td>
+                        <td>
+                            <input-select
+                                title="" no-error="true" line-value="- select payment type -"
+                                ng-disabled="o.use_deposit"
+                                t="o" n="payment_type_id" s="payment_types">
+                            </input-select>
+                        </td>
+                    </tr>
+                    <tr ng-show="!is_refund">
+                        <td>Payment amount</td>
+                        <td>
+                            <postfix i="fa fa-dollar" pl="4" dl="8" wl="true">
+                                <input-text
+                                    no-label="true" type="number" no-error="true"
+                                    ng-model="paid" placeholder="Enter amount to process ... ">
+                                </input-text>
+                            </postfix>
+                        </td>
+                    </tr>
+                    <tr ng-show="!is_refund">
+                        <td>Process payment</td>
+                        <td>
+                            <a class="button tiny radius small-12 btn_pp "
+                               style="margin: 3px 0;"
+                               ng-click="processPosPayment(1, '#PosCtrl')">
+                                    <i class="fi-pricetag-multiple medium"></i> Process payment
+                            </a>
+                            <div class="clearfix">&nbsp;</div>
+                            <a ng-hide="is_walk_in_sale"
+                               class="button tiny radius small-12 btn_pp"
+                               style="margin: 3px 0;"
+                               ng-click="processPosPayment(2, '#PosCtrl')">
+                                    <i class="fa fa-pencil"></i> Create pending bill
+                            </a>
+                            <img ng-src="{{'img/ajax.gif' | baseUrl}}" class="al_pp" style="display: none;" />
+                        </td>
+                    </tr>
+                    <tr ng-show="!is_walk_in_sale && !is_refund">
+                        <td>Use money from deposit</td>
+                        <td>
+                            <input-checkbox ng-model="o.use_deposit"></input-checkbox>
+                        </td>
+                    </tr>
+                    <tr ng-show="!is_walk_in_sale && !is_refund">
+                        <td>Client deposit</td>
+                        <td>{{client.deposits.total | number:2}} $</td>
+                    </tr>
+                    <tr ng-show="!is_refund">
+                        <td>Change</td>
+                        <td>{{(change || 0) | number:2}} $</td>
+                    </tr>
+                    <tr ng-class="{'y-active': required != unpaid}"
+                        ng-show="!is_refund">
+                        <td>Unpaid</td>
+                        <td>{{(unpaid || 0) | number:2}} $</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="small-4 column">
+                <input-select
+                    no-label="true" no-error="true" s="$root.lang_keys"
+                    ng-model="o.language" ng-id="lang" ng-v="text">
+                </input-select>
+                <input-radio
+                    title='Show details <i class="fa fa-laptop"></i>'
+                    t="o" n="print_type" v="screen" placeholder="...">
+                </input-radio>
+                <input-radio
+                    title='Print to screen <i class="fa fa-print"></i>'
+                    t="o" n="print_type" v="print" placeholder="...">
+                </input-radio>
+                <input-radio
+                    title='Download a copy <i class="fa fa-file-o"></i>'
+                    t="o" n="print_type" v="download" placeholder="...">
+                </input-radio>
+                <hr />
+                <a class="tiny button radius btn_print"
+                   ng-disabled="!o.id"
+                   ng-click="((o.id || !is_refund) ? printPosBill('#PosCtrl') : void(0))">
+                    <i class="fa fa-print"></i> Print bill
+                </a>
+                <a class="tiny button radius btn_print"
+                   ng-hide="!is_refund"
+                   ng-click="processPosPayment(3, '#PosCtrl')">
+                    <i class="fa fa-dollar"></i> Process refund
+                </a>
+                <div ng-hide="!is_refund || !o.id || oo.length == 0">
+                    <hr />
+                    <a class="tiny button radius btn_print success"
+                       ng-click="restockInventory()">
+                        <i class="fa fa-arrow-right"></i> Restock inventory
+                    </a>
+                </div>
+                <img ng-src="{{'img/ajax.gif' | baseUrl}}" class="al_print" style="display: none;" />
+                <hr />
+                <p>No. of items: <b>{{oo.length}}</b></p>
+                <a class="tiny button radius"
+                   ng-click="clearSale(rio_selected)">
+                    <i class="fa fa-unlink"></i> Clear
+                </a>
+                <a class="tiny button radius"
+                   ng-click="clearAll()">
+                    <i class="fa fa-unlink"></i> Clear all
+                </a>
+            </div>
+            <hr />
+            <h4 class="small-12"
+                ng-show="oo.length == 0">No inventory added</h4>
+            <table class="small-12"
+                   ng-show="oo.length > 0">
+                <thead>
+                <tr>
+                    <td></td>
+                    <td>Name</td>
+                    <td>Qty</td>
+                    <td>Price</td>
+                    <td>Adaos</td>
+                    <td>Discount</td>
+                    <td>Coupon</td>
+                    <td>Tax</td>
+                    <td ng-show="$root.tax_settings.o_tax_in_use">O Tax</td>
+                    <td>Total</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-click="setRio(rio, $index)"
+                    ng-repeat="rio in oo | array track by $index"
+                    ng-class="{'g-active': rio_selected.index == $index}"
+                    style="cursor: pointer;">
+                    <td>
+                        <i ng-show="(rio_selected.index && (rio_selected.index == rio.index))"
+                           class="fa fa-arrow-circle-right"></i>
+                    </td>
+                    <td>{{rio.product_name}}</td>
+                    <td>{{rio.add_qty}}</td>
+                    <td>{{rio.price | number:2}} $</td>
+                    <td>+ {{rio.adaos | number:2}} $</td>
+                    <td>- {{rio.discount | number:2}} $</td>
+                    <td>- {{rio.coupon_total | number:2}} $</td>
+                    <td>+ {{rio.tax_total | number:2}} $</td>
+                    <td ng-show="$root.tax_settings.o_tax_in_use">+ {{rio.o_tax_total | number:2}} $</td>
+                    <td>{{rio.total | number:2}} $</td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="small-5 column">
+        <fieldset class="small-12" ng-show="access.checkRewards() && access.checkRewardsIsActive() && !is_walk_in_sale && !is_refund">
+            <legend><i class="fa fa-cc-discover"></i> Rewards program</legend>
+            <div class="small-4 column">
+                <strong>Available points: </strong> <span>{{client.reward_points || '0'}}</span>
+                <hr />
+                <input-select
+                    title="Select rewards program" no-error="true" ng-change="calculatePromotion()"
+                    ng-model="o.promotion_id" ng-v="promotion_name" s="promotions">
+                </input-select>
+                <hr />
+                <div ng-show="o.promotion_id">
+                    <strong>Points per dollar:</strong> <span>{{$root.promotions_settings.points_per_dollar}}</span>
+                    <br /> <br />
+                    <strong>Discount:</strong> <span>- {{o.promotion_discount}} $</span>
+                </div>
+            </div>
+            <div class="small-8 column" ng-show="o.promotion_id">
+                <table class="small-12">
+                    <tr>
+                        <td>Code</td>
+                        <td>{{$root.promotions[o.promotion_id].promotion_code}}</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{$root.promotions[o.promotion_id].promotion_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>{{$root.promotions[o.promotion_id].description}}</td>
+                    </tr>
+                    <tr>
+                        <td>Points</td>
+                        <td>{{$root.promotions[o.promotion_id].points}}</td>
+                    </tr>
+                    <tr>
+                        <td>Expiration date</td>
+                        <td>{{$root.promotions[o.promotion_id].expiration_date}}</td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+        <fieldset class="small-12" ng-show="use_coupon_promotion && ri_selected && add_qty && access.checkCouponsPos()">
+            <legend><i class="fa fa-cc-mastercard"></i> Coupons and promotions</legend>
+            <div class="small-6 column">
+                <label>&nbsp;</label>
+                <strong>Coupon discount: </strong> <span>- {{ri_selected.coupon_total}} $</span>
+            </div>
+            <div class="small-3 column">
+                <input-select
+                    title="" custom-filter="true" ng-change="calculateCoupon()"
+                    no-error="true" ng-model="coupon_modifier" s="modifiers">
+                </input-select>
+            </div>
+            <div class="small-3 column">
+                <input-text
+                    title="" no-error="true" type="number"
+                    ng-init="o.coupon_discount = 0.00"
+                    ng-change="calculateCoupon()"
+                    ng-model="coupon_discount">
+                </input-text>
+            </div>
+        </fieldset>
+        <fieldset class="small-12" ng-show="ri_selected.id && add_qty">
+            <legend><i class="fa fa-info"></i> Product total</legend>
+            <table class="small-12">
+                <tr>
+                    <td>Product class</td>
+                    <td>{{($root.retail_classes[ri_selected.class_id].class_name || '- no class -')}}</td>
+                </tr>
+                <tr>
+                    <td>Product vendor</td>
+                    <td>{{($root.retail_vendors[ri_selected.vendor_id].name || '- no vendor -')}}</td>
+                </tr>
+                <tr>
+                    <td>Quantity</td>
+                    <td>{{add_qty}}</td>
+                </tr>
+                <tr>
+                    <td>Price per unit</td>
+                    <td>{{ri_selected.price}} $</td>
+                </tr>
+                <tr ng-show="ri_selected.margin_p">
+                    <td>Margin adaos</td>
+                    <td>
+                        <span class="mr10">{{ri_selected.margin_p}} %</span>
+                        <i class="fa fa-long-arrow-right"></i>
+                        <span class="ml10">+ {{ri_selected.margin_t}} $</span>
+                    </td>
+                </tr>
+                <tr ng-show="ri_selected.markup_t">
+                    <td>Markup adaos</td>
+                    <td>
+                        <span>+ {{ri_selected.markup_t}} $</span>
+                    </td>
+                </tr>
+                <tr ng-repeat="cs in $root.classes_discounts"
+                    ng-show="ri_selected[cs+'_p']">
+                    <td>
+                        <span>{{cs}} discount</span>
+                    </td>
+                    <td>
+                        <span class="mr10">{{ri_selected[cs+'_p']}} %</span>
+                        <i class="fa fa-arrow-right"></i>
+                        <span class="ml10">- {{ri_selected[cs+'_t']}} $</span>
+                    </td>
+                </tr>
+                <tr ng-show="ri_selected.tax_total">
+                    <td>{{ri_selected.tax_name}}</td>
+                    <td>
+                        <span class="mr10">% {{ri_selected.tax_percentage}}</span>
+                        <i class="fa fa-long-arrow-right"></i>
+                        <span class="ml10">+ {{ri_selected.tax_total}} $</span>
+                    </td>
+                </tr>
+                <tr ng-show="ri_selected.o_tax_total">
+                    <td>{{ri_selected.o_tax_name}}</td>
+                    <td>
+                        <span class="mr10">% {{ri_selected.o_tax_percentage}}</span>
+                        <i class="fa fa-long-arrow-right"></i>
+                        <span class="ml10">+ {{ri_selected.o_tax_total}} $</span>
+                    </td>
+                </tr>
+                <tr ng-show="ri_selected.vendor_cost">
+                    <td>Vendor cost</td>
+                    <td>
+                        <span>+ {{ri_selected.vendor_cost}} $</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h5>TOTAL:</h5></td>
+                    <td><h4>{{ri_selected.total}} $</h4></td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset class="small-12">
+            <legend><i class="fa fa-table"></i> Inventory</legend>
+            <div class="small-5 column">
+                <input-text
+                    title="Search inventory" no-error="true"
+                    ng-model="search_inventory" class="clearable">
+                </input-text>
+            </div>
+            <div class="small-3 column">
+                <input-select
+                    title="Quantity" no-error="true" s="rnt(1000)"
+                    ng-change="calculateCoupon(); setRi(ri_selected);" ng-model="add_qty">
+                </input-select>
+            </div>
+            <div class="small-4 column">
+                <label>&nbsp;</label>
+                <a class="button tiny radius"
+                   ng-click="addItem()">
+                    <i class="fi-plus"></i> Add item to sale
+                </a>
+            </div>
+            <div class="small-12 column">
+                <div class="small-4 column">
+                    <input-select
+                        title="Select a class" ng-v="class_name" line-value="- all -"
+                        ng-model="class_id" s="$root.retail_classes" no-error="true">
+                    </input-select>
+                </div>
+                <div class="small-4 column">
+                    <input-select
+                        title="Select a vendor" ng-v="name" line-value="- all -"
+                        ng-model="$root.vendor_id" s="retail_vendors" no-error="true">
+                    </input-select>
+                </div>
+                <div class="small-4 column" ng-show="access.checkCouponsPos()">
+                    <input-checkbox
+                        title="Use coupon"
+                        ng-model="use_coupon_promotion">
+                    </input-checkbox>
+                </div>
+            </div>
+            <table class="small-12">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Product code</th>
+                    <th>Product name</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="cursor: pointer;"
+                    ng-click="setRi(ri); calculateCoupon()"
+                    ng-class="{'g-active': ri_selected.id == ri.id}"
+                    ng-repeat="ri in $root.retail_inventory | array | filter:search_inventory | filter:{class_id:(class_id || '')}
+                                | filterRelationship:filter_inventory_relationship">
+                    <td>
+                        <i ng-show="ri_selected.id == ri.id"
+                           class="fa fa-arrow-circle-right"></i>
+                    </td>
+                    <td>{{ri.product_code}}</td>
+                    <td>{{ri.product_name}}</td>
+                    <td>{{ri.quantity}}</td>
+                    <td>{{ri.price}} $</td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <a class="close-reveal-modal close-item"></a>
+</div>

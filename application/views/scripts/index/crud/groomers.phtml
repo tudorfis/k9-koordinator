@@ -1,0 +1,167 @@
+<div class="small-6 column" users-extra-crud>
+    <fieldset>
+        <legend>Groomer Information</legend>
+        <div class="small-12">
+            <input-text title="Username" t="crud_mod" n="username" required="required"
+                        error-text="Username required and must not be taken"></input-text>
+            <input-text
+                title="Password" t="crud_mod" n="password"
+                type="password" id="password"></input-text>
+            <input-text
+                title="Confirm password" t="crud_mod" n="c_password"
+                error-text="Passwords must match" type="password" id="c_password"
+                required="required" equalto="password"></input-text>
+            <small style="color: #888;">Note: leave empty to keep old password</small>
+        </div>
+        <hr />
+        <input-text title="First name" t="crud_mod" n="first_name" required="required"></input-text>
+        <input-text title="Last name" t="crud_mod" n="last_name" required="required"></input-text>
+        <div class="small-6 column">
+            <div ng-controller="crudPhone" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#CrudCtrl';
+                i_class = 'fa fa-phone'; title = 'Phone'; t = 'crud_mod'; n = 'phone'; placeholder = 'Enter contact phone';
+                tel_format = 'phone_format_id'; pattern = 'phone_number'; required = 1;">
+            </div>
+        </div>
+        <div class="small-6 column">
+            <div ng-controller="crudCell" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#CrudCtrl';
+                i_class = 'fa fa-mobile'; title = 'Cell'; t = 'crud_mod'; n = 'cell'; placeholder = 'Enter cell number';
+                tel_format = 'cell_format_id'; pattern = 'cell_number'; required = 0;">
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <prefix i="fa fa-envelope" pl="2" dl="10">
+            <input-text
+                title="Email" t="crud_mod" n="email"
+                error-text="Email must be of this format example@test.com"
+                type="email" required="required">
+            </input-text>
+        </prefix>
+        <hr />
+        <fieldset>
+            <legend>Address</legend>
+            <input-text
+                title="Street" ng-model="crud_mod.street">
+            </input-text>
+            <input-text
+                title="City" ng-model="crud_mod.city">
+            </input-text>
+            <div class="small-6 column">
+                <input-text
+                    title="State" ng-model="crud_mod.state" pattern="alpha"
+                    ng-required="access.requireAddressClient()" no-error="true"
+                    ng-keyup="convertToUpperCase('#CrudCtrl', 'crud_mod', 'state');
+                              convertToMaxlength('#CrudCtrl', 'crud_mod', 'state',
+                                        $root.user_interface_settings.state_length)">
+                </input-text>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="Zip" ng-model="crud_mod.zip" tabindex="14"
+                    ng-change="getGeoAddress('#CrudCtrl', crud_mod.zip)" pattern="number" no-error="true"
+                    ng-keyup="convertToMaxlength('#CrudCtrl', 'crud_mod', 'zip', $root.user_interface_settings.zip_postcode_length)">
+                </input-text>
+            </div>
+            <hr />
+            <input-checkbox
+                title="Auto select state & city based on zip"
+                ng-model="$root.autoselect_zip"
+                ng-change="getGeoAddress('#CrudCtrl', crud_mod.zip)">
+            </input-checkbox>
+        </fieldset>
+    </fieldset>
+</div>
+<div class="small-6 column">
+    <fieldset>
+        <legend>Availability</legend>
+        <div ng-repeat="av in $root.days" class="left" style="margin-right: 20px;">
+            <input-checkbox
+                title="{{av.toUpperCase()}}"
+                t="crud_mod" n="{{av}}">
+            </input-checkbox>
+        </div>
+        <hr />
+        <div class="left">
+            <a ng-click="allDays(true)"
+               class="button tiny radius" href="javascript:;">
+                Select all
+            </a>
+            <a ng-click="allDays(false)"
+               class="button tiny radius" href="javascript:;">
+                Clear all
+            </a>
+        </div>
+        <div class="right">
+            <input-select
+                title="Daily limit (hrs)" s="rnt(20)"
+                ng-model="crud_mod.daily_limit" required="required">
+            </input-select>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Available Times</legend>
+        <div class="small-12">
+            <div class="small-4 column">
+                <input-text
+                    title="Time in" class="timepicker" no-error="true" ng-model="set_time_in">
+                </input-text>
+            </div>
+            <div class="small-4 column">
+                <input-text
+                    title="Time out" class="timepicker" no-error="true" ng-model="set_time_out">
+                </input-text>
+            </div>
+            <div class="small-4 column">
+                <a class="tiny button radius"
+                   ng-click="setTime(set_time_in, set_time_out)">
+                    <i class="fa fa-check"></i> Set schedule
+                </a>
+            </div>
+            <hr />
+        </div>
+        <table class="small-12">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Time in</th>
+                <th>Time out</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="av in $root.days">
+                <td>{{av.toUpperCase()}}</td>
+                <td>
+                    <input-text
+                        title=""
+                        t="crud_mod" n="{{av+'_in'}}"
+                        class="timepicker" pattern="time_pattern"
+                        error-text="Please add this format 10:30">
+                    </input-text>
+                </td>
+                <td>
+                    <input-text
+                        title=""
+                        t="crud_mod" n="{{av+'_out'}}"
+                        class="timepicker" pattern="time_pattern"
+                        error-text="Please add this format 10:30">
+                    </input-text>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="small-4 columns">
+            <div class="th-img">
+                <image-no-image
+                    t="crud_mod" n="image_id" s="files" ajax="true"
+                    st="path" stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+                </image-no-image>
+            </div>
+        </div>
+        <div class="small-8 columns">
+            <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+            <small style="color: #888;">
+                Note: If a groomer is not working either <br />
+                permanently or temporarly set it to inactive
+            </small>
+        </div>
+    </fieldset>
+</div>

@@ -1,0 +1,45 @@
+<script id="tpl/cp-info" type="text/ng-template">
+    <div class="small-12">
+        <h5 class="right">
+            <i class="fa fa-info-circle"></i> Client & pet informations
+        </h5>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <table class="small-6 column">
+        <tr>
+            <td>
+               <i class="fa fa-user"></i> Name
+            </td>
+            <td>{{client.first_name}}, {{client.last_name}}</td>
+        </tr>
+        <tr>
+            <td>
+                <i class="fa fa-envelope"></i> Email
+            </td>
+            <td>{{client.email || '- none -'}}</td>
+        </tr>
+        <tr>
+            <td>
+                <i class="fa fa-phone"></i> Phone
+            </td>
+            <td>{{client.contact_phone || '- none -'}}</td>
+        </tr>
+    </table>
+    <table class="small-6 column">
+        <tr>
+            <td>
+                <i class="fa fa-paws"></i> Pet name
+            </td>
+            <td>{{pet.pet_name}}</td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>{{pet_type[pet.pet_type_id].v}}</td>
+        </tr>
+        <tr>
+            <td>Breed</td>
+            <td>{{pet_breed[pet.pet_breed_id].v}}</td>
+        </tr>
+    </table>
+    <div class="clearfix">&nbsp;</div>
+</script>

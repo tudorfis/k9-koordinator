@@ -1,0 +1,96 @@
+<fieldset>
+    <legend><i class="fa fa-th"></i> Grooming information</legend>
+    <div class="small-5 column">
+        <fieldset>
+            <legend>Previous grooms</legend>
+            <p>Total No. Grooms: {{ma(pet.r_grooms).length || '0'}}</p>
+            <table class="small-12" ng-show="ma(pet.r_grooms) > 0">
+                <thead>
+                    <tr>
+                        <th>Date in</th>
+                        <th>Date out</th>
+                        <th>Grooming price</th>
+                        <th>Discount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rg in $root.pet.r_grooms">
+                        <td>{{rg.date_in}}</td>
+                        <td>{{rg.date_out}}</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="small-7 column">
+        <fieldset>
+            <legend>Recurring services</legend>
+                <div class="small-6 column">
+                    <form form-submit hide-show-al-content="true" t="current_rg" table="records_grooming" data-abide="true">
+                        <input-select
+                            title="Preferred groomer"
+                            line-value="- select groomer -" required="required"
+                            ng-model="$root.current_rg.g_id" s="groomers">
+                        </input-select>
+                        <input-select
+                            title="Preffered grooming rate"
+                            line-value="- select rate -" required="required"
+                            ng-model="$root.current_rg.gr_id" s="grooming_rates">
+                        </input-select>
+                        <input-select
+                            title="Preffered type"
+                            line-value="- select type -"
+                            ng-change="$root.current_rg.gs_ids = []"
+                            ng-model="$root.current_rg.base_type_id" required="required"
+                            ng-id="v" ng-v="n" s="base_type_filter">
+                        </input-select>
+                        <input-checkbox
+                            title="Is handle carefully ?"
+                            ng-model="$root.current_rg.is_hcp">
+                        </input-checkbox>
+                        <div class="right">
+                            <button type="submit" class="submit button radius tiny" style="font-weight: bold;">
+                                <i class="fa fa-check-square"> </i>
+                            </button>
+                            <img class="al" ng-src="{{'img/ajax.gif' | baseUrl}}" style="display: none;" />
+                        </div>
+                    </form>
+                </div>
+                <div class="small-6 column">
+                    <input-select
+                        title="Add new recurring service" ng-model="$root.gs_id" no-error="true"
+                        s="grooming_services | array | filter:{base_type_id:$root.current_rg.base_type_id}">
+                    </input-select>
+                    <a class="button tiny radius submit"
+                       ng-click="addGs()">
+                        <i class="fa fa-plus-square-o"></i> Add recurring service
+                    </a>
+                    <i class="fa fa-spin fa-spinner fa-2x al" style="display: none;;"></i>
+                </div>
+            <div class="clearfix">&nbsp;</div>
+            <h5 ng-show="ma($root.current_rg.gs_ids).length == 0">
+                <hr /> * No grooming records for this pet to show
+            </h5>
+            <table class="small-12" ng-show="ma($root.current_rg.gs_ids).length > 0">
+                <thead>
+                    <tr>
+                        <th>Service name</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="gs_id in $root.current_rg.gs_ids track by $index">
+                        <td>{{grooming_services[gs_id].v}}</td>
+                        <td>
+                            <a ng-click="deleteGs(gs_id)">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</fieldset>

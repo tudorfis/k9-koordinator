@@ -1,0 +1,128 @@
+<div id="CpCtrl" ng-controller="CpCtrl"
+     class="columns" ng-class="{'small-6': $root.pet.id, 'small-12': !$root.pet.id}">
+
+    <div id="cpModal" class="reveal-modal xlarge exclude" data-reveal>
+        <?= $this->partial('index/cp/cp-mod.phtml', array()) ?>
+        <a class="close-reveal-modal close-item"></a>
+    </div>
+
+    <div id="clientSurveyModal" class="reveal-modal exclude" data-reveal>
+        <?= $this->partial('index/clients/clients-survey.phtml', array()) ?>
+        <a class="close-item-special" ng-click="$root.revealModal('#cpModal')"></a>
+    </div>
+
+    <div id="clientMembershipModal" class="reveal-modal exclude" data-reveal>
+        <?= $this->partial('index/clients/clients-membership.phtml', array()) ?>
+        <a class="close-item-special" ng-click="$root.revealModal('#cpModal')"></a>
+    </div>
+
+    <div id="notepadsModal" class="reveal-modal exclude" data-reveal>
+        <?= $this->partial('index/cp/notepads.phtml', array()) ?>
+        <a class="close-reveal-modal close-item"></a>
+    </div>
+
+    <h4 class="red-big small-9 column">
+        <div class="th-img-35 left">
+            <image-no-image
+                t="identity" n="image_id" s="files" st="path"
+                stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+            </image-no-image>
+        </div>
+        <div class="small-8 column">
+            <i>Employee:</i> <br />
+            <strong>{{$root.identity.last_name}}, {{$root.identity.first_name}} [{{$root.identity.username}}]</strong>
+        </div>
+    </h4>
+    <div class="small-3 column">
+        <div ng-click="revealModal('#MessagesCtrl'); $root.initMessages();" class="messages-btn"
+             ng-class="{'m-btn-actv': ($root.identity.messages.unread != 0), 'm-btn-inactv': ($root.identity.messages.unread == 0)}" >
+            <i class="fa fa-inbox"></i> Inbox ({{$root.identity.messages.unread}})
+        </div>
+    </div>
+    <hr />
+
+    <?= $this->partial('index/cp/clients-table.phtml', array()) ?>
+
+    <div ng-show="!$root.prd_selected"
+         style="position: fixed; bottom: 0;"
+         class="small-5">
+        <button
+            class="button radius large"
+            ng-show="hide_search_cp"
+            ng-click="hide_search_cp = 0">
+                <i class="fi-zoom-in"></i> Search
+        </button>
+        <div ng-show="!hide_search_cp">
+            <a ng-click="hide_search_cp = 1"
+               class="close-item"
+               style="margin-top: 20px;"
+               href="javascript:;"
+               title="Close"></a>
+            <fieldset class="pet-bg"
+                      style="border: 2px solid #aaa;">
+                <legend><i class="fa fa-search"></i> Search by {{$root.client_search_by}}</legend>
+                <div ng-include="'tpl/cp-search'"></div>
+            </fieldset>
+        </div>
+    </div>
+
+    <div id="pet-info" class="small-6 columns" ng-show="$root.pet.id">
+        <a ng-click="$root.prd_selected = ''; $root.client = {}; $root.pet = {};"
+           style="margin: 25px;"
+           class="close-item"
+           href="javascript:;"
+           title="Close">
+        </a>
+
+        <div id="rRecordsCtrl" data-ng-controller="rRecordsCtrl">
+
+            <div id="recordsBoardingModal" class="reveal-modal exclude" data-reveal>
+                <?= $this->partial('index/pet-records/records-boarding.phtml', array()) ?>
+                <a class="close-reveal-modal close-item"></a>
+            </div>
+
+            <div id="recordsDaycareModal" class="reveal-modal exclude" data-reveal>
+                <?= $this->partial('index/pet-records/records-daycare.phtml', array()) ?>
+                <a class="close-reveal-modal close-item"></a>
+            </div>
+
+            <div id="recordsGroomingModal" class="reveal-modal exclude" data-reveal>
+                <?= $this->partial('index/pet-records/records-grooming.phtml', array()) ?>
+                <a class="close-reveal-modal close-item"></a>
+            </div>
+
+            <div id="recordsMedsDietsModal" class="reveal-modal xlarge exclude" data-reveal>
+                <?= $this->partial('index/pet-records/records-meds-diets.phtml', array()) ?>
+                <a class="close-reveal-modal close-item"></a>
+            </div>
+
+            <div id="recordsServicesModal" class="reveal-modal exclude" data-reveal>
+                <?= $this->partial('index/pet-records/records-services.phtml', array()) ?>
+                <a class="close-reveal-modal close-item"></a>
+            </div>
+
+            <div id="recordsTrainingModal" class="reveal-modal exclude" data-reveal>
+                <?= $this->partial('index/pet-records/records-training.phtml', array()) ?>
+                <a class="close-reveal-modal close-item"></a>
+            </div>
+        </div>
+
+        <?= $this->partial('index/cp/pet-panel.phtml', array()) ?>
+
+    </div>
+</div>
+
+<?php
+    $loading_array = array(
+       'index/pet-rsv/r-boarding/r-boarding-ctrl.phtml',
+       'index/pet-rsv/r-daycare/r-daycare-ctrl.phtml',
+       'index/pet-rsv/r-grooms/r-grooms-ctrl.phtml',
+       'index/pet-rsv/r-training/r-training-ctrl.phtml',
+       'index/pet-rsv/r-services/r-services-ctrl.phtml',
+       'index/pet-rsv/r-meds/r-meds-ctrl.phtml',
+       'index/pet-rsv/r-diets/r-diets-ctrl.phtml',
+    );
+    foreach ($loading_array as $partial) {
+        echo $this->partial($partial, array());
+    }
+?>

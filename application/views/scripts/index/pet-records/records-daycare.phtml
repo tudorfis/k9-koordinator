@@ -1,0 +1,18 @@
+<fieldset>
+    <legend><i class="fa fa-level-down"></i> Daycare preffered group</legend>
+    <form form-submit hide-show-al-content="true" submit-btn="true" t="records_daycare_mod"
+          table="records_daycare" data-abide="true" set-table-after-submit="true">
+        <div class="small-12">
+            <fieldset>
+                <div class="small-12 column">
+                    <div ng-include="'tpl/cp-info'"></div>
+                    <input-select
+                        title="Daycare group"
+                        ng-model="$root.records_daycare_mod.daycare_group_id"
+                        s="daycare_groups" required="required">
+                    </input-select>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</fieldset>

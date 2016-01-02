@@ -1,0 +1,38 @@
+<div class="small-12">
+    <fieldset>
+        <legend>Boarding information</legend>
+        <div ng-include="'tpl/cp-info'"></div>
+        <form form-submit hide-show-al-content="true" submit-btn="true" t="records_boarding_mod"
+              table="records_boarding" data-abide="true" set-table-after-submit="true">
+            <div ng-show="boarding_settings.charge_type == 'charge_by_petsize'">
+                <input-select
+                    title="Default pet size" ng-model="$root.records_boarding_mod.charge_type_id"
+                    s="boarding_petsizes" required="required" none-filter="true">
+                </input-select>
+            </div>
+            <div ng-show="boarding_settings.charge_type == 'charge_by_runtype'">
+                <input-select
+                    title="Default run type" ng-model="$root.records_boarding_mod.charge_type_id"
+                    s="boarding_runtypes" required="required" none-filter="true">
+                </input-select>
+            </div>
+            <input-select
+                title="Default stay reason" ng-model="$root.records_boarding_mod.stay_reason_id"
+                s="stay_reasons" required="required" none-filter="true">
+            </input-select>
+            <input-checkbox
+                title="Default mark this pet as 'handle carefully'"
+                ng-model="$root.records_boarding_mod.is_handle_carefully">
+            </input-checkbox>
+            <input-checkbox
+                title="Default mark this pet as 'extra pet by default'"
+                ng-model="$root.records_boarding_mod.is_extra_pet">
+            </input-checkbox>
+        </form>
+        <p style="color: #999; font-size: 10px;">
+            Note: Extra pets are NOT counted in the vacancy screen.
+            For example, if 3 pets from the same family board together in the same run,
+            set 2 as Extra and they will count as 1 in the vacancy screen
+        </p>
+    </fieldset>
+</div>

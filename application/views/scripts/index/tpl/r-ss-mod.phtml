@@ -1,0 +1,106 @@
+<script id="tpl/r-ss-mod" type="text/ng-template">
+    <div ng-switch="do">
+        <div ng-switch-when="1">
+            <div ng-show="$root.section == 'schedule_services' && access.checkServices()">
+                <div class="small-8 column" ng-hide="$root.partial_show">
+                    <form form-submit t="r_ss_mod" table="r_ss" submit-btn="true" submit-btn-text="Add service" data-abide="true">
+                        <div class="small-6 column">
+                            <input-select
+                                title="Select service to be scheduled"
+                                ng-model="$root.r_ss_mod.ss_id" s="schedule_services"
+                                error-text="Please select service to be scheduled"
+                                ng-change="$root.getSSPrice()" required="required">
+                            </input-select>
+                        </div>
+                        <div class="small-3 column">
+                            <postfix pl="4" dl="8" i="fa fa-dollar">
+                                <input-text
+                                    title="Price" disabled="true" placeholder="0.00"
+                                    ng-model="$root.r_ss_mod.ss_price">
+                                </input-text>
+                            </postfix>
+                        </div>
+                        <div class="small-3 column">
+                            <input-select
+                                title="Times"
+                                ng-model="$root.r_ss_mod.ss_times" s="rnt(10)"
+                                required="required" error-text="Please select number of times">
+                            </input-select>
+                        </div>
+                        <div class="small-12 column">
+                            <input-text
+                                title="Service instructions"
+                                ng-model="$root.r_ss_mod.ss_instructions">
+                            </input-text>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Chose date" class="datepicker"
+                                ng-required="!$root.r_ss_mod.ss_everyday"
+                                error-text="Please select date for service"
+                                ng-model="$root.r_ss_mod.ss_date">
+                            </input-text>
+                            <input-checkbox
+                                title="On everyday"
+                                ng-model="$root.r_ss_mod.ss_everyday">
+                            </input-checkbox>
+                        </div>
+                        <div class="small-6 column">
+                            <input-checkbox
+                                title="Exclude on check in"
+                                ng-model="$root.r_ss_mod.ss_exclude_checkin">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="Exclude on check out"
+                                ng-model="$root.r_ss_mod.ss_exclude_checkout">
+                            </input-checkbox>
+                        </div>
+                        <hr />
+                        <div class="left small-6">
+                            <add-records-services-btn
+                                scope_id="{{scope_id}}"
+                                r_type="{{r_type}}"
+                                r_type_mod="{{r_type_mod}}">
+                            </add-records-services-btn>
+                        </div>
+                    </form>
+                </div>
+                <div class="small-4 column" ng-hide="$root.partial_show">
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-anchor"></i> Usefull links
+                        </legend>
+                        <ul class="no-list-type">
+                            <li>
+                                <content-link
+                                    link="crud/users" title="Staff"
+                                    ui-sref="users" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                            <li>
+                                <content-link
+                                    link="crud/schedule_services" title="Schedule services"
+                                    ui-sref="schedule_services" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <hr />
+                <div class="small-12" ng-show="!{{r_type_in}} || ma({{r_type_in}}).length == 0">
+                    <h5>No schedule services programmed</h5>
+                </div>
+                <div class="small-12" ng-show="{{r_type_in}} && ma({{r_type_in}}).length > 0">
+                    <services-table
+                        scope_id="{{scope_id}}"
+                        r_type="{{r_type}}"
+                        r_type_mod="{{r_type_mod}}"
+                        r_type_in="{{r_type_in}}">
+                    </services-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

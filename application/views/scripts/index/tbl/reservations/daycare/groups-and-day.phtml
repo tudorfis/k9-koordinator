@@ -1,0 +1,103 @@
+    <script>
+        /**
+         * @NOTE:
+         *
+         * r = radio-box
+         * rvt = radio-box value text
+         * rvs = radio-box value select
+         * c = checkbox
+         * sh = select hardcoded
+         * se = select editable in db
+         */
+    </script>
+    <div class="small-7 column">
+        <fieldset class="none-bg">
+            <legend><i class="fa fa-folder-o"></i> Daycare groups</legend>
+            <editable-table
+                ts="daycareGroups"
+                with-delete="true" with-add="true"
+                class="small-12" empty-message="No daycare groups defined">
+            </editable-table>
+        </fieldset>
+    </div>
+    <div class="small-5 column">
+        <fieldset class="none-bg">
+            <legend><i class="fa fa-folder-open-o"></i> Daycare day setup</legend>
+            <form form-submit hide-show-al-submit="true" submit-btn="true" submit-btn-text="Save daycare day setup"
+                  t="daycare_settings" table="daycare_settings" id="daycareSettingsForm" data-abide="true">
+                <input-select
+                    title="Set default daycare group for ALL pets to"
+                    t="daycare_settings" n="se_prefered_group" s="daycare_groups">
+                </input-select>
+                <sub>Note: The perferred daycare group for ALL pets in your system will be set to the selected daycare group.</sub>
+                <hr />
+                <div class="small-12">
+                    <div class="small-6 column">
+                        <input-radio
+                            title="Charge 'Half day rate' before hour: "
+                            t="daycare_settings" n="r_halfday_rate_type" v="before_hour">
+                        </input-radio>
+                    </div>
+                    <div class="small-6 column">
+                        <input-text
+                            no-label="true" class="timepicker"
+                            t="daycare_settings" n="rvt_before_hour">
+                        </input-text>
+                    </div>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <div class="small-12">
+                    <div class="small-6 column">
+                        <input-radio
+                            title="Charge 'Half day rate' if less than number of hours: "
+                            t="daycare_settings" n="r_halfday_rate_type" v="less_than_nr_hours">
+                        </input-radio>
+                    </div>
+                    <div class="small-6 column">
+                        <input-select
+                            title="Half day is less than (hours)"
+                            t="daycare_settings" n="rvs_less_than_nr_hours" s="rnt(10)">
+                        </input-select>
+                    </div>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <div class="clearfix">&nbsp;</div>
+                <div class="small-12">
+                    <input-checkbox
+                        title="Enable fast checkin (without reservation)"
+                        t="daycare_settings" n="c_fast_checkin">
+                    </input-checkbox>
+                    <input-checkbox
+                        title="Default to charge per hour"
+                        t="daycare_settings" n="c_default_to_charge_per_hour">
+                    </input-checkbox>
+                    <sub>Note: not compatible with dayboard</sub>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <hr />
+                <div class="small-12">
+                    <input-select
+                        title="Hours rounding"
+                        t="daycare_settings" n="sh_hours_rounding" s="hours_rounding_nr">
+                    </input-select>
+                    <postfix pl="4" dl="8" i="fa fa-dollar">
+                        <input-text
+                            title="Daycare pets that stay over 1 days penalty"
+                            pattern="number" t="daycare_settings" n="t_over_1_day_penalty">
+                        </input-text>
+                    </postfix>
+                    <div class="clearfix">&nbsp;</div>
+                    <input-select
+                        title="When scheduling reservation, check the group's 'limit'"
+                        t="daycare_settings" n="sh_check_groups_limit" s="check_groups_limit_nr">
+                    </input-select>
+                    <sub>Note: for optimal performance, if overbooking is not an issue in your business, set to "Don't check"</sub>
+                    <hr />
+                    <input-checkbox
+                        title="Print collar automatically on check in"
+                        t="daycare_settings" n="c_print_collar_automatically">
+                    </input-checkbox>
+                </div>
+            </form>
+        </fieldset>
+    </div>

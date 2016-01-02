@@ -1,0 +1,20 @@
+
+    <div class="small-8 column">
+        <fieldset>
+            <legend>Security Center</legend>
+            <p>The security center enables the user to change the security level access of any employee</p>
+            <hr />
+            <input-select
+                title="Select employee" ng-model="user_id"
+                s="$root.users" no-error="true">
+            </input-select>
+            <input-select
+                title="Select level" ng-model="role_id"
+                s="$root.role" no-error="true">
+            </input-select>
+            <save-button
+                name="save_center" function="saveCenter()"
+                icon-class="fa fa-check" title="Save">
+            </save-button>
+        </fieldset>
+    </div>

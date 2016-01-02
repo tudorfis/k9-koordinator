@@ -1,0 +1,163 @@
+<h4><i class="fa fa-circle-o"></i> Layouts settings</h4>
+<div class="small-6 column">
+    <fieldset>
+        <legend>Layout sections setup</legend>
+        <table class="small-12">
+            <thead>
+                <tr>
+                    <th>In use</th>
+                    <th>Section name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in [1,2,3,4,5]">
+                    <td>
+                        <input-checkbox
+                            title="Section {{i}}" ng-disabled="i == 1"
+                            ng-model="layout_sections[i].in_use">
+                        </input-checkbox>
+                    </td>
+                    <td>
+                        <input-text
+                            no-label="true" no-error="true"
+                            ng-model="layout_sections[i].v">
+                        </input-text>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <save-button
+            name="save_ls" function="saveLs()" class="tiny"
+            icon-class="fa fa-check" title="Save">
+        </save-button>
+    </fieldset>
+    <fieldset>
+        <legend>Add run to layout</legend>
+        <form form-submit hide-show-al-content="true" submit-btn="true"  submit-btn-text="Save run to layout"
+              t="layout_runs_mod" table="layout_runs" data-abide="true" set-table-after-submit="true">
+            <div class="small-6 column">
+                <input-select
+                    title="Select type" s="boarding_charges"
+                    ng-id="v" ng-v="n" required="required"
+                    ng-model="layout_runs_mod.charge_type">
+                </input-select>
+                <div ng-show="layout_runs_mod.charge_type == 'charge_by_runtype'">
+                    <input-select
+                        title="Select runtype" s="boarding_runtypes"
+                        required="required" ng-model="layout_runs_mod.charge_type_id">
+                    </input-select>
+                </div>
+                <div ng-show="layout_runs_mod.charge_type == 'charge_by_petsizes'">
+                    <input-select
+                        title="Select petsize type" s="boarding_petsizes"
+                        required="required" ng-model="layout_runs_mod.charge_type_id">
+                    </input-select>
+                </div>
+                <hr />
+                <input-select
+                    title="Select section" s="rnt(5)" required="required"
+                    ng-model="layout_runs_mod.layout_section_id">
+                </input-select>
+                <input-select
+                    title="Position in layout screen" s="rnt(79)" required="required"
+                    ng-model="layout_runs_mod.position_layout_screen">
+                </input-select>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="Run number" required="required"
+                    ng-model="layout_runs_mod.run_number">
+                </input-text>
+                <input-textarea
+                    title="Description" style="height: 225px;"
+                    ng-model="layout_runs_mod.run_description">
+                </input-textarea>
+            </div>
+        </form>
+    </fieldset>
+</div>
+<div class="small-6 column">
+    <fieldset
+        ng-show="boarding_settings.charge_type == 'charge_by_petsize'"
+        class="none-bg small-12">
+        <legend>Pet size and rates setup</legend>
+        <editable-table
+            ts="layoutBoardingPetSizes"
+            with-delete="true" with-add="true"
+            class="small-12" empty-message="No petsizes and rates defined">
+        </editable-table>
+    </fieldset>
+    <fieldset
+        ng-show="boarding_settings.charge_type == 'charge_by_runtype'"
+        class="none-bg small-12">
+        <legend>Runtypes and rates setup</legend>
+        <editable-table
+            ts="layoutBoardingRunTypes"
+            with-delete="true" with-add="true"
+            class="small-12" empty-message="No runtypes and rates defined">
+        </editable-table>
+    </fieldset>
+    <a class="button tiny radius right"
+       ng-click="layout_runs_mod = {}">
+        <i class="fa fa-plus"></i> Add new run to layout
+    </a>
+    <table class="small-12">
+        <thead>
+            <tr>
+                <th ng-click="predicate_lr= 'run_number'; reverse_lr=!reverse_lr"
+                    style="cursor: pointer;"><img src="img/mss_ic1.png">
+                        <span>Run number</span>
+                </th>
+                <th ng-click="predicate_lr= 'charge_type'; reverse_lr=!reverse_lr"
+                    style="cursor: pointer;"><img src="img/mss_ic1.png">
+                    <span>Charge type</span>
+                </th>
+                <th ng-click="predicate_lr= 'charge_type_id'; reverse_lr=!reverse_lr"
+                    style="cursor: pointer;"><img src="img/mss_ic1.png">
+                    <span>Charge</span>
+                </th>
+                <th>Section</th>
+                <th ng-click="predicate_lr= 'position_layout_screen'; reverse_lr=!reverse_lr"
+                    style="cursor: pointer;"><img src="img/mss_ic1.png">
+                    <span>Position</span>
+                </th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="lr in layout_runs | array | orderBy:predicate_lr:reverse_lr"
+                ng-class="{'tr-actv': (layout_runs_mod.id == lr.id)}">
+                <td>{{lr.run_number}}</td>
+                <td>{{lr.charge_type}}</td>
+                <td>
+                    <div ng-show="lr.charge_type == 'charge_by_runtype'">
+                        {{boarding_runtypes[lr.charge_type_id].v}}
+                    </div>
+                    <div ng-show="lr.charge_type == 'charge_by_petsizes'">
+                        {{boarding_petsizes[lr.charge_type_id].v}}
+                    </div>
+                </td>
+                <td>{{lr.layout_section_id}}</td>
+                <td>{{lr.position_layout_screen}}</td>
+                <td>
+                    <a class="tiny radius button"
+                       ng-click="setLr(lr)">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                </td>
+                <td>
+                    <a class="tiny radius button"
+                       ng-click="deleteLr(lr)">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr ng-show="ma(layout_runs).length == 0">
+                <td colspan="7">
+                    <h4>No runs to layout defined</h4>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

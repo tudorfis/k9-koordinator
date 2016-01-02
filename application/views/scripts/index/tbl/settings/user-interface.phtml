@@ -1,0 +1,175 @@
+<h4><i class="fa fa-users"></i> User interface</h4>
+<form form-submit hide-show-al-submit="true" submit-btn="true" submit-btn-text="Save" t="user_interface_settings" table="user_interface_settings"
+      id="userInterfaceSettingsForm" action="" method="post" enctype="multipart/form-data" class="" data-abide="true">
+    <div class="small-6 column">
+        <fieldset>
+            <legend>Client and pet settings</legend>
+            <div class="small-12 column">
+                <input-checkbox
+                    title="Disable credit card storage"
+                    t="user_interface_settings" n="disable_credit_card_storage">
+                </input-checkbox>
+                <input-checkbox
+                    title="Require address when creating client"
+                    t="user_interface_settings" n="require_address_when_creating_client">
+                </input-checkbox>
+                <input-checkbox
+                    title="Require email when creating client"
+                    t="user_interface_settings" n="require_email_when_creating_client">
+                </input-checkbox>
+                <hr />
+                <div class="small-12 column">
+                    <div class="small-12 column">
+                        <input-checkbox
+                            title="Alarm pet age when older than"
+                            t="user_interface_settings" n="alarm_pet_age_when_older_than">
+                        </input-checkbox>
+                    </div>
+                    <div class="small-8 column">
+                        <input-select
+                            title="" s="rnt(10)" no-label="true"
+                            t="user_interface_settings" n="alarm_pet_age_when_older_than_value">
+                        </input-select>
+                    </div>
+                    <div class="small-4 column">
+                        <label>years</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Client and pet settings</legend>
+            <div class="small-12 column">
+                <input-checkbox
+                    title="Enable membership"
+                    t="user_interface_settings" n="enable_membership">
+                </input-checkbox>
+                <input-checkbox
+                    title="Enable email"
+                    t="user_interface_settings" n="enable_email">
+                </input-checkbox>
+                <input-checkbox
+                    title="Enable contracts"
+                    t="user_interface_settings" n="enable_contracts">
+                </input-checkbox>
+                <input-checkbox
+                    title="Enable pet ID"
+                    t="user_interface_settings" n="enable_pet_id">
+                </input-checkbox>
+                <input-checkbox
+                    title="Enable reason for stay"
+                    t="user_interface_settings" n="enable_reason_for_stay">
+                </input-checkbox>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Messages</legend>
+            <input-checkbox
+                title="Show survey when creating client"
+                t="user_interface_settings" n="show_survey_when_creating_client">
+            </input-checkbox>
+            <input-checkbox
+                title="Show income survey when creating client"
+                t="user_interface_settings" n="show_income_survey_when_creating_client">
+            </input-checkbox>
+            <input-checkbox
+                title="Send texts from message system"
+                t="user_interface_settings" n="send_texts_from_message_system">
+            </input-checkbox>
+            <input-checkbox
+                title="Show clock status"
+                t="user_interface_settings" n="show_clock_status">
+            </input-checkbox>
+        </fieldset>
+        <fieldset>
+            <legend>Point of sale and checkout screen</legend>
+            <input-checkbox
+                title="POS general items"
+                t="user_interface_settings" n="pos_general_items">
+            </input-checkbox>
+            <input-checkbox
+                title="POS price levels"
+                t="user_interface_settings" n="pos_price_levels">
+            </input-checkbox>
+            <input-checkbox
+                title="Send email at check_out"
+                t="user_interface_settings" n="send_email_at_check_out">
+            </input-checkbox>
+            <input-checkbox
+                title="Allow 'Sold by' for retail sales"
+                t="user_interface_settings" n="allow_sold_by_for_retail_sales">
+            </input-checkbox>
+            <input-checkbox
+                title="Enable manual discounts at checkout"
+                t="user_interface_settings" n="enable_manual_discounts_at_checkout">
+            </input-checkbox>
+            <input-checkbox
+                title="Enable pre-set discounts at checkout"
+                t="user_interface_settings" n="enable_pre_set_discounts_at_checkout">
+            </input-checkbox>
+        </fieldset>
+    </div>
+    <div class="small-6 column">
+        <fieldset>
+            <legend>General settings</legend>
+            <input-select
+                title="Select a country and click 'Save'" s="countries"
+                t="user_interface_settings" n="country">
+            </input-select>
+            <div>
+                <input-select
+                    title="Default language for bills and receipts" s="lang_keys"
+                    ng-id="lang" ng-v="text" ng-model="user_interface_settings.language">
+                </input-select>
+            </div>
+            <input-select
+                title="Default payment type" required="required" error-text="Please select payment type"
+                ng-model="user_interface_settings.payment_type_id" s="payment_types" none-filter="false">
+            </input-select>
+            <div class="small-8 column">
+                <label><i class="fa fa-sort-numeric-asc"></i> State length</label>
+                <div range-slider min="1" max="3" model-max="user_interface_settings.state_length" pin-handle="min"></div>
+            </div>
+            <div class="small-4 column">
+                <label>&nbsp;</label>
+                <span>Max 3</span>
+            </div>
+            <div class="small-8 column">
+                <label><i class="fa fa-home"></i> Zip postcode length</label>
+                <div range-slider min="3" max="7" model-max="user_interface_settings.zip_postcode_length" pin-handle="min"></div>
+            </div>
+            <div class="small-4 column">
+                <label>&nbsp;</label>
+                <span>Max 7</span>
+            </div>
+            <hr />
+            <div class="small-12 column">
+                <input-select
+                    title='<i class="fa fa-phone"></i> Desired phone format' s="tel_formats"
+                    ng-change="doTelFormats()" ng-model="user_interface_settings.phone_format_id" required="required"
+                    error-text="Please select desired phone format">
+                </input-select>
+            </div>
+            <div class="small-12 column">
+                <input-select
+                    title='<label><i class="fa fa-mobile"></i> Desired cell format</label>' s="tel_formats"
+                    ng-change="doTelFormats()" ng-model="user_interface_settings.cell_format_id" required="required"
+                    error-text="Please select desired cell phone format">
+                </input-select>
+            </div>
+            <div class="small-12 column">
+                <input-select
+                    title='<label><i class="fa fa-fax"></i> Desired fax format</label>' s="tel_formats"
+                    ng-change="doTelFormats()" ng-model="user_interface_settings.fax_format_id" required="required"
+                    error-text="Please select desired fax phone format">
+                </input-select>
+            </div>
+            <hr />
+            <input-checkbox
+                title="Date format dd/mm/yy"
+                t="user_interface_settings" n="date_format"
+            </input-checkbox>
+
+        </fieldset>
+    </div>
+</form>

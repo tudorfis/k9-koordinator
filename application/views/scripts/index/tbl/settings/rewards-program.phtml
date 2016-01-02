@@ -1,0 +1,121 @@
+<div class="small-12">
+    <fieldset>
+        <legend>
+            <i class="fa fa-dollar"></i> Rewards program
+        </legend>
+        <div class="small-6 left">
+            <fieldset>
+                <legend>Rewards setup</legend>
+                <form form-submit hide-show-al-submit="true" submit-btn="true" t="promotions_settings" table="promotions_settings"
+                      id="promotionsSettingsForm" action="" method="post" enctype="multipart/form-data" data-abide="true" submit-btn-text="Save">
+                    <input-checkbox
+                        title="Rewards program active"
+                        ng-model="promotions_settings.rewards_program_is_active">
+                    </input-checkbox>
+                    <div class="small-6 column">
+                        <input-text
+                            title="Points per dollar" t="promotions_settings" n="points_per_dollar">
+                        </input-text>
+                    </div>
+                    <div class="small-6 column">
+                        <input-text
+                            title="Points per refferal" t="promotions_settings" n="points_per_referral">
+                        </input-text>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        <div class="small-3 right">
+
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-12">
+            <fieldset>
+                <legend>Rewards promotions setup</legend>
+                    <div class="small-12 column">
+                        <form form-submit hide-show-al-submit="true" submit-btn="true" t="promotions_mod" table="promotions"
+                              id="promotionsForm" action="" method="post" enctype="multipart/form-data" data-abide="true" submit-btn-text="Update">
+                            <div class="small-4 column">
+                                <input-text
+                                    title="Promotion code" pattern="[0-9]" required="true"
+                                    error-text="Please enter only numerical value"
+                                    t="promotions_mod" n="promotion_code">
+                                </input-text>
+                            </div>
+                            <div class="small-4 column">
+                                <input-text
+                                    title="Promotion name" required="true"
+                                    t="promotions_mod" n="promotion_name">
+                                </input-text>
+                            </div>
+                            <div class="small-4 column">
+                                <input-text
+                                    title="Description" required="true"
+                                    t="promotions_mod" n="description">
+                                </input-text>
+                            </div>
+                            <div class="small-4 column">
+                                <input-text
+                                    title="Points" pattern="[0-9]" required="true"
+                                    error-text="Please enter only numerical value"
+                                    t="promotions_mod" n="points">
+                                </input-text>
+                            </div>
+                            <div class="small-4 column">
+                                <input-text
+                                    title="Expiration date" class="datepicker" required="true"
+                                    t="promotions_mod" n="expiration_date">
+                                </input-text>
+                            </div>
+                            <div class="small-4 column">
+                                <input-select
+                                    title="Active / inactive" required="true"
+                                    s="status" t="promotions_mod" n="status_id">
+                                </input-text>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="small-12">
+                        <table class="small-12">
+                            <thead>
+                                <tr>
+                                    <th>Promotion Code</th>
+                                    <th>Promotion Name</th>
+                                    <th>Description</th>
+                                    <th>Points</th>
+                                    <th>Active</th>
+                                    <th>Expires</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="p in $root.promotions">
+                                    <td>{{p.promotion_code}}</td>
+                                    <td>{{p.promotion_name}}</td>
+                                    <td>{{p.description}}</td>
+                                    <td>{{p.points}}</td>
+                                    <td>{{$root.status[p.status_id].v}}</td>
+                                    <td>{{p.expiration_date}}</td>
+                                    <td>
+                                        <a class="button tiny radius"
+                                           ng-click="editPromotion(p); revealModal('#pModal');">
+                                            <i class="fa fa-edit"></i>
+                                       </a>
+                                    </td>
+                                    <td>
+                                        <a class="button tiny radius"
+                                           ng-click="deletePromotion(p.id); revealModal('#pModal');">
+                                            <i class="fa fa-trash"></i>
+                                       </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </fieldset>
+        </div>
+    </fieldset>
+</div>

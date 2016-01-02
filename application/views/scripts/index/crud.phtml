@@ -1,0 +1,389 @@
+<?php
+
+
+    /**
+     * Render crud
+     * @return string
+     */
+    function renderCrud($fields_names = array(), $fields_values = array(), $fields_extra = '', $title = '',
+                            $table = '', $filter = '', $extra_html = '', $with_order = false, $icon_class = '') {
+
+        $return =
+            '<h3 class="left">
+                <i class="'. $icon_class .'"></i> '.$title.
+            '</h3>
+            <span class="right">
+                <i class="fi-info"></i> Scroll down to load more
+            </span>
+
+            <div class="cleafix">&nbsp;</div>
+            <div class="cleafix">&nbsp;</div>
+
+            <div class="content small-12">
+                <fieldset class="bg-gray radius">
+                    '. (!isNE($extra_html) ? '<div class="small-5 column">'. $extra_html .'</div>' : '') .'
+                    <button class="small-2 column radius right"
+                            ng-click="revealModal(\'#crudModal\'); getCrudMod(\''.$table.'\', {});">
+                        <i class="fa fa-plus-circle"> Add</i>
+                    </button>
+                    <div class="clearfix">&nbsp;</div>
+                    <div ng-hide="ma('.$table.').length > 0"
+                         class="secondary label bg-white small-12">
+                            <h3 style="padding: 10px 20px;">no results</h3>
+                    </div>
+                    <table ng-show="ma('.$table.').length > 0" class="small-12">
+                        <thead>
+                           <tr>';
+
+        /** Fields names */
+        foreach ($fields_names as $k => $fn) {
+            $predicate = '';
+            if (isset($fields_values[$k])) {
+                $predicate = (count($predicate_arr = explode('|', $fields_values[$k])) > 1) ? $predicate_arr[1] : $fields_values[$k];
+            }
+
+            $return .=
+                ($with_order && isset($fields_values[$k]) ?
+                    '<th style="cursor: pointer;"
+                          ng-click="predicate = \''.$predicate.'\'; reverse=!reverse">'.
+                            $fn .' <img src="img/mss_ic1.png" />
+                     </th>' :
+                    '<th>'. $fn .'</th>');
+        }
+
+        /** build table functionabilities */
+        $return .=
+                     '<th class="text-center">Edit</th>
+                      <th class="text-center">Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="el in $root.'.$table.' | array | filter:crud_keywords '.
+                        $filter . ($with_order ? ' | orderBy:predicate:reverse' : '') .'">';
+
+        /** Fields values */
+        foreach ($fields_values as $fv) {
+            $fv_arr = explode('|', $fv);
+            if (count($fv_arr) > 1) {
+                $return .= '<td>{{$root.'. $fv_arr[0] .'[el.'. $fv_arr[1] .'].'. $fv_arr[2] .' || \'-\'}}</td>';
+            } else {
+                $return .= '<td>{{el.'. $fv .' || \'-\'}}</td>';
+            }
+        }
+
+        /** Fields extra  */
+        $return .= $fields_extra;
+
+        /** Edit delete */
+        $return .=
+                            '<td class="text-center" style="padding-top: 15px;">' .
+                               '<a class="button tiny radius"
+                                   ng-click="revealModal(\'#crudModal\'); getCrudMod(\''.$table.'\', el);">
+                                        <i class="fa fa-wrench fa-2x"></i>
+                                </a>
+                            </td>
+                            <td class="text-center" style="padding-top: 15px;">
+                                <a class="button tiny radius"
+                                    ng-click="delete(el.id)">
+                                        <i class="fa fa-trash-o fa-2x"></i>
+                                </a>
+                           </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+           </div>';
+
+        return $return;
+    }
+
+    function renderSearch() {
+        return '<input-text
+                    title="Search" class="clearable"
+                    ng-model="crud_keywords" no-error="true">
+                </input-text>';
+    }
+
+?>
+
+<?php
+
+    $crud = '';
+    $modal_class = 'small';
+    $extra_html = renderSearch();
+    $with_order = true;
+    $order = 'v asc';
+    $fields_extra = '';
+    $other_html = '';
+    $table = '';
+    $filter = '';
+    $icon_class = 'fi-list';
+
+    switch($this->params['t']) {
+
+        // ################## //
+        case 'pet_color':
+            $icon_class = 'fa fa-heart';
+            $title = 'Pet Color';
+            $fields_names = array('Status', 'Color');
+            $fields_values = array('status|status_id|v', 'v');
+            break;
+
+        // ################## //
+        case 'pet_type':
+            $title = 'Pet type';
+            $fields_names = array('Status', 'Type');
+            $fields_values = array('status|status_id|v', 'v',);
+            $extra_html = '';
+            break;
+
+        // ################## //
+        case 'pet_breed':
+            $icon_class = 'fa fa-paw';
+            $title = 'Pet breed';
+            $fields_names = array('Status', 'Type', 'Breed');
+            $fields_values = array('status|status_id|v', 'pet_type|pet_type_id|v', 'v');
+            break;
+
+        // ################## //
+        case 'pet_status':
+            $title = 'Pet status';
+            $fields_names = array('Status', 'Pet Status', 'Price');
+            $fields_values = array('status|status_id|v', 'v', 'price');
+            $extra_html = '';
+            break;
+
+        // ################## //
+        case 'client_status':
+            $title = 'Client status';
+            $fields_names = array('Status', 'Client Status');
+            $fields_values = array('status|status_id|v', 'v');
+            $extra_html = '';
+            break;
+
+        // ################## //
+        case 'stay_reasons':
+            $title = 'Boarding stay reason';
+            $fields_names = array('Status', 'Boarding stay reason');
+            $fields_values = array('status|status_id|v', 'v');
+            break;
+
+        // ################## //
+        case 'schedule_services':
+            $icon_class = 'fa fa-pencil';
+            $title = 'Schedule services';
+            $fields_names = array('Active / Inactive', 'Service name', 'Service description', 'Price', 'Is special', 'Limit', 'HCP', 'Order');
+            $fields_values = array('status|status_id|v', 'v', 'service_description', 'price', 'yes_no|is_special|v', 'limit', 'yes_no|is_hcp|v', 'order');
+            break;
+
+        // ################## //
+        case 'meds':
+            $icon_class = 'fa fa-ambulance';
+            $title = 'Medication';
+            $fields_names = array('Status', 'Medication', 'Price');
+            $fields_values = array('status|status_id|v', 'v', 'price');
+            break;
+
+        // ################## //
+
+        case 'meds_type':
+            $title = 'Medication types';
+            $fields_names = array('Status', 'Medication Type');
+            $fields_values = array('status|status_id|v', 'v');
+            break;
+
+        // ################## //
+        case 'diets':
+
+            $title = 'Diets';
+            $fields_names = array('Status', 'Diet', 'Price');
+            $fields_values = array('status|status_id|v', 'v', 'price');
+            break;
+
+        // ################## //
+        case 'diets_type':
+            $icon_class = 'fa fa-eyedropper';
+            $title = 'Diet types';
+            $fields_names = array('Status', 'Diet Type');
+            $fields_values = array('status|status_id|v', 'v');
+            break;
+
+        // ################## //
+        case 'md_dosage':
+            $icon_class = 'fa fa-medkit';
+            $title = 'Med / diet dosage';
+            $fields_names = array('Status', 'Dosage');
+            $fields_values = array('status|status_id|v', 'v');
+            break;
+
+        // ################## //
+        case 'md_dose_type':
+            $icon_class = 'fa fa-medkit';
+            $title = 'Med / diet dosage type';
+            $fields_names = array('Status', 'Dosage type');
+            $fields_values = array('status|status_id|v', 'v');
+            break;
+
+        // ################## //
+        case 'payment_types':
+            $icon_class = 'fa fa-dollar';
+            $title = 'Payment types';
+            $fields_names = array('Status', 'Payment type');
+            $fields_values = array('status|status_id|v', 'v');
+            $extra_html = '';
+            break;
+
+        // ################## //
+        case 'vets':
+            $icon_class = 'fa fa-user-md';
+            $title = 'Veterinary';
+            $fields_names = array('Status', 'Name', 'Phone', 'Email', 'City', 'State', 'Zip');
+            $fields_values = array('status|status_id|v', 'v', 'phone', 'email', 'city', 'state', 'zip');
+            $modal_class = '';
+            break;
+
+        // ################## //
+        case 'users':
+            $icon_class = 'fa fa-user-plus';
+            $title = 'Staff';
+            $fields_names = array('Status', 'Role', 'Date created', 'Email', 'Username',  'Full name', 'Image');
+            $fields_values = array('status|status_id|v', 'role|role_id|v', 'date_created', 'email', 'username');
+            $fields_extra =
+                '<td>{{el.first_name}} {{el.last_name}}</td>'.
+                '<td>
+                    <div class="th-img-100">
+                        <image-no-image
+                            t="el" n="image_id" s="files" st="path"
+                            stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+                        </image-no-image>
+                    </div>
+                 </td>';
+            $order = 'username asc';
+            $modal_class = '';
+            break;
+
+        // ################## //
+        case 'groomers':
+            $icon_class = 'fa fa-user-secret';
+            $title = 'Groomers';
+            $fields_names = array('Status', 'First name', 'Last name', 'Phone', 'Email', 'State', 'City', 'Street', 'Zip', 'Image');
+            $fields_values = array('status|status_id|v', 'first_name', 'last_name', 'phone', 'email', 'state', 'city', 'street', 'zip');
+            $fields_extra =
+                '<td>
+                    <div class="th-img-100">
+                        <image-no-image
+                            t="el" n="image_id" s="files" st="path"
+                            stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+                        </image-no-image>
+                    </div>
+                 </td>';
+            $order = 'last_name asc';
+            $modal_class = '';
+            $table = 'users';
+            $filter = ' | filter:{role_id: 2}';
+            $modal_class = 'xlarge';
+            break;
+
+        // ################## //
+        case 'trainers':
+            $icon_class = 'fa fa-user-secret';
+            $title = 'Trainers';
+            $fields_names = array('Status', 'First name', 'Last name', 'Phone', 'Email', 'State', 'City', 'Street', 'Zip', 'Image');
+            $fields_values = array('status|status_id|v', 'first_name', 'last_name', 'phone', 'email', 'state', 'city', 'street', 'zip');
+            $fields_extra =
+                '<td>
+                    <div class="th-img-100">
+                        <image-no-image
+                            t="el" n="image_id" s="files" st="path"
+                            stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+                        </image-no-image>
+                    </div>
+                 </td>';
+            $order = 'last_name asc';
+            $table = 'users';
+            $filter = ' | filter:{role_id: 3}';
+            $modal_class = 'xlarge';
+            break;
+
+        // ################## //
+        case 'client_survey_findout':
+            $icon_class = 'fa fa-file-text-o';
+            $title = 'Survey findout';
+            $fields_names = array('Status', 'Is refferal', 'Value');
+            $fields_values = array('status|status_id|v', 'is_refferal', 'v');
+            $extra_html = '';
+            break;
+
+        // ################## //
+        case 'client_survey_income':
+            $icon_class = 'fa fa-file-text-o';
+            $title = 'Survey income';
+            $fields_names = array('Status', 'Income');
+            $fields_values = array('status|status_id|v', 'v');
+            $extra_html = '';
+            break;
+
+        }
+
+?>
+
+<script>
+    var CrudCtrl = function (api, $scope, $timeout, crud, settings) {
+
+        var s = $scope;
+        
+        s.t = '<?= (!empty($table) ? $table : $this->params['t']) ?>';
+        s.crud_mod = {};
+        s.title = '<?= $title ?>';
+        s.icon_class = '<?= $icon_class ?>';
+
+        s.getCrudMod = function(table, crud_mod){
+
+            s.crud_mod = crud_mod;
+            s.crud_mod.status_id = s.crud_mod.status_id || 1;
+
+            if (['users', 'groomers', 'trainers'].indexOf(table) != -1) {
+                s.crud_mod.password = '';
+                s.crud_mod.c_password = '';
+            }
+        };
+
+        rs.post.crud_mod = {
+            <?php if ($this->params['t'] == 'groomers') : ?>
+                beforeSubmit: function() {
+                    s.crud_mod.role_id = 2;
+                },
+            <?php elseif ($this->params['t'] == 'trainers') : ?>
+                beforeSubmit: function() {
+                    s.crud_mod.role_id = 3;
+                },
+            <?php endif ?>
+            afterSubmit: function() {
+                crud.setTableAfterSubmit(crud.tbl_arr[s.t], s.crud_mod);
+                <?php if ($this->params['t'] == 'groomers' || $this->params['t'] == 'trainers') : ?>
+                    settings.buildUsersRoles();
+                <?php endif ?>
+            }
+        };
+
+        s.delete = function(id) {
+            rs.confirmMsg("Are you sure you want to delete this item ?", function(){
+                crud.deleteItem(crud.tbl_arr[s.t], s.t, id);
+            });
+        };
+
+    };
+</script>
+
+<div id="CrudCtrl" ng-controller="CrudCtrl" class="small-12 columns">
+
+    <div id="crudModal" class="reveal-modal exclude <?= $modal_class ?>" data-reveal>
+        <?= $this->partial('index/crud/crud-mod.phtml', array('t' => $this->params['t'])) ?>
+        <a class="close-reveal-modal close-item"></a>
+    </div>
+
+    <?= $other_html; ?>
+    <?= renderCrud($fields_names, $fields_values, $fields_extra, $title,
+          (!empty($table) ? $table : $this->params['t']), $filter, $extra_html, $with_order, $icon_class) ?>
+
+</div>

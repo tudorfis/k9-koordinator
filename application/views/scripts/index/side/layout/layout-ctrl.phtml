@@ -1,0 +1,119 @@
+<div id="LayoutCtrl" data-ng-controller="LayoutCtrl"
+     class="reveal-modal xlarge exclude" data-reveal>
+    <div class="small-3 column">
+        <fieldset>
+            <legend>Showing layout</legend>
+            <input-text
+                title="" class="datepicker" no-error="true"
+                ng-model="l_fi.date">
+            </input-text>
+        </fieldset>
+        <fieldset>
+            <legend>Sections</legend>
+            <p style="font-size: 10px;">* select a section</p>
+            <div ng-repeat="ls in layout_sections track by $index"
+                 class="left" style="margin-right: 5px;">
+                <div ng-show="ls.in_use">
+                    <a class="button-box"
+                       ng-class="{'bg-selected': (l_fi.section_id == ls.id), 'bg-other-empty': (l_fi.section_id != ls.id)}"
+                       ng-click="l_fi.section_id = ls.id; lr_selected = {}">
+                        {{ls.v}}
+                    </a>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Legend</legend>
+            <input-select
+                title="Select type" s="boarding_charges"
+                ng-id="v" ng-v="n" no-error="true"
+                ng-change="lr_selected = {}"
+                line-value="- all types -"
+                ng-model="l_fi.charge_type">
+            </input-select>
+            <div ng-show="l_fi.charge_type == 'charge_by_runtype'">
+                <input-select
+                    title="Filter runtype" s="boarding_runtypes" no-error="true"
+                    ng-change="lr_selected = {}" ng-model="l_fi.charge_type_id" line-value="- all runtypes -">
+                </input-select>
+            </div>
+            <div ng-show="l_fi.charge_type == 'charge_by_petsizes'">
+                <input-select
+                    title="Filter petsize type" s="boarding_petsizes" no-error="true"
+                    ng-change="lr_selected = {}" ng-model="l_fi.charge_type_id" line-value="- all petsizes -">
+                </input-select>
+            </div>
+            <table class="small-12">
+                <tr>
+                    <td>Available</td>
+                    <td><div class="color-box bg-available">&nbsp;</div></td>
+                </tr>
+                <tr>
+                    <td>Other empty</td>
+                    <td><div class="color-box bg-other-empty">&nbsp;</div></td>
+                </tr>
+                <tr>
+                    <td>Occupied</td>
+                    <td><div class="color-box bg-occupied">&nbsp;</div></td>
+                </tr>
+                <tr>
+                    <td>Selected</td>
+                    <td><div class="color-box bg-selected">&nbsp;</div></td>
+                </tr>
+                <tr>
+                    <td>Didn't leave</td>
+                    <td><div class="color-box bg-didnt-leave">&nbsp;</div></td>
+                </tr>
+                <tr>
+                    <td>Leaving</td>
+                    <td><div class="color-box bg-leaving">&nbsp;</div></td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <div class="column"
+         ng-class="{'small-7': lr_selected.run_number, 'small-9': !lr_selected.run_number}">
+        <div ng-show="lr_selected.run_number">
+            <div class="small-12 column">
+                <h1 class="red-big">{{lr_selected.run_number}}</h1>
+                <h5>{{lr_selected.run_description}}</h5>
+            </div>
+        </div>
+        <hr />
+        <div ng-repeat="lr in layout_runs | array | filter:{layout_section_id: l_fi.section_id}
+                          | filter:{charge_type:(l_fi.charge_type||'')} | filter:{charge_type_id:(l_fi.charge_type_id||'')}
+                          | orderBy:'position_layout_screen':false">
+            <div class="small-3 table-item left">
+                <a class="button-box"
+                   ng-click="setLr(lr)"
+                   ng-class="{'bg-selected': (lr_selected.run_number == lr.run_number),
+                              'bg-other-empty': (lr_selected.run_number != lr.run_number)}">
+                    {{lr.run_number}} - 0
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="small-2 column"
+         ng-show="lr_selected.run_number">
+        <input-select
+            title="Showing nr dates" no-error="true"
+            ng-init="l_fi.nr_dates = 5"
+            ng-model="l_fi.nr_dates" s="rnt(30)">
+        </input-select>
+        <table class="small-12">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>No pets</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="dp in days_nr_pets | orderBy:'time':true">
+                <td>{{dp.text}}</td>
+                <td class="bg-selected">0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a class="close-reveal-modal close-item"></a>
+</div>

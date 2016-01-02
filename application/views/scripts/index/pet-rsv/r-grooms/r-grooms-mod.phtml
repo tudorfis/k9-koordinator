@@ -1,0 +1,293 @@
+<fieldset>
+    <legend>
+        <i class="fa fa-th"></i> Grooms reservation
+    </legend>
+        <form form-submit hide-show-al-content="true" t="r_grooms_mod" table="r_grooms" id="rGroomsForm" data-abide="true">
+            <fieldset>
+                <legend>Select groomer</legend>
+                <div class="small-6 column">
+                    <div ng-include="'tpl/cp-info'"></div>
+                </div>
+                <div class="small-6 column">
+                    <input-select
+                        title="Groomer"
+                        ng-disabled="r_grooms_mod.in_out == 'out'"
+                        none-option-value="- select groomer -"
+                        ng-model="r_grooms_mod.groomer_id" required="required" s="groomers">
+                    </input-select>
+                    <div class="small-6 column">
+                        <input-text
+                            title="Date in"
+                            ng-model="r_grooms_mod.date_in"
+                            ng-disabled="r_grooms_mod.in_out == 'out'"
+                            placeholder="" class="datepicker" required="required"
+                            error-text="This field is required, only numeric values">
+                        </input-text>
+                        <input-text
+                            title="Date out"
+                            ng-model="r_grooms_mod.date_out"
+                            ng-disabled="r_grooms_mod.in_out == 'out'"
+                            placeholder="" class="datepicker" required="required"
+                            error-text="This field is required, only numeric values">
+                        </input-text>
+                    </div>
+                    <div class="small-6 column">
+                        <input-text
+                            title="Time in"
+                            ng-model="r_grooms_mod.time_in"
+                            ng-disabled="r_grooms_mod.in_out == 'out'" required="required"
+                            placeholder="" class="timepicker" pattern="time_pattern"
+                            error-text="Please add this format 10:30">
+                        </input-text>
+                        <input-text
+                            title="Time out"
+                            ng-model="r_grooms_mod.time_out"
+                            ng-disabled="r_grooms_mod.in_out == 'out'" required="required"
+                            placeholder="" class="timepicker" pattern="time_pattern"
+                            error-text="Please add this format 10:30">
+                        </input-text>
+                    </div>
+                    <div class="small-12" ng-show="r_grooms_mod.date_checkout && r_grooms_mod.time_checkout">
+                        <hr />
+                        <div class="small-6 column">
+                            <input-text
+                                title="Date of checkout"
+                                disabled="true" ng-model="r_grooms_mod.date_checkout">
+                            </input-text>
+                        </div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Time of checkout out"
+                                disabled="true" ng-model="r_grooms_mod.time_checkout">
+                            </input-text>
+                        </div>
+                    </div>
+                    <div class="small-12">
+                        <span>
+                            <strong>Pet size: </strong>
+                            <i>{{$root.pet_size[$root.pet.pet_size_id].v}}</i>
+                        </span>
+                        <div class="clearfix">&nbsp;</div>
+                        <input-checkbox
+                            title="Is handle carefully ?"
+                            ng-model="r_grooms_mod.is_hcp"
+                            ng-disabled="r_grooms_mod.in_out == 'out'">
+                        </input-checkbox>
+                    </div>
+                    <div class="right" ng-show="r_grooms_mod.in_out == 'in'">
+                        <button type="submit" class="submit button radius" style="font-weight: bold;">
+                            <i class="fa fa-check-square"> </i>
+                        </button>
+                        <img class="al" ng-src="{{'img/ajax.gif' | baseUrl}}" style="display: none;" />
+                    </div>
+                </div>
+            </fieldset>
+            <div class="small-12 column">
+                <fieldset>
+                    <legend>Select gromming services</legend>
+                    <div class="small-6 column">
+                        <div class="small-12">
+                            <input-select
+                                title="Select type"
+                                ng-model="r_grooms_mod.base_type_id" required="required"
+                                ng-disabled="r_grooms_mod.in_out == 'out'"
+                                ng-id="v" ng-v="n" s="base_type_filter"
+                                ng-change="clearInputs()">
+                            </input-select>
+                        </div>
+                        <div class="small-12">
+                            <input-select
+                                title="Grooming rate"
+                                ng-model="r_grooms_mod.grooming_rate_id" s="grooming_rates"
+                                ng-disabled="r_grooms_mod.in_out == 'out'"
+                                ng-change="r_grooms_mod.multiplier = grooming_rates[r_grooms_mod.grooming_rate_id].multiplier">
+                            </input-select>
+                        </div>
+                        <div class="small-12" ng-show="r_grooms_mod.grooming_rate_id">
+                            <input-text
+                                title="Multiplier:" no-error="true"
+                                ng-model="r_grooms_mod.multiplier" disabled="true">
+                            </input-text>
+                        </div>
+                    </div>
+                    <div class="small-6 column">
+                        <div ng-show="r_grooms_mod.base_type_id == 1">
+                            <table class="small-12">
+                                <tr>
+                                    <td><strong>Service</strong></td>
+                                    <td><strong>Price</strong></td>
+                                    <td><strong>Handle carefully</strong></td>
+                                    <td><strong>Total</strong></td>
+                                </tr>
+                                <tr ng-repeat="gs in grooming_services | array | filter:{base_type_id:1}">
+                                    <td>
+                                        <input-checkbox
+                                            title="{{gs.v}}"
+                                            ng-disabled="r_grooms_mod.in_out == 'out'"
+                                            t="r_grooms_mod" n="gs_{{gs.id}}">
+                                        </input-checkbox>
+                                    </td>
+                                    <td>
+                                        <span>$ {{gs["v_"+($root.pet.pet_size_id).toString()] | number:2}}</span>
+                                    </td>
+                                    <td>
+                                        <span ng-show="r_grooms_mod.is_hcp">+ $ {{gs.hcp | number:2}}</span>
+                                        <span ng-hide="r_grooms_mod.is_hcp">-</span>
+                                    </td>
+                                    <td>
+                                        <span ng-show="r_grooms_mod.is_hcp">
+                                            = $ {{gs["v_"+($root.pet.pet_size_id).toString()] + gs.hcp | number:2}}
+                                        </span>
+                                        <span ng-hide="r_grooms_mod.is_hcp">
+                                            = $ {{gs["v_"+($root.pet.pet_size_id).toString()] | number:2}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div ng-show="r_grooms_mod.base_type_id == 2">
+                            <table class="small-12">
+                                <tr>
+                                    <td><strong>Service</strong></td>
+                                    <td><strong>Price</strong></td>
+                                    <td><strong>Handle carefully</strong></td>
+                                    <td><strong>Total</strong></td>
+                                </tr>
+                                <tr ng-repeat="gs in grooming_services | array | filter:{base_type_id:2}">
+                                    <td>
+                                        <input-checkbox
+                                            title="{{gs.v}}"
+                                            ng-disabled="r_grooms_mod.in_out == 'out'"
+                                            t="r_grooms_mod" n="gs_{{gs.id}}">
+                                        </input-checkbox>
+                                    </td>
+                                    <td>
+                                        <span>$ {{gs["v_"+($root.pet.pet_size_id).toString()] | number:2}}</span>
+                                    </td>
+                                    <td>
+                                        <span ng-show="r_grooms_mod.is_hcp">+ $ {{gs.hcp | number:2}}</span>
+                                        <span ng-hide="r_grooms_mod.is_hcp">-</span>
+                                    </td>
+                                    <td>
+                                        <span ng-show="r_grooms_mod.is_hcp">
+                                            = $ {{gs["v_"+($root.pet.pet_size_id).toString()] + gs.hcp | number:2}}
+                                        </span>
+                                        <span ng-hide="r_grooms_mod.is_hcp">
+                                            = $ {{gs["v_"+($root.pet.pet_size_id).toString()] | number:2}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-6 column" ng-show="r_grooms_mod.id">
+            <fieldset>
+                <legend>
+                    <i class="fa fa-credit-card"></i> Payment details
+                </legend>
+                <form form-submit hide-show-al-content="true" t="o" table="grooms_payments"
+                      ng-hide="r_grooms_mod.in_out == 'out'" data-abide="true" submit-btn="true"
+                      submit-btn-text="Pay reservation">
+                    <input-select
+                        title="Payment type" required="required"
+                        line-value="- select payment type -"
+                        ng-model="o.payment_type_id" s="payment_types">
+                    </input-select>
+                    <postfix i="fa fa-dollar" pl="4" dl="8" wl="true">
+                        <input-text
+                            no-label="true" type="number" pattern="number" required="required"
+                            error-text="This field is required and must be numeric value"
+                            ng-model="o.paid" placeholder="Enter amount to process ... ">
+                        </input-text>
+                    </postfix>
+                    <div class="clearfix">&nbsp;</div>
+                </form>
+                <table class="small-12" ng-show="o.id">
+                    <tr>
+                        <td>Payment status: </td>
+                        <td>{{(payment_status[o.payment_status_id].v)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Payment type: </td>
+                        <td>{{(payment_types[o.payment_type_id].v)}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>TOTAL: </td>
+                        <td>$ {{o.required | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Paid</td>
+                        <td>$ {{o.paid | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Change</td>
+                        <td>$ {{o.change | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Unpaid</td>
+                        <td>$ {{o.unpaid | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date created</td>
+                        <td>{{o.date_created}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date modified</td>
+                        <td>{{o.date_modified}}</td>
+                    </tr>
+                    <tr>
+                        <td>Created by</td>
+                        <td>{{$root.users[o.created_user_id].first_name}}, {{$root.users[o.created_user_id].last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Modified by</td>
+                        <td>{{$root.users[o.modified_user_id].first_name}}, {{$root.users[o.modified_user_id].last_name}}</td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        <div class="small-6 column">
+            <fieldset ng-show="r_grooms_mod.id">
+                <legend>
+                    <i class="fa fa-dollar"></i> Billing details
+                </legend>
+                <div class="small-6 column">
+                    <input-select
+                        title="Select language" no-error="true" s="$root.lang_keys"
+                        ng-model="o.language" ng-id="lang" ng-v="text">
+                    </input-select>
+                    <input-radio
+                        title='Show details <i class="fa fa-laptop"></i>'
+                        t="o" n="print_type" v="screen" placeholder="...">
+                    </input-radio>
+                    <input-radio
+                        title='Print to screen <i class="fa fa-print"></i>'
+                        t="o" n="print_type" v="print" placeholder="...">
+                    </input-radio>
+                    <input-radio
+                        title='Download a copy <i class="fa fa-file-o"></i>'
+                        t="o" n="print_type" v="download" placeholder="...">
+                    </input-radio>
+                    <hr />
+                    <a class="tiny button radius btn_print"
+                       ng-click="$root.printRsvBill('#rGroomsCtrl', 'r_grooms_mod', 'r_grooms')">
+                        <i class="fa fa-print"></i> Bill details and prices
+                    </a>
+                    <i class="fa fa-spin fa-spinner fa-2x al_print" style="display: none;"></i>
+                </div>
+                <div class="small-6 column">
+                    <a class="button radius"
+                       ng-disabled="r_grooms_mod.in_out == 'out'"
+                       ng-click="(r_grooms_mod.in_out == 'in' ? $root.checkoutPet('#rGroomsCtrl', 'r_grooms_mod', 'r_grooms') : void(0))">
+                        <i class="fa fa-sign-out"></i> Checkout pet
+                    </a>
+                    <hr />
+                </div>
+            </fieldset>
+        </div>
+</fieldset>

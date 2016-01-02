@@ -1,0 +1,100 @@
+<div id="clients-membership">
+    <form form-submit hide-show-al-content="true" submit-btn="true" t="client_membership_mod"
+          table="clients_membership" data-abide="true" submit-btn-text="Generate card">
+        <h3><i class="fa fa-barcode"></i> Client membership</h3>
+        <fieldset>
+            <div class="small-6 column">
+                <div class="small-6 column">
+                    <div class="th-img-100">
+                        <image-no-image
+                            t="client" n="image_id" s="files" ajax="true"
+                            st="path" stt="path_thumb" fancybox="true" image="no_profile_img.gif">
+                        </image-no-image>
+                    </div>
+                </div>
+                <div class="small-6 column">
+                    <h3 class="red-big">{{client.first_name}}, {{client.last_name}}</h3>
+                    <div class="clearfix">&nbsp;</div>
+                    <p><i class="fa fa-envelope-o"></i> Email: {{client.email || '-'}}</p>
+                    <p><i class="fa fa-phone"></i> Phone: {{client.preffered_phone || '-'}}</p>
+                </div>
+            </div>
+            <div class="small-6 column" ng-show="$root.pet">
+                <div class="small-6 column">
+                    <div class="th-img-100">
+                        <image-no-image
+                            t="pet" n="image_id" s="files" ajax="true"
+                            st="path" stt="path_thumb" fancybox="true">
+                        </image-no-image>
+                    </div>
+                </div>
+                <div class="small-6 column">
+                    <h3>{{pet.pet_name}}</h3>
+                    <div class="clearfix">&nbsp;</div>
+                    <p><i class="fa fa-paw"></i> Type: {{$root.pet_type[pet.pet_type_id].v}}</p>
+                    <p><i class="fa fa-paw"></i> Breed: {{$root.pet_breed[pet.pet_breed_id].v}}</p>
+                </div>
+            </div>
+            <div class="clearfix" style="margin-bottom: 45px;">&nbsp;</div>
+            <div class="small-9 column">
+                <input-text
+                    title="Membership"
+                    t="client_membership_mod" n="membership">
+                </input-text>
+            </div>
+            <div class="small-3 column">
+                <input-text
+                    title="Valability" class="datepicker" required="true"
+                    t="client_membership_mod" n="valability">
+                </input-text>
+                <a class="button tiny radius"
+                   ng-click="$root.setOneYear('#CpCtrl', 'client_membership_mod', 'valability')">
+                    One year later
+                </a>
+            </div>
+            <hr />
+            <div class="small-4 column">
+                <div>
+                    <label>
+                        <div class="right">
+                            <a class="button right tiny"
+                               ng-click="clientGenerateBarcode(1)">
+                                <i class="fa fa-barcode"></i> Regenerate
+                            </a>
+                        </div>
+                    </label>
+                    <hr />
+                    <img id="barcode" />
+                </div>
+            </div>
+            <div class="small-4 column">
+                <input-radio
+                    title='Show on screen <i class="fa fa-laptop"></i>' placeholder="..."
+                    t="client_membership_mod" n="print_type" v="screen">
+                </input-radio>
+                <input-radio
+                    title='Print in browser <i class="fa fa-print"></i>' placeholder="..."
+                    t="client_membership_mod" n="print_type" v="print">
+                </input-radio>
+                <input-radio
+                    title='Download membership .pdf <i class="fa fa-file-o"></i>' placeholder="..."
+                    t="client_membership_mod" n="print_type" v="download">
+                </input-radio>
+            </div>
+            <div class="small-4 column">
+                <input-checkbox
+                    title="Add pet name"
+                    t="client_membership_mod" n="add_pet_name">
+                </input-checkbox>
+                <input-checkbox
+                    title="Print client photo"
+                    t="client_membership_mod" n="print_photo_client">
+                </input-checkbox>
+                <input-checkbox
+                    title="Print pet photo"
+                    t="client_membership_mod" n="print_photo_pet">
+                </input-checkbox>
+            </div>
+        </fieldset>
+    </form>
+</div>

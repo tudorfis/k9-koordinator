@@ -1,0 +1,116 @@
+
+<div class="small-4 column">
+    <fieldset>
+        <legend>Security level management</legend>
+        <div class="small-12">
+            <div class="small-10 column">
+                <input-text
+                    title="Role / level of permission"
+                    no-error="true" ng-model="role_v">
+                </input-text>
+            </div>
+            <div class="small-2 column">
+                <button class="button tiny radius"
+                        ng-click="addRole(role)">
+                    <i class="fa fa-plus"></i> Add
+                </button>
+            </div>
+            <hr />
+            <table class="small-12">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Level</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="cursor: pointer;"
+                        ng-repeat="r in $root.role"
+                        ng-click="setRoleId(r.id)">
+                        <th style="background-color: #fff !important;">
+                            <i class="fa fa-angle-double-right"
+                               ng-show="(role_id && (r.id == role_id))">&nbsp;</i>
+                        </th>
+                        <th ng-class="{'bg-button': (role_id && (r.id == role_id))}">{{r.v}}</th>
+                        <th style="background-color: #fff !important;">
+                            <a ng-click="deleteRole(r)"
+                               ng-show="r.id != '1' && r.id != '2' && r.id != '3'">
+                                <i class="fa fa-trash">&nbsp;</i>
+                            </a>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <hr />
+            <div class="small-12">
+                <p style="color: #ff0000;">* These are areas that ONLY the highest level
+                    of security (e.g. Owner) should have access to</p>
+            </div>
+            <hr />
+            <div class="small-12">
+                <p style="color: #00aa00;">* These are sensitive areas that ONLY
+                    highly trusted/trained employees (e.g. Senior Manager) should have access to</p>
+            </div>
+            <hr />
+
+        </div>
+
+    </fieldset>
+</div>
+<div class="small-8 column" ng-show="role_id">
+    <fieldset style="text-align: center;" ng-show="loading">
+        <div style="margin: auto auto;">
+            <img ng-src="{{'img/ajax-big.gif' | baseUrl}}" />
+        </div>
+    </fieldset>
+    <fieldset ng-show="!loading">
+        <legend>Security level permissions</legend>
+        <div class="small-12">
+            <a class="button radius right btn_save_levels"
+               style="margin-top: -55px;"
+               ng-click="saveLevels()">
+                <i class="fa fa-gears"></i> Save levels
+            </a>
+            <img ng-src="{{'img/ajax.gif' | baseUrl}}"
+                 class="al_save_levels right" style="display: none;" />
+        </div>
+        <hr />
+        <div class="small-6 column">
+            <cu-fieldset
+                title="Add Reservations"
+                start="0" end="3">
+            </cu-fieldset>
+            <cu-fieldset
+                title="Edit Reservations"
+                start="3" end="7">
+            </cu-fieldset>
+            <cu-fieldset
+                title="Delete Reservations"
+                start="7" end="11">
+            </cu-fieldset>
+            <cu-fieldset
+                title="Edit"
+                start="11" end="16">
+            </cu-fieldset>
+            <cu-fieldset
+                title="Protection"
+                start="16" end="18">
+            </cu-fieldset>
+        </div>
+        <div class="small-6 column">
+            <cu-fieldset
+                title="Access"
+                start="18" end="28">
+            </cu-fieldset>
+            <cu-fieldset
+                title="View Reports"
+                start="28" end="33">
+            </cu-fieldset>
+            <cu-fieldset
+                title="Setup Access"
+                start="33" end="40">
+            </cu-fieldset>
+        </div>
+    </fieldset>
+</div>

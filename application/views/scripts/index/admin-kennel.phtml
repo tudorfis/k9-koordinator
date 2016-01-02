@@ -1,0 +1,79 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K9 - Kennel Administration</title>
+    <link rel="stylesheet" href="<?= $this->baseUrl('css/foundation.min.css?v=1.1') ?>" />
+    <link rel="stylesheet" href="<?= $this->baseUrl('css/font-awesome.min.css') ?>" />
+    <script src="<?= $this->baseUrl('js/vendor/jquery.min.js?v=2.1.0') ?>"></script>
+    <script src="<?= $this->baseUrl('js/vendor/foundation.min.js?v=5') ?>"></script>
+</head>
+<body>
+    <div style="height: 50px; width: 70%; margin: 0 auto; position: fixed; top: 10%; left: 15%; background-color: #333;">
+        <div class="clearfix">&nbsp;</div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="clearfix">&nbsp;</div>
+        <p class="right">
+            <a href="select-kennel">
+                <i class="fa fa-arrow-circle-left"></i> - Go back (select kennel)
+            </a>
+        </p>
+        <div class="clearfix">&nbsp;</div>
+        <?php
+            if (isset($_POST['submit'])) {
+
+                $users = api(array('table' => 'users'), '', 0, 1, 0, 0, 1);
+                $users = $users['data'];
+                $err_msg = '';
+
+                foreach($users as $user) {
+                    if ($user['username'] == $_POST['username'] &&
+                            $user['password'] == md5(md5($_POST['password']))) {
+                        setcookie("ka_li", $user, time()+3600);
+                        break;
+                    } else {
+                        $err_msg = 'Username or password incorect !';
+                        break;
+                    }
+                }
+            }
+        ?>
+        <?php if (!isset($_COOKIE['ka_li']) || empty($_COOKIE['ka_li'])) : ?>
+                <fieldset>
+                    <legend>
+                        <i class="fa fa-sign-in"></i> Admin kennel Login
+                    </legend>
+                    <form action="" method="post">
+                        <div>
+                            <label>Username</label>
+                            <input type="text" name="username" placeholder="Enter username ..." autofocus />
+                        </div>
+                        <div>
+                            <label>Password</label>
+                            <input type="password" name="password" placeholder="Enter password ..." />
+                        </div>
+                        <div>
+                            <button type="submit" name="submit">
+                                <i class="fa fa-arrow-circle-o-up"></i> Login
+                            </button>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                        <?php if (!empty($err_msg)) : ?>
+                            <div data-alert class="alert-box warning round">
+                                <?= $err_msg ?>
+                                <a href="#" class="close">&times;</a>
+                            </div>
+                        <?php endif ?>
+                    </form>
+                </fieldset>
+        <?php else : ?>
+
+            <h5>Logged in</h5>
+            <hr />
+
+
+        <?php endif ?>
+    </div>
+</body>
+</html>

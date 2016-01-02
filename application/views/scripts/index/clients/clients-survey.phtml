@@ -1,0 +1,107 @@
+<form form-submit hide-show-al-content="true" submit-btn="true" t="client_survey_mod" table="clients_survey" data-abide="true">
+    <h3>
+        <i class="fi-graph-bar"></i> Kennel Survey
+    </h3>
+    <hr />
+    <div ng-show="$root.client_survey_findout[client_survey_mod.client_survey_findout_id].is_refferal == 1">
+        <fieldset class="small-6 column"
+                  ng-show="$root.client_survey_findout[client_survey_mod.client_survey_findout_id].refferal_table == 'clients'">
+            <legend>Select refferal customer</legend>
+            <div class="small-12">
+                <input-text
+                    title="Search customer:" no-error="true"
+                    ng-model="search_survey_clients" class="clearable">
+                </input-text>
+            </div>
+            <table class="small-12">
+                <thead>
+                <tr>
+                    <th>Last name</th>
+                    <th>First name</th>
+                    <th>Contact phone</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="cursor: pointer;"
+                    ng-repeat="survey_client in clients | array | filter:search_survey_clients"
+                    ng-click="client_survey_mod.reffered_id = survey_client.id"
+                    ng-class="{'tr-actv': client_survey_mod.reffered_id == survey_client.id}">
+                        <td>{{survey_client.last_name}}</td>
+                        <td>{{survey_client.first_name}}</td>
+                        <td>{{survey_client.preffered_phone}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset class="small-6 column"
+                  ng-show="$root.client_survey_findout[client_survey_mod.client_survey_findout_id].refferal_table == 'vets'">
+            <legend>Select refferal vet</legend>
+            <div class="small-12">
+                <input-text
+                    title="Search vet:" no-error="true"
+                    ng-model="search_survey_vets" class="clearable">
+                </input-text>
+            </div>
+            <table class="small-12">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="cursor: pointer;"
+                    ng-repeat="survey_vet in vets | array | filter:search_survey_vets"
+                    ng-click="client_survey_mod.reffered_id = survey_vet.id"
+                    ng-class="{'tr-actv': client_survey_mod.reffered_id == survey_vet.id}">
+                    <td>{{survey_vet.v}}</td>
+                    <td>{{survey_vet.phone}}</td>
+                    <td>{{survey_vet.email}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="column"
+         ng-class="{'small-6': $root.client_survey_findout[client_survey_mod.client_survey_findout_id].is_refferal == 1}">
+        <fieldset class="small-12" ng-show="access.checkSurveyIncome()">
+            <legend>Demographic Survey</legend>
+            <input-select
+                title="" t="client_survey_mod" n="client_survey_income_id"
+                s="client_survey_income" none-filter="true">
+            </input-select>
+        </fieldset>
+        <fieldset class="small-12">
+            <legend>How did you find about our kennel ?</legend>
+            <input-select
+                title="" t="client_survey_mod" n="client_survey_findout_id"
+                s="client_survey_findout" none-filter="true">
+            </input-select>
+            <div class="small-12"
+                 ng-show="$root.client_survey_findout[client_survey_mod.client_survey_findout_id].is_refferal == 1">
+                <hr />
+                <div ng-show="$root.client_survey_findout[client_survey_mod.client_survey_findout_id].refferal_table == 'clients'">
+                    <div ng-show="$root.clients[client_survey_mod.reffered_id]">
+                        <label>Reffered client</label>
+                        <h5>
+                            <i class="fa fa-user"></i> {{$root.clients[client_survey_mod.reffered_id].first_name}}, {{$root.clients[client_survey_mod.reffered_id].last_name}}<br />
+                            <i class="fa fa-phone"></i> {{$root.clients[client_survey_mod.reffered_id].preffered_phone || '-'}} <br />
+                            <i class="fa fa-envelope"></i> {{$root.clients[client_survey_mod.reffered_id].email || '-'}}
+                        </h5>
+                    </div>
+                </div>
+                <div ng-show="$root.client_survey_findout[client_survey_mod.client_survey_findout_id].refferal_table == 'vets'">
+                    <div ng-show="$root.vets[client_survey_mod.reffered_id]">
+                        <label>Reffered vet</label>
+                        <h5>
+                            <i class="fa fa-user-md"></i> {{$root.vets[client_survey_mod.reffered_id].v}} <br />
+                            <i class="fa fa-phone"></i> {{$root.vets[client_survey_mod.reffered_id].phone || '-'}} <br />
+                            <i class="fa fa-envelope"></i> {{$root.vets[client_survey_mod.reffered_id].email || '-'}}
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</form>

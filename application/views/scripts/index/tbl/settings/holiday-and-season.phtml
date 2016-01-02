@@ -1,0 +1,140 @@
+
+<div class="small-7 column">
+    <fieldset>
+        <legend>
+            <i class="fa fa-treet"></i> Holiday setup
+        </legend>
+        <editable-table
+            ts="holidaySetup"
+            with-delete="true" with-add="true" delete-permanent="true"
+            class="small-12" empty-message="No holiday setup defined">
+        </editable-table>
+    </fieldset>
+</div>
+<div class="small-5 column">
+    <fieldset>
+        <legend>
+            <i class="fa fa-treet"></i> Seasons setup
+        </legend>
+        <table class="small-12">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Season name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="s in season track by $index"
+                ng-class="{'tr-actv': (season_mod.id == s.id)}">
+                <td>
+                    <i class="fa fa-arrow-circle-right"
+                        ng-show="season_mod.id == s.id"></i>
+                </td>
+                <td>{{s.start_date}}</td>
+                <td>{{s.end_date}}</td>
+                <td>{{s.v}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="small-12 column">
+            <fieldset>
+                <legend>Adding new dates</legend>
+                <input-select
+                    title="" no-error="true"
+                    ng-change="setSm(season[season_id])"
+                    ng-model="season_id" s="season">
+                </input-select>
+                <div ng-show="season_id">
+                    <div class="small-6 column">
+                        <input-text
+                            title="Start date" no-error="true"
+                            t="season_mod" n="start_date" class="datepicker">
+                        </input-text>
+                    </div>
+                    <div class="small-6 column">
+                        <input-text
+                            title="End date" no-error="true"
+                            t="season_mod" n="end_date" class="datepicker">
+                        </input-text>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div ng-repeat="d in days" class="left" style="margin-right: 10px">
+                        <input-checkbox
+                            title="{{d | capitalize}}"
+                            t="season_mod" n="is_{{d}}">
+                        </input-checkbox>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="left">
+                        <a class="tiny button radius"
+                           ng-click="sdaDates()">
+                            Switch all days
+                        </a>
+                    </div>
+                    <hr />
+                    <div class="left">
+                        <input-checkbox
+                            title="In use"
+                            t="season_mod" n="in_use">
+                        </input-checkbox>
+                    </div>
+                    <div class="right">
+                        <save-button
+                            name="ss" function="saveSs()" class="tiny"
+                            icon-class="fa fa-check" title="Save">
+                        </save-button>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Special rate seasons</legend>
+                <table class="small-12">
+                    <thead>
+                        <tr>
+                            <th>In use</th>
+                            <th></th>
+                            <th>Modifier</th>
+                            <th>Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="i in rna(3)">
+                            <td>
+                                <input-checkbox
+                                    title=""
+                                    ng-model="season[i].in_use">
+                                </input-checkbox>
+                            </td>
+                            <td>
+                                <input-text
+                                    title="" no-error="true"
+                                    ng-model="season[i].v">
+                                </input-text>
+                            </td>
+                            <td>
+                                <input-select
+                                    title="" no-error="true" s="modifiers"
+                                    ng-model="season[i].modifier_id">
+                                </input-select>
+                            </td>
+                            <td>
+                                <input-text
+                                    title="" no-error="true"
+                                    ng-model="season[i].rate">
+                                </input-text>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="color: #999">Note: 1/2 day boards are not charge the holiday surcharge</p>
+                <div class="clearfix">&nbsp;</div>
+                <save-button
+                    name="ssr" function="saveSsr()" class="tiny"
+                    icon-class="fa fa-check" title="Save">
+                </save-button>
+            </fieldset>
+        </div>
+    </fieldset>
+</div>

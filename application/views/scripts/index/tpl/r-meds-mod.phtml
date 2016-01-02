@@ -1,0 +1,136 @@
+<script id="tpl/r-meds-mod" type="text/ng-template">
+    <div ng-switch="do">
+        <div ng-switch-when="1">
+            <div ng-show="$root.section == 'meds' && access.checkMeds()">
+                <div class="small-9 column" ng-hide="$root.partial_show">
+                    <form form-submit t="r_meds_mod" table="r_meds" submit-btn="true" submit-btn-text="Add medication" data-abide="true">
+                        <div class="small-10 column">
+                            <div class="small-6 column">
+                                <input-select
+                                    title="Select medication"
+                                    ng-model="$root.r_meds_mod.med_id" s="meds"
+                                    required="required" error-text="Please select medication">
+                                </input-select>
+                            </div>
+                            <div class="small-6 column">
+                                <input-text
+                                    title="Instructions"
+                                    ng-model="$root.r_meds_mod.med_instructions">
+                                </input-text>
+                            </div>
+                            <div class="clearfix">&nbsp;</div>
+                            <div class="small-6 column">
+                                <input-select
+                                    title="Select med type" required="required"
+                                    error-text="Please select medication type"
+                                    ng-model="$root.r_meds_mod.med_type_id" s="meds_type">
+                                </input-select>
+                            </div>
+                            <div class="small-3 column">
+                                <input-select
+                                    title="Dose"
+                                    error-text="Please select dosage" ng-required="!$root.r_meds_mod.med_dose_type_id"
+                                    ng-model="$root.r_meds_mod.med_dosage_id" s="md_dosage">
+                                </input-select>
+                            </div>
+                            <div class="small-3 column">
+                                <input-select
+                                    title="Dose"
+                                    error-text="Please select dosage" ng-required="!$root.r_meds_mod.med_dosage_id"
+                                    ng-model="$root.r_meds_mod.med_dose_type_id" s="md_dose_type">
+                                </input-select>
+                            </div>
+                        </div>
+                        <div class="small-2 column">
+                            <input-checkbox
+                                title="Morning" class="med_morning"
+                                ng-model="$root.r_meds_mod.med_morning">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="Afternoon" class="med_afternoon"
+                                ng-model="$root.r_meds_mod.med_afternoon">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="Evening" class="med_evening"
+                                ng-model="$root.r_meds_mod.med_evening">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="As needed"
+                                ng-change="doCheckboxesMd('{{scope_id}}', 'r_meds_mod', 'med_as_needed', 'med', 'med')"
+                                ng-model="$root.r_meds_mod.med_as_needed">
+                            </input-checkbox>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Chose date" class="datepicker"
+                                ng-required="!$root.r_meds_mod.med_everyday"
+                                error-text="Please select date for medication, or select everyday"
+                                ng-model="$root.r_meds_mod.med_date">
+                            </input-text>
+                            <input-checkbox
+                                title="On everyday"
+                                ng-model="$root.r_meds_mod.med_everyday">
+                            </input-checkbox>
+                        </div>
+                        <hr />
+                        <div class="left small-6">
+                            <add-records-meds-btn
+                                scope_id="{{scope_id}}"
+                                r_type="{{r_type}}"
+                                r_type_mod="{{r_type_mod}}">
+                            </add-records-meds-btn>
+                        </div>
+                    </form>
+                </div>
+                <div class="small-3 column" ng-hide="$root.partial_show">
+                    <fieldset>
+                        <legend>
+                            <i class="fa fa-anchor"></i> Usefull links
+                        </legend>
+                        <ul class="no-list-type">
+                            <li>
+                                <content-link
+                                    link="crud/meds" title="Medications"
+                                    ui-sref="meds" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                            <li>
+                                <content-link
+                                    link="crud/meds_type" title="Medication types"
+                                    ui-sref="meds_type" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                            <li>
+                                <content-link
+                                    link="crud/md_dosage" title="Dosages"
+                                    ui-sref="md_dosage" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                            <li>
+                                <content-link
+                                    link="crud/md_dose_type" title="Dosages types"
+                                    ui-sref="md_dose_type" icon-class="fa fa-asterisk">
+                                </content-link>
+                            </li>
+                        </ul>
+                    </fieldset>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <hr />
+                <div class="small-12" ng-show="!{{r_type_in}} || ma({{r_type_in}}).length == 0">
+                    <h5>No medications programmed</h5>
+                </div>
+                <div class="small-12" ng-show="{{r_type_in}} && ma({{r_type_in}}).length > 0">
+                    <meds-table
+                        scope_id="{{scope_id}}"
+                        r_type="{{r_type}}"
+                        r_type_mod="{{r_type_mod}}"
+                        r_type_in="{{r_type_in}}">
+                    </meds-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+

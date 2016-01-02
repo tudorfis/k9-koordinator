@@ -1,0 +1,48 @@
+<div class="small-5 column">
+    <fieldset>
+        <legend>Hourly rates</legend>
+        <input-checkbox
+            title="In Use (suggest automatically base price for grooming reservations)"
+            ng-model="grooming_options[9].v">
+        </input-checkbox>
+        <input-text
+            title="Grooming work hour rate" no-error="true"
+            ng-model="$root.grooming_options[10].v">
+        </input-text>
+        <input-checkbox
+            title="Use the last non-zero base price as default price"
+            ng-model="grooming_options[11].v">
+        </input-checkbox>
+        <hr />
+        <p>Note: Different 'Grooming Types' will save prices accordingly. E.g. Bath 'Good Shape' and 'Bad Shape' are not the same</p>
+        <save-button
+            name="save_hr" function="saveHr()"
+            icon-class="fa fa-check-circle-o" title="Save rates">
+        </save-button>
+    </fieldset>
+</div>
+<div class="small-7 column">
+    <fieldset>
+        <legend>Grooming type modifiers</legend>
+        <div class="small-3 column">
+            Multiplies to the breed grooming time e.g. if base time is 1 hr and
+            multiplier is 2.5 then the final time will be 2 hrs and 30 mins
+            <i class="fa fa-arrow-circle-down right">&nbsp;</i>
+        </div>
+        <div class="small-3 column">&nbsp;</div>
+        <div class="small-3 column">
+            Checked = changes price /
+            Not checked = changes time but not the price
+            <i class="fa fa-arrow-circle-down right">&nbsp;</i>
+        </div>
+        <div class="small-3 column">&nbsp;</div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="clearfix">&nbsp;</div>
+        <editable-table
+            ts="groomingRates"
+            with-delete="true" with-add="true"
+            class="small-12" empty-message="No grooming rates defined">
+        </editable-table>
+    </fieldset>
+</div>
+

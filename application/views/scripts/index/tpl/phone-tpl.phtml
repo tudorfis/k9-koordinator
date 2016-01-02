@@ -1,0 +1,20 @@
+<script id="tpl/phone" type="text/ng-template">
+    <div ng-switch="do">
+        <div ng-switch-when="1">
+            <postfix i="{{i_class}}" pl="4" dl="8">
+                <div>
+                    <input-text
+                        title="{{title}}" t="{{t}}" n="{{n}}"
+                        ng-keyup="convertTelNumber('{{scope_id}}', '{{t}}', '{{n}}', '{{tel_format}}')"
+                        tabindex="{{tabindex}}" pattern="{{pattern}}" ng-required="{{required}}"
+                        placeholder="{{placeholder}}" no-error="true" extra-html="true">
+                    </input-text>
+                    <small class="error">
+                        {{required ? 'This field is required.' : ''}}
+                        <div ng-bind="$root.getTelErrorText('{{tel_format}}')"></div>
+                    </small>
+                </div>
+            </postfix>
+        </div>
+    </div>
+</script>

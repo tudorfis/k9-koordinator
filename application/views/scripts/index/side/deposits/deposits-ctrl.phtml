@@ -1,0 +1,205 @@
+<div id="DepositsCtrl" data-ng-controller="DepositsCtrl"
+     class="reveal-modal xlarge exclude" data-reveal>
+
+    <div ng-hide="$root.client.id">
+        <fieldset class="small-12">
+            <legend>Please select client</legend>
+            <div class="small-8 column">
+                <div ng-include="'tpl/cp-search'"></div>
+            </div>
+            <div class="small-4 column">
+                <div class="small-6 column">
+                    <a class="button tiny radius"
+                       ng-click="$root.client = {}; is_walk_in_sale = true; clearAll()">
+                        <i class="fa fa-circle-o"></i> Set as walk in sale
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <hr />
+            <div class="small-12">
+                <ul class="g-active-hover-list no-list-type">
+                    <li style="cursor: pointer;"
+                        ng-click="$root.client = c"
+                        ng-repeat="c in $root.clients | array | filter:search_clients">
+                        {{c.last_name}}, {{c.first_name}}
+                    </li>
+                </ul>
+                <div ng-show="$root.clients | isEmpty">
+                    <h5>* no clients available</h5>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div ng-show="$root.client.id">
+        <fieldset class="small-12">
+            <legend>
+                <i class="fa fa-thumbs-o-up"></i> Deposits
+            </legend>
+            <div class="small-12">
+                <div class="small-8 column">
+                    <h3 class="red-big">
+                        {{client.last_name}}, {{client.first_name}}
+                    </h3>
+                    <h5>
+                        <a class="button tiny radius success"
+                           ng-show="client.deposits.data.length > 0"
+                           ng-click="show_client_deposits = 1">
+                            <i class="fa fa-info"></i> View deposits
+                        </a>
+                        <span>( {{client.deposits.total | number:2}} $ )</span>
+                    </h5>
+                </div>
+                <div class="small-4 column">
+                    <a class="button tiny radius right ml10"
+                       ng-click="$root.client = {}; $root.pet = {}; setDMod({}, 0); show_client_deposits = 0;">
+                        <i class="fa fa-glass"></i> Select client
+                    </a>
+                    <a class="button tiny radius right"
+                       ng-click="setDMod({}, 0); $root.initDeposits(); show_client_deposits = 0;">
+                        <i class="fa fa-file"></i> New deposit
+                    </a>
+                </div>
+                <hr />
+                <div class="small-12" ng-show="show_client_deposits">
+                    <a ng-click="show_client_deposits = 0;" class="close-item"  title="Close" style="right: 30px; top: 270px;" href="javascript:;"></a>
+                    <div class="small-9 column">
+                        <div ng-include="'tpl/from-to-dates'"></div>
+                    </div>
+                    <div class="small-3 column">
+                        <input-select
+                            title="Limit to:" no-error="true" s="rnt(100)"
+                            ng-model="limit_to" ng-init="limit_to = 5">
+                        </input-select>
+                    </div>
+                    <table class="small-12" ng-init="pd = 'date_created'; rd = 1;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th th-order title="Type" t="plus_minus"></th>
+                                <th th-order title="Payment type" t="payment_type_id"></th>
+                                <th th-order title="Amount" t="payment_amount"></th>
+                                <th>Is tip</th>
+                                <th>Tip user</th>
+                                <th>Language</th>
+                                <th>Print type</th>
+                                <th th-order title="Date created" t="date_created"></th>
+                                <th th-order title="Created by" t="created_user_id"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="cursor: pointer;"
+                                ng-click="setDMod(d, 1);"
+                                ng-class="{'tr-actv': (d_mod.id == d.id)}"
+                                ng-repeat="d in $root.client.deposits.data | filterDates:d_dates | array | orderBy:pr:rv | limitTo:limit_to">
+                                    <td>
+                                        <i ng-show="d_mod.id == d.id"
+                                           class="fa fa-arrow-right"></i>
+                                    </td>
+                                    <td>{{d.plus_minus}}</td>
+                                    <td>{{(payment_types[d.payment_type_id] ? payment_types[d.payment_type_id].v : '-')}}</td>
+                                    <td>{{d.payment_amount | number:2}} $</td>
+                                    <td>{{d.is_a_tip == 1 ? "Yes" : "No"}}</td>
+                                    <td>{{users[d.tip_user_id].v || '-'}}</td>
+                                    <td>{{d.language}}</td>
+                                    <td>{{d.print_type}}</td>
+                                    <td>{{d.date_created}}</td>
+                                    <td>{{users[d.created_user_id].v}}</td>
+                                    <td>
+                                        <i style="cursor: pointer;"
+                                           ng-show="d.plus_minus == 'plus'"
+                                           ng-click="deleteDeposit(d.id)"
+                                           class="fa fa-trash fa-2x"></i>
+                                    </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="clearfix">&nbsp;</div>
+                    <hr />
+                    <div class="clearfix">&nbsp;</div>
+                </div>
+                <div class="small-7 column">
+                    <table class="small-12">
+                        <tr>
+                            <td>Payment type</td>
+                            <td>
+                                <input-select
+                                    title="" no-error="true" line-value="- select payment type -"
+                                    ng-disabled="not_editable"
+                                    ng-model="d_mod.payment_type_id" s="payment_types">
+                                </input-select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Payment amount</td>
+                            <td>
+                                <postfix i="fa fa-dollar" pl="4" dl="8" wl="true">
+                                    <input-text
+                                        no-label="true" type="number" ng-model="d_mod.payment_amount" no-error="true"
+                                        ng-disabled="not_editable" placeholder="Enter amount to process ... ">
+                                    </input-text>
+                                </postfix>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input-checkbox
+                                    title="This is a tip"
+                                    ng-model="d_mod.is_a_tip"
+                                    ng-disabled="not_editable">
+                                </input-checkbox>
+                            </td>
+                            <td>
+                                <div ng-show="d_mod.is_a_tip">
+                                    <input-select
+                                        title="" no-error="true" line-value="- no employee selected -"
+                                        ng-model="d_mod.tip_user_id" s="users" ng-disabled="not_editable">
+                                    </input-select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Process payment</td>
+                            <td>
+                                <a class="button tiny radius small-12 btn_d"
+                                   style="margin: 3px 0;"
+                                   ng-disabled="not_editable"
+                                   ng-click="(!not_editable ? processDeposit('#DepositsCtrl') : void(0))">
+                                    <i class="fi-pricetag-multiple medium"></i> Deposit
+                                </a>
+                                <img ng-src="{{'img/ajax.gif' | baseUrl}}" class="al_d" style="display: none;" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="small-5 column">
+                    <input-select
+                        no-label="true" no-error="true" s="$root.lang_keys"
+                        ng-model="d_mod.language" ng-id="lang" ng-v="text">
+                    </input-select>
+                    <input-radio
+                        title='Show details <i class="fa fa-laptop"></i>'
+                        placeholder="..." t="d_mod" n="print_type" v="screen">
+                    </input-radio>
+                    <input-radio
+                        title='Print to screen <i class="fa fa-print"></i>'
+                        placeholder="..." t="d_mod" n="print_type" v="print">
+                    </input-radio>
+                    <input-radio
+                        title='Download a copy <i class="fa fa-file-o"></i>'
+                        placeholder="..." t="d_mod" n="print_type" v="download">
+                    </input-radio>
+                    <hr />
+                    <a class="tiny button radius btn_print_d"
+                       ng-disabled="!d_mod.id"
+                       ng-click="(d_mod.id ? printDepositBill('#DepositsCtrl') : void(0))">
+                        <i class="fa fa-print"></i> Print bill
+                    </a>
+                    <img ng-src="{{'img/ajax.gif' | baseUrl}}" class="al_print_d" style="display: none;" />
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <a class="close-reveal-modal close-item"></a>
+</div>

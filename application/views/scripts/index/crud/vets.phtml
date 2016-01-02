@@ -1,0 +1,65 @@
+<div class="small-7 column" users-extra-crud>
+    <div class="small-12">
+        <input-select title="Status" t="crud_mod" n="status_id" s="status" required="true"></input-select>
+        <input-text title="Name" t="crud_mod" n="v" required="required"></input-text>
+        <input-text title="Contact" t="crud_mod" n="contact"></input-text>
+    </div>
+    <div class="small-6 column">
+        <div ng-controller="crudPhone" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#CrudCtrl';
+            i_class = 'fa fa-phone'; title = 'Phone'; t = 'crud_mod'; n = 'phone'; placeholder = 'Enter contact phone';
+            tel_format = 'phone_format_id'; pattern = 'phone_number'; required = 1;">
+        </div>
+    </div>
+    <div class="small-6 column">
+        <div ng-controller="crudCell" ng-include="'tpl/phone'" ng-init="do = 1; scope_id = '#CrudCtrl';
+            i_class = 'fa fa-mobile'; title = 'Cell'; t = 'crud_mod'; n = 'cell'; placeholder = 'Enter cell number';
+            tel_format = 'cell_format_id'; pattern = 'cell_number'; required = 0;">
+        </div>
+    </div>
+    <hr />
+    <prefix i="fa fa-envelope" pl="2" dl="10">
+        <input-text
+            title="Email" t="crud_mod" n="email"
+            error-text="Email must be of this format example@test.com"
+            type="email" required="required">
+        </input-text>
+    </prefix>
+    <hr />
+    <fieldset>
+        <legend>Address</legend>
+        <input-text
+            title="Street" ng-model="crud_mod.street">
+        </input-text>
+        <input-text
+            title="City" ng-model="crud_mod.city">
+        </input-text>
+        <div class="small-6 column">
+            <input-text
+                title="State" ng-model="crud_mod.state" pattern="alpha"
+                ng-required="access.requireAddressClient()" no-error="true"
+                ng-keyup="convertToUpperCase('#CrudCtrl', 'crud_mod', 'state');
+                          convertToMaxlength('#CrudCtrl', 'crud_mod', 'state',
+                                    $root.user_interface_settings.state_length)">
+            </input-text>
+        </div>
+        <div class="small-6 column">
+            <input-text
+                title="Zip" ng-model="crud_mod.zip" tabindex="14"
+                ng-change="getGeoAddress('#CrudCtrl', crud_mod.zip)" pattern="number" no-error="true"
+                ng-keyup="convertToMaxlength('#CrudCtrl', 'crud_mod', 'zip', $root.user_interface_settings.zip_postcode_length)">
+            </input-text>
+        </div>
+        <hr />
+        <input-checkbox
+            title="Auto select state & city based on zip"
+            ng-model="$root.autoselect_zip"
+            ng-change="getGeoAddress('#CrudCtrl', crud_mod.zip)">
+        </input-checkbox>
+    </fieldset>
+</div>
+<div class="small-5 column">
+    <input-textarea
+        title="Veterinay Notes"
+        t="crud_mod" n="notes" style="height: 600px;">
+    </input-textarea>
+</div>

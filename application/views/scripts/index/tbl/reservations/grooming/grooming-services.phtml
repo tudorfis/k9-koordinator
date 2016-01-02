@@ -1,0 +1,18 @@
+<fieldset class="small-12 none-bg">
+    <legend>Grooming services</legend>
+    <div class="small-4 column">
+        <input-select
+            title="Select type of grooming" no-error="true"
+            ng-model="gs_type" s="base_type_filter" ng-id="v" ng-v="n">
+        </input-select>
+    </div>
+    <p style="color: #888; font-size: 10px;" class="small-8 column">
+        Important note: do not leave any fields blank. If you don't wish to use a service set 'In Use' checkbox.<br />
+        <strong>HCP:</strong> Handle Carefully Price
+    </p>
+    <editable-table
+        ts="groomingServices"
+        with-delete="true" with-add="true" filter=" | filter:{base_type_id: gs_type}"
+        class="small-12" empty-message="No grooming services defined">
+    </editable-table>
+</fieldset>

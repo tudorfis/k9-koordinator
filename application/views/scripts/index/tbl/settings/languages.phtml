@@ -1,0 +1,82 @@
+<div id="LanguageCtrl" data-ng-controller="LanguageCtrl">
+    <link rel="stylesheet" ng-href="{{'css/world-flags-16px.min.css' | baseUrl}}" />
+    <div class="small-12">
+        <h3>
+            <i class="fi-flag left"> Languages </i>
+            <img ng-src="{{'img/ajax.gif' | baseUrl}}" class="al_main left hide" style="margin-left: 15px;" />
+        </h3>
+        <hr />
+        <div class="small-2 column">
+            <label style="margin-bottom: 10px;"><b>Deselect languages</b></label>
+            <div ng-repeat="lk in lang_keys">
+                <input-checkbox
+                    title="{{lk.text}}"
+                    ng-model="filter[lk.lang]"
+                    ng-init="filter[lk.lang] = true">
+                </input-checkbox>
+            </div>
+        </div>
+        <div class="small-6 column" add-delete-language>
+            <div class="small-6 column">
+                <label><b>Add language</b></label> 
+                <input  
+                    placeholder="Language code (eg. en)"
+                    required="required"
+                    type="text"
+                    ng-model="add_language.lang" />
+                <input  
+                    placeholder="Language title (eg. English)"
+                    required="required"
+                    type="text"
+                    ng-model="add_language.text" />
+                <a class="button tiny right btn_add"
+                   ng-click="addLanguage()">
+                        <i class="fi-plus"></i> Add
+                </a>  
+                <img ng-src="{{'img/ajax.gif' | baseUrl}}"
+                        class="right hide al_add" />
+            </div>
+            <div class="small-6 column">
+                <input-select
+                    title="<b>Delete language</b>" no-error="true"
+                    ng-id="lang" ng-v="text" s="lang_keys"
+                    ng-model="delete_language">
+                </input-select>
+                <a class="button tiny right btn_delete"
+                   ng-click="deleteLanguage()">
+                    <i class="fi-minus"></i> Delete
+                </a>  
+                <img ng-src="{{'img/ajax.gif' | baseUrl}}"
+                     class="right hide al_delete" />
+            </div>
+            <hr />
+            <input-text
+                title="<b>Search for keywords</b>" no-error="true"
+                placeholder="Search for keywords ..."
+                u-class="small-12 column" ng-model="keywords">
+            </input-text>
+        </div>
+        <table id="languagesTable" class="small-12">
+            <thead class="f16">
+                <th class="small-1">Key</th>
+                <th ng-repeat="l2 in lang_keys"
+                    ng-hide="isExcludedByFilter(l2.lang)">
+                        <i class="flag {{l2.lang == 'en' ? 'gb' : l2.lang}}"></i> {{l2.text}}
+                </th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="l in languages | array | filter:keywords">
+                    <td class="small-1"><h6>{{l.k}}</h6></td>
+                    <td ng-repeat="lk in lang_keys"
+                        ng-hide="isExcludedByFilter(lk.lang)">
+                        <input-textarea
+                            no-error="true"
+                            ng-change="updateLang(l.id)"
+                            ng-model="$root.languages[l.id][lk.lang]">
+                        </input-textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

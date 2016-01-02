@@ -1,0 +1,70 @@
+<!doctype html>
+<html class="no-js" lang="en" ng-app="mainApp" ng-controller="MainCtrl" id="MainCtrl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{settings.layout_title}}</title>
+<link rel="icon" type="image/png" ng-href="{{site_logo}}" />
+<?= $this->partial('index/init.phtml', array('identity' => $this->identity)) ?>
+</head>
+<body>
+    <div id="loading-mask-models" class="loading-mask">&nbsp;</div>
+    <div id="loading-mask-resources" class="loading-mask">&nbsp;</div>
+    <a class="scrollup">Scroll</a>
+    <alert-confirm-messages></alert-confirm-messages>
+    <div class="sticky" data-options="sticky_on: large">
+        <nav class="top-bar" data-topbar>
+            <ul class="title-area">
+                <li class="name">
+                    <h1 id="topLogo">
+                        <img ng-src="{{site_logo}}" alt="" /> {{cookies.kennel}}
+                    </h1>
+                </li>
+                <li class="toggle-topbar menu-icon">
+                    <a href="#">Menu</a>
+                </li>
+            </ul>
+            <?= $this->partial('menu/top-menu.phtml', array('identity' => $this->identity)) ?>
+        </nav>
+    </div>
+    <div class="off-canvas-wrap docs-wrap">
+        <div class="inner-wrap">
+            <?php if (!isNE($this->identity)) : ?>
+                <?= $this->partial('menu/left-menu.phtml') ?>
+                <div id="mainContent" class="columns"
+                     ng-class="{'small-11': access.checkSideMenu(),
+                                'small-12': !access.checkSideMenu()}">
+                    <?= $this->layout()->content ?>
+                </div>
+            <?php else : ?>
+                <div id="mainContent">
+                    <?= $this->layout()->content ?>
+                </div>
+            <?php endif ?>
+        </div>
+    </div>
+    <?php if (!isNE($this->identity)) : ?>
+        <?= $this->partial('index/pets/pets-sticky.phtml') ?>
+        <?= $this->partial('index/clients/clients-sticky.phtml') ?>
+        <?= $this->partial('index/side/deposits/deposits-ctrl.phtml') ?>
+        <?= $this->partial('index/side/layout/layout-ctrl.phtml') ?>
+        <?= $this->partial('index/side/manager/manager-ctrl.phtml') ?>
+        <?= $this->partial('index/side/messages/messages-ctrl.phtml') ?>
+        <?= $this->partial('index/side/pending/pending-ctrl.phtml') ?>
+        <?= $this->partial('index/side/pos/pos-ctrl.phtml') ?>
+        <?= $this->partial('index/side/reports/reports-ctrl.phtml') ?>
+        <?= $this->partial('index/side/vaccancies/vaccancies-ctrl.phtml') ?>
+        <?= $this->partial('index/tpl/phone-tpl.phtml') ?>
+        <?= $this->partial('index/tpl/cp-info.phtml') ?>
+        <?= $this->partial('index/tpl/cp-search.phtml') ?>
+        <?= $this->partial('index/tpl/from-to-dates.phtml') ?>
+        <?= $this->partial('index/tpl/last-visits.phtml') ?>
+        <?= $this->partial('index/tpl/visits-table.phtml') ?>
+        <?= $this->partial('index/tpl/r-top-sections.phtml') ?>
+        <?= $this->partial('index/tpl/r-ss-mod.phtml') ?>
+        <?= $this->partial('index/tpl/r-meds-mod.phtml') ?>
+        <?= $this->partial('index/tpl/r-diets-mod.phtml') ?>
+        <?= $this->partial('index/tpl/r-panel.phtml') ?>
+    <?php endif ?>
+</body>
+</html>

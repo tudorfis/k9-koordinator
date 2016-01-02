@@ -1,0 +1,191 @@
+<div class="small-6 column">
+    <fieldset>
+        <legend>Grooming options</legend>
+            <input-checkbox
+                title="Recommended next groom in use (appears in bill)"
+                ng-model="grooming_options[1].v">
+            </input-checkbox>
+            <div class="small1-12">
+                <label class="small-4 column">Recommend groom after</label>
+                <input-select
+                    no-label="true" no-error="true" u-class="small-4 column"
+                    ng-model="grooming_options.2.v" s="rnt(12)">
+                </input-select>
+                <label class="small-4 column">weeks of current grooming</label>
+            </div>
+            <hr />
+            <input-checkbox
+                title="Enable virtual grooming receptionist"
+                ng-model="grooming_options[3].v">
+            </input-checkbox>
+            <div class="clearfix">&nbsp;</div>
+            <div class="small-6 column">
+                <input-radio
+                    title="Groomer limits as hours"
+                    ng-model="grooming_options[4].v" v="as_hours">
+                </input-radio>
+            </div>
+            <div class="small-6 column">
+                <input-radio
+                    title="as number of pets"
+                    ng-model="grooming_options[4].v" v="as_no_pets">
+                </input-radio>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="small-6 column">
+                <input-text
+                    title="Base type 1 (e.g. Bath)" no-error="true"
+                    ng-model="grooming_options[5].v">
+                </input-text>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="Base type 2 (e.g. Hair cut)" no-error="true"
+                    ng-model="grooming_options[6].v">
+                </input-text>
+            </div>
+        <save-button
+            name="save_go" function="saveGo()"
+            icon-class="fa fa-check" title="Save options">
+        </save-button>
+    </fieldset>
+    <div class="clearfix">&nbsp;</div>
+    <fieldset>
+        <legend>Groomer priority by breed</legend>
+        <div class="small-6 column">
+            <input-select
+                no-label="true" ng-model="groomer_id"
+                s="$root.groomers" no-error="true">
+            </input-select>
+            <input-select
+                no-label="true" ng-model="pet_breed_id"
+                s="$root.pet_breed" no-error="true">
+            </input-select>
+        </div>
+        <div class="small-6 column">
+            <input-select
+                no-label="true" no-error="true"
+                ng-model="priority" s="rnt(10)">
+            </input-select>
+            <save-button
+                name="save_gp" function="saveGp()"
+                icon-class="fa fa-plus-circle" title="Add priority">
+            </save-button>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-12">
+            <table class="small-12">
+                <thead>
+                    <tr>
+                        <th>
+                            <span>Groomer</span>
+                            <img src="img/mss_ic1.png"
+                                 style="cursor: pointer;"
+                                 ng-click="predicate = 'groomer_id'; reverse=!reverse" />
+                        </th>
+                        <th>
+                            <span>Breed</span>
+                            <img src="img/mss_ic1.png"
+                                 style="cursor: pointer;"
+                                 ng-click="predicate = 'pet_breed_id'; reverse=!reverse" />
+                        </th>
+                        <th>
+                            <span>Priority</span>
+                            <img src="img/mss_ic1.png"
+                                 style="cursor: pointer;"
+                                 ng-click="predicate = 'priority'; reverse=!reverse" />
+                        </th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="gp in $root.grooming_priority | array | orderBy:predicate:reverse">
+                        <td>{{$root.groomers[gp.groomer_id].v}}</td>
+                        <td>{{$root.pet_breed[gp.pet_breed_id].v}}</td>
+                        <td>{{gp.priority}}</td>
+                        <td>
+                            <a class="button tiny radius"
+                               ng-click="deleteGp(gp)">
+                                <i class="fa fa-trash-o"></i>
+                           </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>
+<div class="small-6 column">
+    <fieldset>
+        <legend>Pet breed hours setup</legend>
+        <span>Set hours needed for each service on all breeds, individual breeds</span>
+        <br /><br />
+        <div class="small-6 column">
+            <input-select
+                title="Pet type" ng-model="pet_type_id"
+                s="pet_type" no-error="true">
+            </input-select>
+        </div>
+        <div class="small-6 column">
+            <label>&nbsp;</label>
+            <span>Breeds listed {{($root.pet_breed | array).length}}</span>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-6 column">
+            <label>Save all <b>{{$root.grooming_options[5].v}}</b> to</label>
+            <div class="small-10 column">
+                <input-text
+                    title="" ng-model="$root.grooming_options[7].v"
+                    no-error="true">
+                </input-text>
+            </div>
+            <div class="small-2 column">
+                <save-button
+                    name="save_bt1" function="saveBt('1', 7)" class="tiny"
+                    icon-class="fa fa-check" title="">
+                </save-button>
+            </div>
+        </div>
+        <div class="small-6 column">
+            <label>Save all <b>{{$root.grooming_options[6].v}}</b> to</label>
+            <div class="small-10 column">
+                <input-text
+                    title="" ng-model="$root.grooming_options[8].v"
+                    no-error="true">
+                </input-text>
+            </div>
+            <div class="small-2 column">
+                <save-button
+                    name="save_bt2" function="saveBt('2', 8)" class="tiny"
+                    icon-class="fa fa-check" title="">
+                </save-button>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-12">
+            <table class="small-12">
+                <thead>
+                <tr>
+                    <th>
+                        <span>Breed name</span>
+                    </th>
+                    <th>
+                        <span data-tooltip aria-haspopup="true" class="has-tip" title="Base type 1">{{$root.grooming_options[5].v}}</span>
+                    </th>
+                    <th>
+                        <span data-tooltip aria-haspopup="true" class="has-tip" title="Base type 2">{{$root.grooming_options[6].v}}</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pb in $root.pet_breed | array | filter:{pet_type_id:pet_type_id}">
+                        <td>{{pb.v}}</td>
+                        <td>{{$root.grooming_options[7].v}}</td>
+                        <td>{{$root.grooming_options[8].v}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </fieldset>
+</div>

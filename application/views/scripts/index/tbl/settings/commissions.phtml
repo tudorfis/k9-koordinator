@@ -1,0 +1,236 @@
+
+<h3><i class="fa fa-line-chart"></i> Commisions</h3>
+<div class="small-6 column">
+    <div class="small-12 column">
+        <fieldset>
+            <legend>Gromming Commissions</legend>
+            <div class="small-6 column">
+                <input-select
+                    title="Groomer" ng-model="cg_mod.groomer_id"
+                    no-error="true" ng-change="changeGrooming()"
+                    s="groomers" none-option-value="- select groomer -">
+                </input-select>
+            </div>
+            <postfix t="%" pl="1" dl="2">
+                <input-text
+                    title="" no-error="true"
+                    t="cg_mod" n="percentage">
+                </input-text>
+            </postfix>
+            <div class="small-3 left">
+                <label>&nbsp;</label>
+                <a class="button tiny right radius btn_cg"
+                   ng-click="saveGrooming()">
+                    <i class="fi-check"></i> Save grooming
+                </a>
+                <img style="display: none;" class="al right al_cg"
+                     ng-src="{{'img/ajax.gif' | baseUrl}}">
+            </div>
+            <hr />
+            <div ng-repeat="i in ['1','2','3']"
+                 class="small-12">
+                <div class="small-3 column">
+                    <input-checkbox
+                        title="If total is over"
+                        t="cg_mod" n="if_{{i}}">
+                    </input-checkbox>
+                </div>
+                <div class="small-3 column">
+                    <input-text
+                        no-error="true" no-label="true"
+                        t="cg_mod" n="if_value_{{i}}">
+                    </input-text>
+                </div>
+                <div class="small-3 column">
+                    <input-select
+                        no-error="true" no-label="true"
+                        t="cg_mod" n="if_modifier_{{i}}" s="modifiers">
+                    </input-select>
+                </div>
+                <div class="small-3 column">
+                    <input-text
+                        no-error="true" no-label="true"
+                        t="cg_mod" n="if_modifier_value_{{i}}">
+                    </input-text>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="small-12 column">
+        <fieldset>
+            <legend>Training Commissions</legend>
+            <div class="small-6 column">
+                <input-select
+                    title="Trainer" ng-model="ct_id" no-error="true" ng-change="changeGT(ct_id, 'ct_mod', 'trainers')"
+                    s="trainers" none-option-value="- select trainer -">
+                </input-select>
+            </div>
+            <postfix t="%" pl="1" dl="2">
+                <input-text
+                    title="" no-error="true"
+                    t="ct_mod" n="commission_percentage">
+                </input-text>
+            </postfix>
+            <div class="small-3 left">
+                <label>&nbsp;</label>
+                <a class="button tiny right radius ctBtn"
+                   ng-click="updateGT(ct_id, 'ct_mod', 'users')">
+                    <i class="fi-check"></i> Save training
+                </a>
+                <img style="display: none;" class="al right ctAl"
+                     ng-src="{{'img/ajax.gif' | baseUrl}}">
+            </div>
+        </fieldset>
+    </div>
+    <div class="small-12 column">
+        <fieldset>
+            <legend>New customers board commissions</legend>
+            <prefix t="$" pl="1" dl="6">
+                <input-text
+                    title="" t="boarding_settings" n="commissions_new_customers_board"
+                    class="" required="" no-error="true">
+                </input-text>
+            </prefix>
+            <div class="small-5 left">
+                <a class="button tiny right radius cBtn"
+                   ng-click="updateC()">
+                    <i class="fi-check"></i> Save commission
+                </a>
+                <img style="display: none;" class="al right cAl"
+                     ng-src="{{'img/ajax.gif' | baseUrl}}">
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="small-6 column">
+    <div class="small-12" id="tabContents">
+        <dl class="tabs">
+            <dd id="panel1_tab" class="active">
+                <a ng-click="openTab('#tabContents', '#panel1', '#panel1_tab')">
+                    <i class="fa fa-table"></i> Services
+                </a>
+            </dd>
+            <dd id="panel2_tab">
+                <a ng-click="openTab('#tabContents', '#panel2', '#panel2_tab')">
+                    <i class="fa fa-table"></i> Retail
+                </a>
+            </dd>
+        </dl>
+        <div>
+            <div class="content" id="panel1">
+                <fieldset>
+                    <legend>Services commissions</legend>
+                    <div class="small-4 column">
+                        <input-text
+                            title="Search service" no-error="true"
+                            ng-model="search_services" class="clearable">
+                        </input-text>
+                    </div>
+                    <postfix t="$" pl="1" dl="3">
+                        <input-text
+                            title="Set all to:" no-error="true"
+                            ng-model="ss_commission_percentage">
+                        </input-text>
+                    </postfix>
+                    <div class="small-4 column">
+                        <label>&nbsp;</label>
+                        <a class="button tiny right radius csBtn"
+                           ng-click="setAll(ss_commission_percentage, 'schedule_services')">
+                            <i class="fi-check"></i> Set all
+                        </a>
+                        <img style="display: none;" class="al right csAl"
+                             ng-src="{{'img/ajax.gif' | baseUrl}}">
+                    </div>
+                    <hr />
+                    <table class="small-12">
+                        <thead>
+                        <tr>
+                            <th>Service name</th>
+                            <th>Price</th>
+                            <th>Commission</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="s in $root.schedule_services | array | filter:search_services">
+                            <td>{{s.v}}</td>
+                            <td>${{s.price}}</td>
+                            <td>
+                                <div class="small-9 column">
+                                    <input-textarea
+                                        no-error="true"
+                                        ng-model="s.commission_percentage">
+                                    </input-textarea>
+                                </div>
+                                <div class="small-3 column">
+                                    <a class="button tiny radius ssBtn{{s.id}}"
+                                       ng-click="updateSR(s.id, s, 'schedule_services', 'ss')"><i class="fi-check"></i></a>
+                                    <img style="display: none;" class="al right ssAl{{s.id}}"
+                                         ng-src="{{'img/ajax.gif' | baseUrl}}">
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="content" id="panel2" style="display: none;">
+                <fieldset>
+                    <legend>Retail commissions</legend>
+                    <div class="small-4 column">
+                        <input-text
+                            title="Search retail" no-error="true"
+                            ng-model="search_retail" class="clearable">
+                        </input-text>
+                    </div>
+                    <postfix t="$" pl="1" dl="3">
+                        <input-text
+                            title="Set all to:" no-error="true"
+                            ng-model="ri_commission_percentage">
+                        </input-text>
+                    </postfix>
+                    <div class="small-4 column">
+                        <label>&nbsp;</label>
+                        <a class="button tiny right radius csBtn"
+                           ng-click="setAll(ri_commission_percentage, 'retail_inventory')">
+                            <i class="fi-check"></i> Set all
+                        </a>
+                        <img style="display: none;" class="al right csAl"
+                             ng-src="{{'img/ajax.gif' | baseUrl}}">
+                    </div>
+                    <hr />
+                    <table class="small-12">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Product code</th>
+                            <th>Commission</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="r in $root.retail_inventory | array | filter:search_retail">
+                            <td>{{r.product_name}}</td>
+                            <td>${{r.price}}</td>
+                            <td>{{r.product_code}}</td>
+                            <td>
+                                <div class="small-9 column">
+                                    <input-textarea
+                                        no-error="true"
+                                        ng-model="r.commission_percentage">
+                                    </input-textarea>
+                                </div>
+                                <div class="small-3 column">
+                                    <a class="button tiny radius riBtn{{r.id}}"
+                                       ng-click="updateSR(r.id, r, 'retail_inventory', 'ri')"><i class="fi-check"></i></a>
+                                    <img style="display: none;" class="al right riAl{{r.id}}"
+                                         ng-src="{{'img/ajax.gif' | baseUrl}}">
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

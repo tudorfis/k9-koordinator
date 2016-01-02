@@ -1,0 +1,299 @@
+<fieldset>
+    <legend>
+        <i class="fa fa-list-alt"></i> Training reservation
+    </legend>
+    <form form-submit hide-show-al-content="true" t="r_training_mod" table="r_training" id="rTrainingForm" data-abide="true">
+        <div class="small-4 column">
+            <div class="small-6 column">
+                <input-text
+                    title="Date in"
+                    ng-model="r_training_mod.date_in"
+                    ng-disabled="r_training_mod.in_out == 'out'"
+                    placeholder="" class="datepicker" required="required"
+                    error-text="This field is required, only numeric values">
+                </input-text>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="Time in"
+                    ng-model="r_training_mod.time_in"
+                    ng-disabled="r_training_mod.in_out == 'out'"
+                    placeholder="" class="timepicker" pattern="time_pattern"
+                    error-text="Please add this format 10:30">
+                </input-text>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <div class="small-6 column">
+                <input-text
+                    title="Date out"
+                    ng-model="r_training_mod.date_out"
+                    ng-disabled="r_training_mod.in_out == 'out'"
+                    placeholder="" required="required" class="datepicker"
+                    error-text="This field is required, only numeric values">
+                </input-text>
+            </div>
+            <div class="small-6 column">
+                <input-text
+                    title="Time out"
+                    ng-disabled="r_training_mod.in_out == 'out'"
+                    ng-model="r_training_mod.time_out"
+                    placeholder="" class="timepicker" pattern="time_pattern"
+                    error-text="Please add this format 10:30">
+                </input-text>
+            </div>
+            <div class="clearfix">&nbsp;</div>
+            <hr />
+            <input-select
+                title="Trainer" required="required"
+                ng-disabled="r_training_mod.in_out == 'out'"
+                ng-model="r_training_mod.t_id" s="trainers">
+            </input-select>
+            <input-textarea
+                title="Instructions"
+                ng-disabled="r_training_mod.in_out == 'out'"
+                ng-model="r_training_mod.instructions">
+            </input-textarea>
+        </div>
+        <div class="small-8 column">
+            <div class="small-6 column" ng-show="r_training_mod.in_out == 'in'">
+                <input-text
+                    title="Select a date"
+                    ng-model="training_filter.date"
+                    class="datepicker" no-error="true">
+                </input-text>
+                <div class="small-6 column">
+                    <input-checkbox
+                        title="Show all"
+                        ng-model="training_filter.show_all">
+                    </input-radio>
+                </div>
+                <div class="right" ng-show="r_training_mod.in_out == 'in'">
+                    <button type="submit" class="submit button radius" style="font-weight: bold;">
+                        <i class="fa fa-check-square"> </i>
+                    </button>
+                    <img class="al" ng-src="{{'img/ajax.gif' | baseUrl}}" style="display: none;" />
+                </div>
+            </div>
+            <div class="small-6 column">
+                <fieldset>
+                    <legend>
+                        <i class="fa fa-anchor"></i> Usefull links
+                    </legend>
+                    <ul class="no-list-type">
+                        <li>
+                            <content-link
+                                link="tbl/reservations/training/training-groups" title="Training groups & options"
+                                ui-sref="reservation_training_groups" icon-class="fa fa-asterisk">
+                            </content-link>
+                        </li>
+                        <li>
+                            <content-link
+                                link="tbl/reservations/training/training-schedule" title="Training class scheduler"
+                                ui-sref="reservation_training_schedule" icon-class="fa fa-asterisk">
+                            </content-link>
+                        </li>
+                        <li>
+                            <a ng-click="closeCurrentModal(); getRecordsTraining()">
+                                <i class="fa fa-asterisk"></i> Training records
+                            </a>
+                        </li>
+                        <li>
+                            <content-link
+                                link="crud/trainers" title="Trainers"
+                                ui-sref="trainers" icon-class="fa fa-asterisk">
+                            </content-link>
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+            <div class="clearfix">
+                <hr />
+            </div>
+            <table class="small-12" ng-hide="r_training_mod.in_out == 'in'">
+                <tr>
+                    <td>Training name</td>
+                    <td>{{training_groups[r_training_mod.tg_id].v}}</td>
+                </tr>
+                <tr>
+                    <td>Duration</td>
+                    <td>{{training_schedule[r_training_mod.ts_id].time_duration}}</td>
+                </tr>
+                <tr>
+                    <td>Limit</td>
+                    <td>{{training_groups[r_training_mod.tg_id].limit}}</td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td>$ {{training_groups[r_training_mod.tg_id].price}}</td>
+                </tr>
+            </table>
+            <div ng-show="r_training_mod.in_out == 'in'">
+                <div class="small-6 column">
+                    <label>&nbsp;</label>
+                    <p><i class="fa fa-table"></i> Training schedules</p>
+                </div>
+                <div class="small-6 column">
+                    <input-select
+                        title="Select a class" ng-v="v" line-value="- all classes -"
+                        ng-model="tg_id" s="$root.training_groups" no-error="true">
+                    </input-select>
+                </div>
+                <div class="clearfix">&nbsp;</div>
+                <div class="small-12">
+                    <table class="small-12">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date start</th>
+                                <th>Time start</th>
+                                <th>Date end</th>
+                                <th>Time end</th>
+                                <th>Duration</th>
+                                <th>Limit</th>
+                                <th>Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ts in (training_schedule | array | filter:{tg_id:(tg_id||'')} | filterTraining:training_filter | array)"
+                                ng-class="{'g-active': ts.id == r_training_mod.ts_id}"
+                                style="cursor: pointer;"
+                                ng-click="selectTs(ts)">
+                                <td>{{training_groups[ts.tg_id].v}}</td>
+                                <td>{{ts.date_in || '-'}}</td>
+                                <td>{{ts.time_in || '-'}}</td>
+                                <td>{{ts.date_out || '-'}}</td>
+                                <td>{{ts.time_out || '-'}}</td>
+                                <td>{{ts.time_duration}}</td>
+                                <td>{{training_groups[ts.tg_id].limit}}</td>
+                                <td>$ {{training_groups[ts.tg_id].price | number:2}}</td>
+                            </tr>
+                            <tr ng-show="(training_schedule | array | filter:{tg_id:(tg_id||'')} | filterTraining:training_filter | array).length == 0">
+                                <td colspan="6">
+                                    <hr />
+                                    <p>
+                                        No training classes available this period, please select different date or schedule classes
+                                        <content-link
+                                            link="tbl/reservations/training/training-schedule" title="- click here -"
+                                            ui-sref="reservation_training_schedule">
+                                        </content-link>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr />
+            <div ng-include="'tpl/cp-info'"></div>
+        </div>
+    </form>
+    <div class="clearfix">&nbsp;</div>
+    <div class="small-12">
+        <div class="small-6 column" ng-show="r_training_mod.id && r_training_mod.tg_id && r_training_mod.ts_id">
+            <fieldset>
+                <legend>
+                    <i class="fa fa-credit-card"></i> Payment details
+                </legend>
+                <form form-submit hide-show-al-content="true" t="o" table="training_payments"
+                      ng-hide="r_training_mod.in_out == 'out'" data-abide="true" submit-btn="true"
+                      submit-btn-text="Pay reservation">
+                    <input-select
+                        title="Payment type" required="required"
+                        line-value="- select payment type -"
+                        ng-model="o.payment_type_id" s="payment_types">
+                    </input-select>
+                    <postfix i="fa fa-dollar" pl="4" dl="8" wl="true">
+                        <input-text
+                            no-label="true" type="number" pattern="number" required="required"
+                            error-text="This field is required and must be numeric value"
+                            ng-model="o.paid" placeholder="Enter amount to process ... ">
+                        </input-text>
+                    </postfix>
+                    <div class="clearfix">&nbsp;</div>
+                </form>
+                <table class="small-12" ng-show="o.id">
+                    <tr>
+                        <td>Payment status: </td>
+                        <td>{{(payment_status[o.payment_status_id].v)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Payment type: </td>
+                        <td>{{(payment_types[o.payment_type_id].v)}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>TOTAL: </td>
+                        <td>$ {{o.required | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Paid</td>
+                        <td>$ {{o.paid | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Change</td>
+                        <td>$ {{o.change | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Unpaid</td>
+                        <td>$ {{o.unpaid | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date created</td>
+                        <td>{{o.date_created}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date modified</td>
+                        <td>{{o.date_modified}}</td>
+                    </tr>
+                    <tr>
+                        <td>Created by</td>
+                        <td>{{$root.users[o.created_user_id].first_name}}, {{$root.users[o.created_user_id].last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Modified by</td>
+                        <td>{{$root.users[o.modified_user_id].first_name}}, {{$root.users[o.modified_user_id].last_name}}</td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        <div class="small-6 column">
+            <fieldset ng-show="r_training_mod.id && r_training_mod.tg_id && r_training_mod.ts_id">
+                <legend>
+                    <i class="fa fa-dollar"></i> Billing details
+                </legend>
+                <div class="small-6 column">
+                    <input-select
+                        title="Select language" no-error="true" s="$root.lang_keys"
+                        ng-model="o.language" ng-id="lang" ng-v="text">
+                    </input-select>
+                    <input-radio
+                        title='Show details <i class="fa fa-laptop"></i>'
+                        t="o" n="print_type" v="screen" placeholder="...">
+                    </input-radio>
+                    <input-radio
+                        title='Print to screen <i class="fa fa-print"></i>'
+                        t="o" n="print_type" v="print" placeholder="...">
+                    </input-radio>
+                    <input-radio
+                        title='Download a copy <i class="fa fa-file-o"></i>'
+                        t="o" n="print_type" v="download" placeholder="...">
+                    </input-radio>
+                    <hr />
+                    <a class="tiny button radius btn_print"
+                       ng-click="$root.printRsvBill('#rTrainingCtrl', 'r_training_mod', 'r_training')">
+                        <i class="fa fa-print"></i> Bill details and prices
+                    </a>
+                    <i class="fa fa-spin fa-spinner fa-2x al_print" style="display: none;"></i>
+                </div>
+                <div class="small-6 column">
+                    <a class="button radius"
+                       ng-disabled="r_training_mod.in_out == 'out'"
+                       ng-click="(r_training_mod.in_out == 'in' ? $root.checkoutPet('#rTrainingCtrl', 'r_training_mod', 'r_training') : void(0))">
+                        <i class="fa fa-sign-out"></i> Checkout pet
+                    </a>
+                    <hr />
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</fieldset>

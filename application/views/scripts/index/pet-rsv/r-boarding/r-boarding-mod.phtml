@@ -1,0 +1,318 @@
+<fieldset>
+    <legend>
+        <i class="fa fa-th-large"></i> Boarding reservation
+    </legend>
+    <div ng-controller="rBoardingTop" ng-init="r_type_mod = 'r_boarding_mod'" ng-include="'tpl/r-top-sections'"></div>
+    <div id="check_in_out"
+         ng-show="$root.section == 'check_in_out'">
+        <form form-submit hide-show-al-content="true" t="r_boarding_mod" table="r_boarding" id="rBoardingForm" data-abide="true">
+            <div class="small-6 columns">
+                <div ng-include="'tpl/cp-info'"></div>
+                <hr />
+                <input-select
+                    title="Stay reason" required="required" error-text="Please select stay reason"
+                    ng-disabled="r_boarding_mod.in_out == 'out'"
+                    ng-model="r_boarding_mod.stay_reason_id" s="stay_reasons" none-filter="true">
+                </input-select>
+                <input-textarea
+                    title="Luggage"
+                    ng-disabled="r_boarding_mod.in_out == 'out'"
+                    ng-model="r_boarding_mod.luggage">
+                </input-textarea>
+                <hr />
+                <fieldset>
+                    <legend>
+                        <i class="fa fa-anchor"></i> Usefull links
+                    </legend>
+                    <ul class="no-list-type">
+                        <li>
+                            <content-link
+                                link="tbl/reservations/boarding/boarding-settings" title="Boarding settings & charges"
+                                ui-sref="reservations_boarding_settings" icon-class="fa fa-asterisk">
+                            </content-link>
+                        </li>
+                        <li>
+                            <content-link
+                                link="crud/stay_reasons" title="Boarding stay reasons"
+                                ui-sref="stay_reasons" icon-class="fa fa-asterisk">
+                            </content-link>
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+            <div class="small-6 columns">
+                <fieldset>
+                    <legend>
+                        <i class="fa fa-clock-o"></i> Date / Time
+                    </legend>
+                    <div class="small-12">
+                        <div class="small-6 column">
+                            <input-text
+                                title="Date in"
+                                ng-model="r_boarding_mod.date_in"
+                                ng-disabled="r_boarding_mod.in_out == 'out'" placeholder=""
+                                class="datepicker" required="required"
+                                error-text="This field is required, only numeric values">
+                            </input-text>
+                        </div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Time in"
+                                ng-model="r_boarding_mod.time_in"
+                                ng-disabled="r_boarding_mod.in_out == 'out'" placeholder=""
+                                class="timepicker" required="required" pattern="time_pattern"
+                                error-text="Please add this format 10:30">
+                            </input-text>
+                        </div>
+                        <div class="clearfix">&nbsp;</div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Date out"
+                                ng-disabled="r_boarding_mod.in_out == 'out'" placeholder=""
+                                ng-model="r_boarding_mod.date_out" class="datepicker"
+                                error-text="This field is required, only numeric values">
+                            </input-text>
+                        </div>
+                        <div class="small-6 column">
+                            <input-text
+                                title="Time out"
+                                ng-model="r_boarding_mod.time_out"
+                                ng-disabled="r_boarding_mod.in_out == 'out'" placeholder=""
+                                class="timepicker" required="required" pattern="time_pattern"
+                                error-text="Please add this format 10:30">
+                            </input-text>
+                        </div>
+                        <div class="small-12" ng-show="r_boarding_mod.date_checkout && r_boarding_mod.time_checkout">
+                            <hr />
+                            <div class="small-6 column">
+                                <input-text
+                                    title="Date of checkout"
+                                    disabled="true" ng-model="r_boarding_mod.date_checkout">
+                                </input-text>
+                            </div>
+                            <div class="small-6 column">
+                                <input-text
+                                    title="Time of checkout out"
+                                    disabled="true" ng-model="r_boarding_mod.time_checkout">
+                                </input-text>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="small-4 column">
+                            <postfix pl="4" dl="8" i="fa fa-dollar">
+                                <input-text
+                                    title="Deposit" ng-disabled="r_boarding_mod.id"
+                                    error-text="Please enter a valid amount"
+                                    ng-model="r_boarding_mod.deposit" pattern="number">
+                                </input-text>
+                            </postfix>
+                        </div>
+                        <div class="small-8 column">
+                            <div ng-switch="boarding_settings.charge_type">
+                                <div ng-switch-when="charge_by_petsize">
+                                    <input-select
+                                        title="Pet size" ng-model="r_boarding_mod.charge_type_id"
+                                        ng-disabled="r_boarding_mod.in_out == 'out'"
+                                        s="boarding_petsizes" required="required" none-filter="true">
+                                    </input-select>
+                                </div>
+                                <div ng-switch-when="charge_by_runtype">
+                                    <input-select
+                                        title="Run type" ng-model="r_boarding_mod.charge_type_id"
+                                        ng-disabled="r_boarding_mod.in_out == 'out'"
+                                        s="boarding_runtypes" required="required" none-filter="true">
+                                    </input-select>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="small-12" ng-show="r_boarding_mod.charge_type_id && boarding_settings.charge_type == 'charge_by_petsize'">
+                            <tr>
+                                <td>Limit</td>
+                                <td>{{boarding_petsizes[r_boarding_mod.charge_type_id].limits}}</td>
+                            </tr>
+                            <tr>
+                                <td>Fullday</td>
+                                <td>$ {{boarding_petsizes[r_boarding_mod.charge_type_id].full_day | number:2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Halfday</td>
+                                <td>$ {{boarding_petsizes[r_boarding_mod.charge_type_id].half_day | number:2}}</td>
+                            </tr>
+                        </table>
+                        <table class="small-12" ng-show="r_boarding_mod.charge_type_id && boarding_settings.charge_type == 'charge_by_runtype'">
+                            <tr>
+                                <td>Limitt</td>
+                                <td>{{boarding_runtypes[r_boarding_mod.charge_type_id].limits}}</td>
+                            </tr>
+                            <tr>
+                                <td>Fullday</td>
+                                <td>$ {{boarding_runtypes[r_boarding_mod.charge_type_id].full_day}}</td>
+                            </tr>
+                            <tr>
+                                <td>Halfday</td>
+                                <td>$ {{boarding_runtypes[r_boarding_mod.charge_type_id].half_day}}</td>
+                            </tr>
+                        </table>
+                        <div>
+                            <input-checkbox
+                                title="Mark this pet as 'handle carefully'"
+                                ng-disabled="r_boarding_mod.in_out == 'out'"
+                                ng-model="r_boarding_mod.is_handle_carefully">
+                            </input-checkbox>
+                            <input-checkbox
+                                title="Mark this pet as 'extra pet'"
+                                ng-disabled="r_boarding_mod.in_out == 'out'"
+                                ng-model="r_boarding_mod.is_extra_pet">
+                            </input-checkbox>
+                        </div>
+                    </div>
+                    <div class="right" ng-show="r_boarding_mod.in_out == 'in'">
+                        <div class="clearfix">&nbsp;</div>
+                        <button type="submit" class="submit button radius" style="font-weight: bold;">
+                            <i class="fa fa-check-square"> </i>
+                        </button>
+                        <img class="al" ng-src="{{'img/ajax.gif' | baseUrl}}" style="display: none;" />
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+        <div class="clearfix">&nbsp;</div>
+        <div class="small-6 column" ng-show="r_boarding_mod.id">
+            <fieldset>
+                <legend>
+                    <i class="fa fa-credit-card"></i> Payment details
+                </legend>
+                <form form-submit hide-show-al-content="true" t="o" table="boarding_payments"
+                      ng-hide="r_grooms_mod.in_out == 'out'" data-abide="true" submit-btn="true"
+                      submit-btn-text="Pay reservation">
+                    <input-select
+                        title="Payment type" required="required"
+                        line-value="- select payment type -"
+                        ng-model="o.payment_type_id" s="payment_types">
+                    </input-select>
+                    <postfix i="fa fa-dollar" pl="4" dl="8" wl="true">
+                        <input-text
+                            no-label="true" type="number" pattern="number" required="required"
+                            error-text="This field is required and must be numeric value"
+                            ng-model="o.paid" placeholder="Enter amount to process ... ">
+                        </input-text>
+                    </postfix>
+                    <div class="clearfix">&nbsp;</div>
+                </form>
+                <table class="small-12" ng-show="o.id">
+                    <tr>
+                        <td>Payment status: </td>
+                        <td>{{(payment_status[o.payment_status_id].v)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Payment type: </td>
+                        <td>{{(payment_types[o.payment_type_id].v)}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>TOTAL: </td>
+                        <td>$ {{o.required | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Paid</td>
+                        <td>$ {{o.paid | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Change</td>
+                        <td>$ {{o.change | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Unpaid</td>
+                        <td>$ {{o.unpaid | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date created</td>
+                        <td>{{o.date_created}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date modified</td>
+                        <td>{{o.date_modified}}</td>
+                    </tr>
+                    <tr>
+                        <td>Created by</td>
+                        <td>{{$root.users[o.created_user_id].first_name}}, {{$root.users[o.created_user_id].last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Modified by</td>
+                        <td>{{$root.users[o.modified_user_id].first_name}}, {{$root.users[o.modified_user_id].last_name}}</td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+        <div class="small-6 column">
+            <fieldset ng-show="r_boarding_mod.id">
+                <legend>
+                   <i class="fa fa-dollar"></i> Billing details
+                </legend>
+                <div class="small-4 column"
+                    style="border-right: 1px solid #ccc;">
+                    <input-radio
+                        title="Calculate by time in / out"
+                        ng-disabled="r_boarding_mod.in_out == 'out'"
+                        ng-model="r_boarding_mod.is_halfday" v="2">
+                    </input-radio>
+                </div>
+                <div class="small-4 column">
+                    <input-radio
+                        title="Charge by fullday rate"
+                        ng-disabled="r_boarding_mod.in_out == 'out'"
+                        ng-model="r_boarding_mod.is_halfday" v="0">
+                    </input-radio>
+                </div>
+                <div class="small-4 column">
+                    <input-radio
+                        title="Charge by halfday rate"
+                        ng-disabled="r_boarding_mod.in_out == 'out'"
+                        ng-model="r_boarding_mod.is_halfday" v="1">
+                    </input-radio>
+                </div>
+                <hr />
+                <div class="small-6 column">
+                    <input-select
+                        title="Select language" no-error="true" s="$root.lang_keys"
+                        ng-model="o.language" ng-id="lang" ng-v="text">
+                    </input-select>
+                    <input-radio
+                        title='Show details <i class="fa fa-laptop"></i>'
+                        t="o" n="print_type" v="screen" placeholder="...">
+                    </input-radio>
+                    <input-radio
+                        title='Print to screen <i class="fa fa-print"></i>'
+                        t="o" n="print_type" v="print" placeholder="...">
+                    </input-radio>
+                    <input-radio
+                        title='Download a copy <i class="fa fa-file-o"></i>'
+                        t="o" n="print_type" v="download" placeholder="...">
+                    </input-radio>
+                    <hr />
+                    <a class="tiny button radius btn_print"
+                       ng-click="$root.printRsvBill('#rBoardingCtrl', 'r_boarding_mod', 'r_boarding')">
+                        <i class="fa fa-print"></i> Bill details and prices
+                    </a>
+                    <i class="fa fa-spin fa-spinner fa-2x al_print" style="display: none;"></i>
+                </div>
+                <div class="small-6 column">
+                    <a class="button radius"
+                       ng-disabled="r_boarding_mod.in_out == 'out'"
+                       ng-click="(r_boarding_mod.in_out == 'in' ? $root.checkoutPet('#rBoardingCtrl', 'r_boarding_mod', 'r_boarding') : void(0))">
+                        <i class="fa fa-sign-out"></i> Checkout pet
+                    </a>
+                    <hr />
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div ng-controller="rBoardingServices" ng-include="'tpl/r-ss-mod'"
+         ng-init="do = 1; scope_id = '#rBoardingCtrl'; r_type = 'r_boarding'; r_type_mod = 'r_boarding_mod'; r_type_in = 'pet.r_boarding[r_boarding_mod.id].r_ss'; "></div>
+
+    <div ng-controller="rBoardingMeds" ng-include="'tpl/r-meds-mod'"
+         ng-init="do = 1; scope_id = '#rBoardingCtrl'; r_type = 'r_boarding'; r_type_mod = 'r_boarding_mod'; r_type_in = 'pet.r_boarding[r_boarding_mod.id].r_meds'; "></div>
+
+    <div ng-controller="rBoardingDiets" ng-include="'tpl/r-diets-mod'"
+         ng-init="do = 1; scope_id = '#rBoardingCtrl'; r_type = 'r_boarding'; r_type_mod = 'r_boarding_mod'; r_type_in = 'pet.r_boarding[r_boarding_mod.id].r_diets'; "></div>
+</fieldset>

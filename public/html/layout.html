@@ -1,0 +1,126 @@
+<style id="toStyle">&nbsp;</style>
+<style id="fromStyle">
+
+    .top-bar,
+    .top-bar-section ul,
+    .top-bar-section .has-form,
+    .top-bar-section ul li > a,
+    .top-bar-section li:not(.has-form) a:not(.button) {
+        background: none repeat scroll 0 0 '+(settings.layout_topbar_bg_color || "#000")+';
+    }
+
+    .left-off-canvas-menu {
+        background: none repeat scroll 0 0 '+(settings.layout_sidebar_bg_color || "#aaa")+';
+    }
+
+    ul.off-canvas-list li label {
+        background: none repeat scroll 0 0 #444444;
+    }
+
+    button, button:hover, button:focus, .button:hover, .button:focus, .button,
+    button.disabled, button[disabled], .button.disabled, .button[disabled],
+    button.disabled:hover, button.disabled:focus, button[disabled]:hover,
+    button[disabled]:focus, .button.disabled:hover, .button.disabled:focus,
+    .button[disabled]:hover, .button[disabled]:focus
+    html input[type="button"], html input[type="button"]:hover, html input[type="button"]:focus,
+    input[type="reset"], input[type="reset"]:hover, input[type="reset"]:focus,
+    input[type="submit"], input[type="submit"]:hover, input[type="submit"]:focus {
+        background-color: '+settings.layout_button_bg_color+';
+    }
+    button, .button {
+        border-color: '+(settings.layout_button_bg_color || "#007095")+'
+    }
+
+    .top-bar-section li.active:not(.has-form) a:not(.button), #searchLink,
+    .top-bar-section li.active:not(.has-form) a:hover:not(.button),
+    .top-bar li.active, .top-bar li.active a {
+        background-color: '+(settings.layout_button_bg_color || "#000")+';
+    }
+
+    .ngrs-range-slider .ngrs-join {
+        background-color: '+(settings.layout_button_bg_color || "#2f96b4")+';
+    }
+    .ngrs-range-slider.ngrs-focus {
+        border-color: '+(settings.layout_button_bg_color || "#2f96b4")+';
+        box-shadow: inset 0 1px 1px '+(settings.layout_button_bg_color || "#2f96b4")+', 0 0 8px '+(settings.layout_button_bg_color || "#2f96b4")+';
+    }
+
+    button.disabled, button[disabled], .button.disabled, .button[disabled],
+    button.disabled:hover, button.disabled:focus, button[disabled]:hover,
+    button[disabled]:focus, .button.disabled:hover, .button[disabled]:hover,
+    .button[disabled]:focus  {
+        background-color: #999999;
+        border-color: #ccc;
+    }
+
+    a, a:focus {
+        color: '+(settings.layout_button_bg_color || "#008CBA")+';
+    }
+
+    a:hover {
+        color: '+(settings.layout_button_hover_bg_color || settings.layout_button_bg_color || "#008CBA")+'
+    }
+
+    button:hover, .button:hover, #searchLink:hover {
+        background-color: '+(settings.layout_button_hover_bg_color || "#008CBA")+';
+    }
+
+    .bg-button {
+        background-color: '+(settings.layout_button_bg_color || "#008CBA")+' !important;
+        color: #fff !important;
+    }
+
+    .actv {
+        font-weight: bold !important;
+        background-color: '+(settings.layout_button_hover_bg_color || "#008CBA")+' !important;
+        -webkit-box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.75);
+        box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.75);
+    }
+
+    .tr-actv td {
+        font-weight: bold !important;
+        background-color: #ccc !important;
+    }
+
+    .ui-timepicker-table td a:hover,
+    .ui-timepicker a:hover {
+        border: 0;
+        background: none repeat scroll 0 0 '+(settings.layout_button_bg_color || "#008CBA")+';
+        color: #fff;
+    }
+
+    table.ui-timepicker-table td.ui-timepicker-hours div.ui-widget-header,
+    table.ui-timepicker-table td.ui-timepicker-minutes div.ui-widget-header {
+        font-weight: bold;
+        background-color: '+(settings.layout_topbar_bg_color || "#000")+';
+        color: #fff;
+    }
+
+    table.ui-timepicker-table .ui-state-active {
+        font-weight: bold;
+        border-color: 1px solid '+(settings.layout_button_bg_color || "#008CBA")+';
+        color: '+(settings.layout_button_bg_color || "#008CBA")+';
+    }
+
+    .datepicker td span.active, .datepicker td.active.day, .datepicker td.active.year, .datepicker th span.active, .datepicker th.active.day, .datepicker th.active.year {
+        background: none repeat scroll 0 0 '+(settings.layout_button_bg_color || "#008CBA")+';
+        color: #fff;
+    }
+
+    .th:hover, .th:focus {
+        box-shadow: 0 0 6px 1px '+(settings.layout_button_bg_color || "#008CBA")+';
+    }
+
+    .f-dropdown li a {
+        color: #fff;
+    }
+
+    .tabs dd.active > a {
+        background: none repeat scroll 0 0 '+(settings.layout_button_bg_color || "#008CBA")+';
+        color: #fff;
+        font-weight: bold;
+        border: 1px solid #ccc;
+    }
+
+</style>

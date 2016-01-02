@@ -1,0 +1,56 @@
+<h3><i class="fi-wrench"> General settings</i></h3>
+<hr />
+<form form-submit hide-show-al-submit="true" submit-btn="true" t="settings" table="settings" t-post="general_settings"
+      id="generalSettingsForm" action="" method="post" enctype="multipart/form-data" data-abide="true">
+    <div class="small-2 column">
+        <label>Website image logo</label>
+        <div class="th-img">
+            <image-no-image
+                t="settings" n="image_logo_id" s="files" ajax="true"
+                st="path" stt="path_thumb" fancybox="true">
+            </image-no-image>
+        </div>
+    </div>
+    <div class="small-10 column">
+        <div class="small-7">
+            <fieldset class="small-12">
+                <legend>Layout / buttons</legend>
+                <div class="left mlb30">
+                    <input-text
+                        title="Topbar"  ng-change="parseStyle('settings', '#fromStyle', '#toStyle')"
+                        ng-model="settings.layout_topbar_bg_color" class="colorpicker">
+                    </input-text>
+                </div>
+                <div class="left mlb30">
+                    <input-text
+                        title="Sidebar" ng-change="parseStyle('settings', '#fromStyle', '#toStyle')"
+                        ng-model="settings.layout_sidebar_bg_color" class="colorpicker">
+                    </input-text>
+                </div>
+                <div class="left mlb30">
+                    <input-text
+                        title="Button" ng-change="parseStyle('settings', '#fromStyle', '#toStyle')"
+                        ng-model="settings.layout_button_bg_color" class="colorpicker">
+                    </input-text>
+                </div>
+                <div class="left mlb30">
+                    <input-text
+                        title="Hover button" ng-change="parseStyle('settings', '#fromStyle', '#toStyle')"
+                        ng-model="settings.layout_button_hover_bg_color" class="colorpicker">
+                    </input-text>
+                </div>
+            </fieldset>
+            <fieldset class="small-12">
+                <legend>General</legend>
+                <input-text
+                    title="Site title"
+                    ng-model="settings.layout_title">
+                </input-text>
+                <input-text
+                    title="Small title"
+                    ng-model="settings.layout_alt_title">
+                </input-text>
+            </fieldset>
+        </div>
+    </div>
+</form>
